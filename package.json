@@ -1,0 +1,48 @@
+{
+  "name": "nix-kubernetes",
+  "version": "0.0.0",
+  "description": "Kubernetes deployment manager written in nix",
+  "homepage": "https://github.com/x-truder/nix-kubernetes",
+  "author": {
+    "name": "Jaka Hudoklin",
+    "email": "jakahudoklin@gmail.com",
+    "url": "https://x-truder.net"
+  },
+  "files": [
+    "lib"
+  ],
+  "main": "lib/index.js",
+  "keywords": [
+    "nix",
+    "kubernetes",
+    "dm",
+    "deployment",
+    "manager",
+    "docker"
+  ],
+  "devDependencies": {
+    "eslint": "^2.1.0",
+    "eslint-config-xo-space": "^0.10.0",
+    "gulp": "^3.9.0",
+    "gulp-eslint": "^2.0.0",
+    "gulp-exclude-gitignore": "^1.0.0",
+    "gulp-line-ending-corrector": "^1.0.1",
+    "gulp-istanbul": "^0.10.3",
+    "gulp-mocha": "^2.0.0",
+    "gulp-plumber": "^1.0.0",
+    "gulp-nsp": "^2.1.0",
+    "gulp-coveralls": "^0.1.0"
+  },
+  "eslintConfig": {
+    "extends": "xo-space",
+    "env": {
+      "mocha": true
+    }
+  },
+  "repository": "git@github.com:x-truder/nix-kubernetes.git",
+  "scripts": {
+    "prepublish": "gulp prepublish",
+    "test": "gulp"
+  },
+  "license": "MIT"
+}
