@@ -1,6 +1,13 @@
 # nix-kubernetes [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage percentage][coveralls-image]][coveralls-url]
 > Kubernetes deployment manager written in nix
 
+## Build deployments
+
+```sh
+$ nix-build -A staging -I services=$HOME/projects/x-truder.net/services --arg
+configuration $HOME/projects/gatehub/services2/deploy.nix
+```
+
 ## Installation
 
 ```sh
