@@ -17,14 +17,19 @@ in mapAttrs (name: deployment:
   let
     config = configForDeployment deployment;
 
-    rcs = mapAttrs (name: ctrl: mkController ctrl) config.kubernetes.controllers;
-    services = mapAttrs (name: service: mkService service) config.kubernetes.services;
+    result = {
+      namespace = mkNamespace config.kubernetes.namespace;
+      controllers =
+        mapAttrs (name: ctrl: mkController ctrl) config.kubernetes.controllers;
+      services =
+        mapAttrs (name: service: mkService service) config.kubernetes.services;
+      pvc =
+        mapAttrs (name: pvc: mkPvc pvc) config.kubernetes.pvc;
+    };
   in pkgs.stdenv.mkDerivation {
     name = "configurations";
     buildCommand = ''
-      mkdir -p $out
-      cp ${pkgs.writeText "controllers.json" (builtins.toJSON rcs)} $out/controllers.json
-      cp ${pkgs.writeText "services.json" (builtins.toJSON services)} $out/services.json
+      cp ${pkgs.writeText "result.json" (builtins.toJSON result)} $out
     '';
   }
 ) deployments

@@ -3,20 +3,28 @@
 with lib;
 
 rec {
+  mkCommand = cmd: if isString cmd then (splitString " " cmd) else cmd;
+
   mkContainer = container: {
     name = container.name;
     image = container.image;
     imagePullPolicy = "Always";
+    securityContext = container.security;
     ports = map (port: {
-      name = port.name;
       containerPort = port.containerPort;
       port = port.port;
-    }) container.ports;
+    } // (optionalAttrs (port.name != null) {
+      name = port.name;
+    })) container.ports;
     volumeMounts = map (volume: {
       name = volume.name;
       mountPath = volume.mountPath;
     }) container.mounts;
-  };
+  } // (optionalAttrs (container.command != null) {
+    command = mkCommand container.command;
+  }) // (optionalAttrs (container.args != null) {
+    args = mkCommand container.args;
+  });
 
   mkVolume = volume: {
     name = volume.name;
@@ -64,6 +72,31 @@ rec {
         targetPort = port.targetPort;
       }) service.ports;
       selector = service.selector;
+    };
+  };
+
+  mkPvc = pvc: {
+    apiVersion = "v1";
+    kind = "PersistentVolumeClaim";
+    metadata = {
+      name = pvc.name;
+    };
+    spec = {
+      accessModes = pvc.accessModes;
+    };
+    resources = {
+      requests = {
+        storage = pvc.size;
+      };
+    };
+  };
+
+  mkNamespace = ns: {
+    apiVersion = "v1";
+    kind = "Namespace";
+    metadata = {
+      name = ns.name;
+      labels = ns.labels;
     };
   };
 }

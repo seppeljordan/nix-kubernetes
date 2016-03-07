@@ -25,7 +25,13 @@ let
 
       command = mkOption {
         description = "Command to run";
-        type = types.nullOr (types.either types.list types.str);
+        type = types.nullOr (types.either (types.listOf types.str) types.str);
+        default = null;
+      };
+
+      args = mkOption {
+        description = "Arguments to command";
+        type = types.nullOr (types.either (types.listOf types.str) types.str);
         default = null;
       };
 
@@ -35,27 +41,39 @@ let
         default = {};
       };
 
+      security = {
+        capabilities = {
+          add = mkOption {
+            description = "Capabilites to add";
+            type = types.listOf types.str;
+            default = [];
+          };
+        };
+      };
+
       ports = mkOption {
         description = "Ports exposed by pod";
         type = types.listOf types.optionSet;
         default = [];
 
-        options = {
-          name = mkOption {
-            description = "Name of the port";
-            type = types.nullOr types.str;
-            default = null;
-          };
+        options = { config, ... }: {
+          options = {
+            name = mkOption {
+              description = "Name of the port";
+              type = types.nullOr types.str;
+              default = null;
+            };
 
-          port = mkOption {
-            description = "Port to expose";
-            type = types.int;
-          };
+            port = mkOption {
+              description = "Port to expose";
+              type = types.int;
+            };
 
-          containerPort = mkOption {
-            description = "Port in container";
-            default = config.port;
-            type = types.int;
+            containerPort = mkOption {
+              description = "Port in container";
+              default = config.port;
+              type = types.int;
+            };
           };
         };
       };
@@ -205,6 +223,35 @@ let
       default = "default";
       type = types.str;
     };
+
+    labels = mkOption {
+      description = "Namespace labels";
+      type = types.attrsOf types.str;
+      default = {};
+    };
+  };
+
+  pvcOptions = { name, config, ... }: {
+    options = {
+      name = mkOption {
+        description = "Name of persistent volume claim";
+        type = types.str;
+        default = name;
+      };
+
+      size = mkOption {
+        description = "Size of storage requested by persistent volume claim";
+        type = types.str;
+        default = "1G";
+        example = "10G";
+      };
+
+      accessModes = mkOption {
+        description = "Requested acces modes";
+        type = types.listOf (types.enum ["ReadWriteOnce"]);
+        default = ["ReadWriteOnce"];
+      };
+    };
   };
 
 in {
@@ -221,6 +268,12 @@ in {
       type = types.attrsOf types.optionSet;
       options = [ serviceOptions ];
       description = "Attribute set of services";
+    };
+
+    pvc = mkOption {
+      type = types.attrsOf types.optionSet;
+      options = [ pvcOptions ];
+      description = "Attribute set of persistent volume claims";
     };
   };
 }
