@@ -2,7 +2,7 @@
 
 with pkgs.lib;
 
-with import ./lib.nix { inherit (pkgs) lib; };
+with import ./lib.nix { inherit (pkgs) lib; inherit pkgs; };
 
 let
   deployments = import configuration;
@@ -25,6 +25,8 @@ in mapAttrs (name: deployment:
         mapAttrs (name: service: mkService service) config.kubernetes.services;
       pvc =
         mapAttrs (name: pvc: mkPvc pvc) config.kubernetes.pvc;
+      secrets =
+        mapAttrs (name: secret: mkSecret secret) config.kubernetes.secrets;
     };
   in pkgs.stdenv.mkDerivation {
     name = "configurations";

@@ -255,6 +255,21 @@ let
     };
   };
 
+  secretOptions = { name, config, ... }: {
+    options = {
+      name = mkOption {
+        description = "Name of the secret";
+        type = types.str;
+        default = name;
+      };
+
+      secrets = mkOption {
+        description = "Files to include in secret";
+        type = types.attrs;
+      };
+    };
+  };
+
 in {
   options.kubernetes = {
     namespace = namespaceOptions;
@@ -277,6 +292,13 @@ in {
       type = types.attrsOf types.optionSet;
       options = [ pvcOptions ];
       description = "Attribute set of persistent volume claims";
+      default = {};
+    };
+
+    secrets = mkOption {
+      type = types.attrsOf types.optionSet;
+      options = [ secretOptions ];
+      description = "Attribute set of secrets";
       default = {};
     };
   };

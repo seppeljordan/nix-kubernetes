@@ -1,4 +1,4 @@
-{ lib }:
+{ lib, pkgs }:
 
 with lib;
 
@@ -99,5 +99,21 @@ rec {
       name = ns.name;
       labels = ns.labels;
     };
+  };
+
+  mkSecret = secret: {
+    apiVersion = "v1";
+    kind = "Secret";
+    metadata = {
+      name = secret.name;
+    };
+    data = mapAttrs (name: secret:
+      builtins.readFile (pkgs.stdenv.mkDerivation {
+        name = "secret-${name}";
+        buildCommand = ''
+          cat ${secret} | ${pkgs.coreutils}/bin/base64 -w0 > $out
+        '';
+      })
+    ) secret.secrets;
   };
 }
