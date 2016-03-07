@@ -20,6 +20,7 @@ rec {
       name = volume.name;
       mountPath = volume.mountPath;
     }) container.mounts;
+    env = mapAttrsToList (name: value: { inherit name value; }) container.env;
   } // (optionalAttrs (container.command != null) {
     command = mkCommand container.command;
   }) // (optionalAttrs (container.args != null) {
