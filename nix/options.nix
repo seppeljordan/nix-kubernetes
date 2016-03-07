@@ -172,6 +172,7 @@ let
         volumes = mkOption {
           type = types.attrsOf types.optionSet;
           options = [ volumeOptions ];
+          default = {};
         };
       };
     };
@@ -262,18 +263,21 @@ in {
       type = types.attrsOf types.optionSet;
       options = [ controllerOptions ];
       description = "Attribute set of controllers";
+      default = {};
     };
 
     services = mkOption {
       type = types.attrsOf types.optionSet;
       options = [ serviceOptions ];
       description = "Attribute set of services";
+      default = {};
     };
 
     pvc = mkOption {
       type = types.attrsOf types.optionSet;
       options = [ pvcOptions ];
       description = "Attribute set of persistent volume claims";
+      default = {};
     };
   };
 }
