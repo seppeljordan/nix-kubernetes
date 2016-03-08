@@ -29,6 +29,15 @@ Examples:
   lib/cli.js deploy -d name --build-only  only build
 ```
 
+## Example usage
+
+```sh
+$ nix-kubernetes create -d gatehub deploy.nix
+$ export NIX_PATH="services=/home/offlinehacker/projects/x-truder.net/services:$NIX_PATH"
+$ nix-kubernetes deploy -d gatehub --build-only
+$ nix-kubernetes deploy -d gatehub
+```
+
 ## Development
 
 ### Use development version
