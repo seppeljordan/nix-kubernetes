@@ -5,5 +5,7 @@
         image = "test2";
       };
     };
+
+    kubernetes.services.test.ports = [{port = 1000;}];
   };
 }

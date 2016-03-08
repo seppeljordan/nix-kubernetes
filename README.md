@@ -1,26 +1,39 @@
 # nix-kubernetes [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage percentage][coveralls-image]][coveralls-url]
 > Kubernetes deployment manager written in nix
 
-## Build deployments
-
-```sh
-$ nix-build -A staging -I services=$HOME/projects/x-truder.net/services --arg
-configuration $HOME/projects/gatehub/services2/deploy.nix
-```
-
 ## Installation
 
 ```sh
-$ npm install --save nix-kubernetes
+$ npm install -g nix-kubernetes
 ```
 
 ## Usage
 
-```js
-var nixKubernetes = require('nix-kubernetes');
+```bash
+Usage: lib/cli.js <command> [options]
 
-nixKubernetes('Rainbow');
+Commands:
+  create <file>  Create deployment
+  list           List all known deployments
+  delete         Delete deployment
+  describe       Describes deployment
+  deploy         Deploy configuration
+
+Options:
+  -h, --help    Show help                                              [boolean]
+  -c, --config                          [default: "~/.kube/nix-kubernetes.json"]
+
+Examples:
+  lib/cli.js create -d name deploy.nix  create deployment
+  lib/cli.js deploy -d name             deploy resources
 ```
+
+## Build deployments
+
+```sh
+$ nix-build -A staging --arg configuration deploy.nix
+```
+
 ## License
 
 MIT © [Jaka Hudoklin](https://x-truder.net)

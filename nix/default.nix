@@ -19,7 +19,7 @@ in mapAttrs (name: deployment:
 
     result = {
       namespace = mkNamespace config.kubernetes.namespace;
-      controllers =
+      replicationcontrollers =
         mapAttrs (name: ctrl: mkController ctrl) config.kubernetes.controllers;
       services =
         mapAttrs (name: service: mkService service) config.kubernetes.services;
