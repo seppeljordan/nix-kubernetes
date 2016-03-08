@@ -11,6 +11,7 @@
   "files": [
     "lib"
   ],
+  "bin": "bin/nix-kubernetes",
   "main": "lib/index.js",
   "keywords": [
     "nix",

@@ -24,8 +24,18 @@ Options:
   -c, --config                          [default: "~/.kube/nix-kubernetes.json"]
 
 Examples:
-  lib/cli.js create -d name deploy.nix  create deployment
-  lib/cli.js deploy -d name             deploy resources
+  lib/cli.js create -d name deploy.nix    create deployment
+  lib/cli.js deploy -d name               deploy resources
+  lib/cli.js deploy -d name --build-only  only build
+```
+
+## Development
+
+### Use development version
+
+```sh
+$ npm link
+$ export PATH=~/.npm/bin:$PATH
 ```
 
 ## Build deployments
