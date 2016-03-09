@@ -37,7 +37,9 @@ rec {
     kind = "ReplicationController";
     metadata = {
       name = rc.name;
-      labels = rc.labels;
+      labels = rc.labels // (optionalAttrs (rc.dependencies != []) {
+        "x-truder.net/dependencies" = concatStringsSep "," rc.dependencies;
+      });
     };
     spec = {
       replicas = rc.replicas;

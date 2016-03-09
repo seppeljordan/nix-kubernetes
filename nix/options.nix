@@ -157,6 +157,12 @@ let
         type = types.int;
       };
 
+      dependencies = mkOption {
+        description = "Replication controller dependencies";
+        default = [];
+        type = types.listOf types.str;
+      };
+
       pod = {
         labels = mkOption {
           description = "Pod labels";
