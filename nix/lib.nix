@@ -11,8 +11,7 @@ rec {
     imagePullPolicy = "Always";
     securityContext = container.security;
     ports = map (port: {
-      containerPort = port.containerPort;
-      port = port.port;
+      containerPort = port.port;
     } // (optionalAttrs (port.name != null) {
       name = port.name;
     })) container.ports;
@@ -74,7 +73,9 @@ rec {
       ports = map (port: {
         port = port.port;
         targetPort = port.targetPort;
-      }) service.ports;
+      } // (optionalAttrs (port.name != null) {
+        name = port.name;
+      })) service.ports;
       selector = service.selector;
     };
   };

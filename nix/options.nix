@@ -202,6 +202,12 @@ let
         type = types.listOf types.optionSet;
         options = { config, ... }: {
           options = {
+            name = mkOption {
+              description = "Name of the port";
+              type = types.nullOr types.str;
+              default = null;
+            };
+
             port = mkOption {
               description = "Port to expose";
               type = types.int;
