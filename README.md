@@ -25,7 +25,7 @@ Options:
 
 Examples:
   lib/cli.js create -d name deploy.nix    create deployment
-  lib/cli.js deploy -d name               deploy resources
+  lib/cli.js deploy -d name -n namespace  deploy resources
   lib/cli.js deploy -d name --build-only  only build
 ```
 
@@ -35,7 +35,7 @@ Examples:
 $ nix-kubernetes create -d gatehub deploy.nix
 $ export NIX_PATH="services=/home/offlinehacker/projects/x-truder.net/services:$NIX_PATH"
 $ nix-kubernetes deploy -d gatehub --build-only
-$ nix-kubernetes deploy -d gatehub
+$ nix-kubernetes deploy -d gatehub -n namespace
 ```
 
 ## Development
