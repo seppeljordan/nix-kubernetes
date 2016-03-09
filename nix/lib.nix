@@ -88,10 +88,10 @@ rec {
     };
     spec = {
       accessModes = pvc.accessModes;
-    };
-    resources = {
-      requests = {
-        storage = pvc.size;
+      resources = {
+        requests = {
+          storage = pvc.size;
+        };
       };
     };
   };
