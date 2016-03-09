@@ -13,11 +13,9 @@ let
       args = { inherit pkgs; };
     }).config;
 
-in mapAttrs (name: deployment:
-  let
-    config = configForDeployment deployment;
-
-    result = {
+    result = mapAttrs (name: deployment: let
+      config = configForDeployment deployment;
+    in {
       namespace = mkNamespace config.kubernetes.namespace;
       replicationcontrollers =
         mapAttrs (name: ctrl: mkController ctrl) config.kubernetes.controllers;
@@ -27,11 +25,10 @@ in mapAttrs (name: deployment:
         mapAttrs (name: pvc: mkPvc pvc) config.kubernetes.pvc;
       secrets =
         mapAttrs (name: secret: mkSecret secret) config.kubernetes.secrets;
-    };
-  in pkgs.stdenv.mkDerivation {
-    name = "configurations";
-    buildCommand = ''
-      cp ${pkgs.writeText "result.json" (builtins.toJSON result)} $out
-    '';
-  }
-) deployments
+    }) deployments;
+in pkgs.stdenv.mkDerivation {
+  name = "configurations";
+  buildCommand = ''
+    cp ${pkgs.writeText "result.json" (builtins.toJSON result)} $out
+  '';
+}
