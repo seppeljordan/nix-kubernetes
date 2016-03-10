@@ -49,6 +49,12 @@ let
             default = [];
           };
         };
+
+        privileged = mkOption {
+          description = "Whether to run container as privileged";
+          type = types.bool;
+          default = false;
+        };
       };
 
       ports = mkOption {
@@ -114,6 +120,41 @@ let
       options = mkOption {
         description = "Volume options";
         type = types.attrs;
+        default = {};
+      };
+    };
+  };
+
+  podOptions = { name, config, ... }: {
+    options = {
+      name = mkOption {
+        description = "Name of the pod";
+        type = types.str;
+        default = name;
+      };
+
+      labels = mkOption {
+        description = "Pod labels";
+        type = types.attrsOf types.str;
+        default = {};
+      };
+
+      dependencies = mkOption {
+        description = "Pod dependencies";
+        default = [];
+        type = types.listOf types.str;
+      };
+
+      containers = mkOption {
+        description = "Pod containers";
+        type = types.attrsOf types.optionSet;
+        options = [ containerOptions ];
+      };
+
+      volumes = mkOption {
+        description = "Pod volumes";
+        type = types.attrsOf types.optionSet;
+        options = [ volumeOptions ];
         default = {};
       };
     };
@@ -285,6 +326,13 @@ let
 in {
   options.kubernetes = {
     namespace = namespaceOptions;
+
+    pods = mkOption {
+      type = types.attrsOf types.optionSet;
+      options = [ podOptions ];
+      description = "Attribute set of pods";
+      default = {};
+    };
 
     controllers = mkOption {
       type = types.attrsOf types.optionSet;

@@ -26,6 +26,29 @@ rec {
     args = mkCommand container.args;
   });
 
+  mkPod = pod: {
+    kind = "Pod";
+    apiVersion = "v1";
+
+    metadata = {
+      name = pod.name;
+      labels = pod.labels;
+      annotations = {
+        "x-truder.net/dependencies" = concatStringsSep "," pod.dependencies;
+      };
+    };
+
+    spec = {
+      containers = mapAttrsToList (name: container:
+        mkContainer container
+      ) pod.containers;
+
+      volumes = mapAttrsToList (name: volume:
+        mkVolume volume
+      ) pod.volumes;
+    };
+  };
+
   mkVolume = volume: {
     name = volume.name;
     ${volume.type} = volume.options;

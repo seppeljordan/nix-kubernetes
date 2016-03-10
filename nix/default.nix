@@ -17,6 +17,8 @@ let
       config = configForDeployment deployment;
     in {
       namespace = mkNamespace config.kubernetes.namespace;
+      pods =
+        mapAttrs (name: pod: mkPod pod) config.kubernetes.pods;
       replicationcontrollers =
         mapAttrs (name: ctrl: mkController ctrl) config.kubernetes.controllers;
       services =
