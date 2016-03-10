@@ -35,7 +35,7 @@ rec {
       labels = pod.labels;
       annotations = {
         "x-truder.net/dependencies" = concatStringsSep "," pod.dependencies;
-      };
+      } // pod.annotations;
     };
 
     spec = {

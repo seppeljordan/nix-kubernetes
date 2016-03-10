@@ -139,6 +139,12 @@ let
         default = {};
       };
 
+      annotations = mkOption {
+        description = "Pod annotation";
+        type = types.attrsOf types.str;
+        default = {};
+      };
+
       dependencies = mkOption {
         description = "Pod dependencies";
         default = [];
