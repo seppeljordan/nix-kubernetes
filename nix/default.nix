@@ -27,6 +27,8 @@ let
         mapAttrs (name: pvc: mkPvc pvc) config.kubernetes.pvc;
       secrets =
         mapAttrs (name: secret: mkSecret secret) config.kubernetes.secrets;
+      ingress =
+        mapAttrs (name: ing: mkIngress ing) config.kubernetes.ingress;
     }) deployments;
 in pkgs.stdenv.mkDerivation {
   name = "configurations";

@@ -19,7 +19,13 @@ rec {
       name = volume.name;
       mountPath = volume.mountPath;
     }) container.mounts;
-    env = mapAttrsToList (name: value: { inherit name value; }) container.env;
+    env = mapAttrsToList (name: value: {
+      inherit name;
+    } // (optionalAttrs (isAttrs value) {
+      valueFrom = value;
+    }) // (optionalAttrs (isString value) {
+      inherit value;
+    })) container.env;
   } // (optionalAttrs (container.command != null) {
     command = mkCommand container.command;
   }) // (optionalAttrs (container.args != null) {
@@ -39,6 +45,8 @@ rec {
     };
 
     spec = {
+      nodeSelector = pod.nodeSelector;
+
       containers = mapAttrsToList (name: container:
         mkContainer container
       ) pod.containers;
@@ -100,6 +108,7 @@ rec {
         name = port.name;
       })) service.ports;
       selector = service.selector;
+      type = service.type;
     };
   };
 
@@ -142,5 +151,20 @@ rec {
         '';
       })
     ) secret.secrets;
+  };
+
+  mkIngress = ing: {
+    apiVersion = "extensions/v1beta1";
+    kind = "Ingress";
+    metadata.name = ing.name;
+    spec = {
+      rules = mapAttrsToList (name: rule: {
+        host = rule.host;
+        http.paths = mapAttrsToList (name: path: {
+          path = path.path;
+          backend = path.backend;
+        }) rule.http.paths;
+      }) ing.rules;
+    };
   };
 }

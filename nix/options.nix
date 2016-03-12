@@ -37,8 +37,8 @@ let
 
       env = mkOption {
         description = "Environment variables to set";
-        type = types.attrsOf types.str;
         default = {};
+        type = types.attrsOf types.unspecified;
       };
 
       security = {
@@ -125,6 +125,33 @@ let
     };
   };
 
+  podTemplate = {
+    labels = mkOption {
+      description = "Pod labels";
+      type = types.attrsOf types.str;
+      default = {};
+    };
+
+    annotations = mkOption {
+      description = "Pod annotation";
+      type = types.attrsOf types.str;
+      default = {};
+    };
+
+    containers = mkOption {
+      description = "Pod containers";
+      type = types.attrsOf types.optionSet;
+      options = [ containerOptions ];
+    };
+
+    volumes = mkOption {
+      description = "Pod volumes";
+      type = types.attrsOf types.optionSet;
+      options = [ volumeOptions ];
+      default = {};
+    };
+  };
+
   podOptions = { name, config, ... }: {
     options = {
       name = mkOption {
@@ -133,14 +160,8 @@ let
         default = name;
       };
 
-      labels = mkOption {
-        description = "Pod labels";
-        type = types.attrsOf types.str;
-        default = {};
-      };
-
-      annotations = mkOption {
-        description = "Pod annotation";
+      nodeSelector = mkOption {
+        description = "Node selector where to put pod";
         type = types.attrsOf types.str;
         default = {};
       };
@@ -150,20 +171,7 @@ let
         default = [];
         type = types.listOf types.str;
       };
-
-      containers = mkOption {
-        description = "Pod containers";
-        type = types.attrsOf types.optionSet;
-        options = [ containerOptions ];
-      };
-
-      volumes = mkOption {
-        description = "Pod volumes";
-        type = types.attrsOf types.optionSet;
-        options = [ volumeOptions ];
-        default = {};
-      };
-    };
+    } // podTemplate;
   };
 
   controllerOptions = { name, config, ... }: {
@@ -210,24 +218,11 @@ let
         type = types.listOf types.str;
       };
 
-      pod = {
-        labels = mkOption {
-          description = "Pod labels";
-          type = types.attrsOf types.str;
-          default = config.selector;
-        };
+      pod = podTemplate;
+    };
 
-        containers = mkOption {
-          type = types.attrsOf types.optionSet;
-          options = [ containerOptions ];
-        };
-
-        volumes = mkOption {
-          type = types.attrsOf types.optionSet;
-          options = [ volumeOptions ];
-          default = {};
-        };
-      };
+    config = {
+      pod.labels.name = mkDefault config.name;
     };
   };
 
@@ -243,6 +238,12 @@ let
         description = "Service labels";
         type = types.attrsOf types.str;
         default = {};
+      };
+
+      type = mkOption {
+        description = "Service type (ClusterIP, NodePort, LoadBalancer)";
+        type = types.enum ["ClusterIP" "NodePort" "LoadBalancer"];
+        default = "ClusterIP";
       };
 
       ports = mkOption {
@@ -329,6 +330,54 @@ let
     };
   };
 
+  ingressOptions = { name, config, ... }: {
+    options = {
+      name = mkOption {
+        description = "Name of the ingress";
+        type = types.str;
+        default = name;
+      };
+
+      rules = mkOption {
+        description = "Attribute set of rules";
+        type = types.attrsOf types.optionSet;
+        options = { name, config, ... }: {
+          options = {
+            host = mkOption {
+              description = "Ingress host";
+              type = types.nullOr types.str;
+            };
+
+            http.paths = mkOption {
+              description = "Attribute set of paths";
+              type = types.attrsOf types.optionSet;
+              options = { name, config, ... }: {
+                options = {
+                  path = mkOption {
+                    description = "Path to route";
+                    type = types.str;
+                    default = name;
+                  };
+
+                  backend.serviceName = mkOption {
+                    description = "Name of the service to route to";
+                    type = types.str;
+                  };
+
+                  backend.servicePort = mkOption {
+                    description = "Service port to route to";
+                    type = types.int;
+                    default = 80;
+                  };
+                };
+              };
+            };
+          };
+        };
+      };
+    };
+  };
+
 in {
   options.kubernetes = {
     namespace = namespaceOptions;
@@ -365,6 +414,13 @@ in {
       type = types.attrsOf types.optionSet;
       options = [ secretOptions ];
       description = "Attribute set of secrets";
+      default = {};
+    };
+
+    ingress = mkOption {
+      type = types.attrsOf types.optionSet;
+      options = [ ingressOptions ];
+      description = "Attribute set of ingress";
       default = {};
     };
   };
