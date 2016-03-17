@@ -29,6 +29,8 @@ let
         mapAttrs (name: secret: mkSecret secret) config.kubernetes.secrets;
       ingress =
         mapAttrs (name: ing: mkIngress ing) config.kubernetes.ingress;
+      jobs =
+        mapAttrs (name: job: mkJob job) config.kubernetes.jobs;
     }) deployments;
 in pkgs.stdenv.mkDerivation {
   name = "configurations";

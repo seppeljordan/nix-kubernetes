@@ -34,6 +34,18 @@ rec {
     lifecycle.postStart.exec.command = mkCommand container.postStart.command;
   });
 
+  mkSpec = resource: {
+    nodeSelector = resource.nodeSelector;
+
+    containers = mapAttrsToList (name: container:
+      mkContainer container
+    ) resource.containers;
+
+    volumes = mapAttrsToList (name: volume:
+      mkVolume volume
+    ) resource.volumes;
+  };
+
   mkPod = pod: {
     kind = "Pod";
     apiVersion = "v1";
@@ -46,17 +58,7 @@ rec {
       } // pod.annotations;
     };
 
-    spec = {
-      nodeSelector = pod.nodeSelector;
-
-      containers = mapAttrsToList (name: container:
-        mkContainer container
-      ) pod.containers;
-
-      volumes = mapAttrsToList (name: volume:
-        mkVolume volume
-      ) pod.volumes;
-    };
+    spec = mkSpec pod;
   };
 
   mkVolume = volume: {
@@ -82,15 +84,7 @@ rec {
           labels = rc.pod.labels;
         };
 
-        spec = {
-          containers = mapAttrsToList (name: container:
-            mkContainer container
-          ) rc.pod.containers;
-
-          volumes = mapAttrsToList (name: volume:
-            mkVolume volume
-          ) rc.pod.volumes;
-        };
+        spec = mkSpec rc.pod;
       };
     };
   };
@@ -167,6 +161,23 @@ rec {
           backend = path.backend;
         }) rule.http.paths;
       }) ing.rules;
+    };
+  };
+
+  mkJob = job: {
+    apiVersion = "extensions/v1beta1";
+    kind = "Job";
+    metadata = {
+      name = job.name;
+    };
+    spec = {
+      template = {
+        metadata = {
+          labels = job.pod.labels;
+        };
+
+        spec = mkSpec job.pod;
+      };
     };
   };
 }

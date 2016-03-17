@@ -146,6 +146,12 @@ let
       default = {};
     };
 
+    nodeSelector = mkOption {
+      description = "Node selector where to put pod";
+      type = types.attrsOf types.str;
+      default = {};
+    };
+
     containers = mkOption {
       description = "Pod containers";
       type = types.attrsOf types.optionSet;
@@ -166,12 +172,6 @@ let
         description = "Name of the pod";
         type = types.str;
         default = name;
-      };
-
-      nodeSelector = mkOption {
-        description = "Node selector where to put pod";
-        type = types.attrsOf types.str;
-        default = {};
       };
 
       dependencies = mkOption {
@@ -386,6 +386,18 @@ let
     };
   };
 
+  jobOptions = { name, config, ... }: {
+    options = {
+      name = mkOption {
+        description = "Name of the job";
+        type = types.str;
+        default = name;
+      };
+
+      pod = podTemplate;
+    };
+  };
+
 in {
   options.kubernetes = {
     namespace = namespaceOptions;
@@ -429,6 +441,13 @@ in {
       type = types.attrsOf types.optionSet;
       options = [ ingressOptions ];
       description = "Attribute set of ingress";
+      default = {};
+    };
+
+    jobs = mkOption {
+      type = types.attrsOf types.optionSet;
+      options = [ jobOptions ];
+      description = "Attribute set of jobs";
       default = {};
     };
   };
