@@ -10,23 +10,28 @@ $ npm install -g nix-kubernetes
 ## Usage
 
 ```bash
-Usage: lib/cli.js <command> [options]
+Usage: /home/offlinehacker/.npm/bin/nix-kubernetes <command> [options]
 
 Commands:
-  create <file>  Create deployment
-  list           List all known deployments
-  delete         Delete deployment
-  describe       Describes deployment
-  deploy         Deploy configuration
+  create <file>   Create deployment
+  list            List all known deployments
+  delete          Delete deployment
+  describe        Describes deployment
+  deploy          Deploy configuration
+  run-job <name>  Run distributed kubernetes job
 
 Options:
+  -c, --config  path to configuration file
+                                        [default: "~/.kube/nix-kubernetes.json"]
   -h, --help    Show help                                              [boolean]
-  -c, --config                          [default: "~/.kube/nix-kubernetes.json"]
 
 Examples:
-  lib/cli.js create -d name deploy.nix    create deployment
-  lib/cli.js deploy -d name -n namespace  deploy resources
-  lib/cli.js deploy -d name --build-only  only build
+  /home/offlinehacker/.npm/bin/nix-kuberne  create deployment
+  tes create -d name deploy.nix
+  /home/offlinehacker/.npm/bin/nix-kuberne  deploy resources
+  tes deploy -d name -n namespace
+  /home/offlinehacker/.npm/bin/nix-kuberne  only build
+  tes deploy -d name --build-only
 ```
 
 ## Example usage
