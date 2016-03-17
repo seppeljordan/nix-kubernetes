@@ -41,6 +41,14 @@ let
         type = types.attrsOf types.unspecified;
       };
 
+      postStart = {
+        command = mkOption {
+          description = "Command to execute in post start phase";
+          type = types.nullOr (types.either (types.listOf types.str) types.str);
+          default = null;
+        };
+      };
+
       security = {
         capabilities = {
           add = mkOption {

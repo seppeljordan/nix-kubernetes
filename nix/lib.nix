@@ -30,6 +30,8 @@ rec {
     command = mkCommand container.command;
   }) // (optionalAttrs (container.args != null) {
     args = mkCommand container.args;
+  }) // (optionalAttrs (container.postStart.command != null) {
+    lifecycle.postStart.exec.command = mkCommand container.postStart.command;
   });
 
   mkPod = pod: {
