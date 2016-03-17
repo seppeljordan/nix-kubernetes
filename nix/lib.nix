@@ -3,7 +3,7 @@
 with lib;
 
 rec {
-  mkCommand = cmd: if isString cmd then (splitString " " cmd) else cmd;
+  mkCommand = cmd: if isString cmd then ["sh" "-c" cmd] else cmd;
 
   mkContainer = container: {
     name = container.name;
