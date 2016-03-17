@@ -16,21 +16,33 @@ let
     result = mapAttrs (name: deployment: let
       config = configForDeployment deployment;
     in {
-      namespace = mkNamespace config.kubernetes.namespace;
-      pods =
-        mapAttrs (name: pod: mkPod pod) config.kubernetes.pods;
-      replicationcontrollers =
-        mapAttrs (name: ctrl: mkController ctrl) config.kubernetes.controllers;
-      services =
-        mapAttrs (name: service: mkService service) config.kubernetes.services;
-      pvc =
-        mapAttrs (name: pvc: mkPvc pvc) config.kubernetes.pvc;
-      secrets =
-        mapAttrs (name: secret: mkSecret secret) config.kubernetes.secrets;
-      ingress =
-        mapAttrs (name: ing: mkIngress ing) config.kubernetes.ingress;
-      jobs =
-        mapAttrs (name: job: mkJob job) config.kubernetes.jobs;
+      # Deployment options
+      options = {
+        namespace = config.kubernetes.namespace.name;
+      };
+
+      # Deployment resources
+      resources = {
+        namespaces = {
+          ${config.kubernetes.namespace.name} = mkNamespace config.kubernetes.namespace;
+        };
+        pods =
+          mapAttrs (name: pod: mkPod pod) config.kubernetes.pods;
+        replicationcontrollers =
+          mapAttrs (name: ctrl: mkController ctrl) config.kubernetes.controllers;
+        services =
+          mapAttrs (name: service: mkService service) config.kubernetes.services;
+        pvc =
+          mapAttrs (name: pvc: mkPvc pvc) config.kubernetes.pvc;
+        secrets =
+          mapAttrs (name: secret: mkSecret secret) config.kubernetes.secrets;
+        ingress =
+          mapAttrs (name: ing: mkIngress ing) config.kubernetes.ingress;
+      };
+
+      # Keep jobs separated from other resources, as they have to be explicitly
+      # started
+      jobs = mapAttrs (name: job: mkJob job) config.kubernetes.jobs;
     }) deployments;
 in pkgs.stdenv.mkDerivation {
   name = "configurations";

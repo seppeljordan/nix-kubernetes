@@ -164,6 +164,12 @@ let
       options = [ volumeOptions ];
       default = {};
     };
+
+    restartPolicy = mkOption {
+      description = "Pod restart policy";
+      type = types.enum ["Always" "OnFailure" "Never"];
+      default = "Always";
+    };
   };
 
   podOptions = { name, config, ... }: {
@@ -395,6 +401,10 @@ let
       };
 
       pod = podTemplate;
+    };
+
+    config = {
+      pod.restartPolicy = mkDefault "Never";
     };
   };
 

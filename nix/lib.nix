@@ -44,6 +44,8 @@ rec {
     volumes = mapAttrsToList (name: volume:
       mkVolume volume
     ) resource.volumes;
+
+    restartPolicy = resource.restartPolicy;
   };
 
   mkPod = pod: {
