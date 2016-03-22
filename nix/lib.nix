@@ -33,6 +33,10 @@ rec {
     args = mkCommand container.args;
   }) // (optionalAttrs (container.postStart.command != null) {
     lifecycle.postStart.exec.command = mkCommand container.postStart.command;
+  }) // (optionalAttrs (container.limits.memory != null) {
+    resources.limits.memory = container.limits.memory;
+  }) // (optionalAttrs (container.limits.cpu != null) {
+    resources.limits.cpu = container.limits.cpu;
   });
 
   mkSpec = resource: {

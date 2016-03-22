@@ -115,6 +115,22 @@ let
           };
         };
       };
+
+      limits = {
+        memory = mkOption {
+          description = "Limit memory for container";
+          type = types.nullOr types.str;
+          example = "128Mi";
+          default = null;
+        };
+
+        cpu = mkOption {
+          description = "Limit cpu for container";
+          type = types.nullOr types.str;
+          example = "500m";
+          default = null;
+        };
+      };
     };
   };
 
