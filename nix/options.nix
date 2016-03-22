@@ -78,6 +78,12 @@ let
               default = null;
             };
 
+            protocol = mkOption {
+              description = "Protocol to use";
+              default = "TCP";
+              type = types.enum ["TCP" "UDP"];
+            };
+
             port = mkOption {
               description = "Port to expose";
               type = types.int;
@@ -268,6 +274,12 @@ let
               description = "Name of the port";
               type = types.nullOr types.str;
               default = null;
+            };
+
+            protocol = mkOption {
+              description = "Protocol to use";
+              default = "TCP";
+              type = types.enum ["TCP" "UDP"];
             };
 
             port = mkOption {

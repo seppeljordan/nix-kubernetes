@@ -12,6 +12,7 @@ rec {
     securityContext = container.security;
     ports = map (port: {
       containerPort = port.port;
+      protocol = port.protocol;
     } // (optionalAttrs (port.name != null) {
       name = port.name;
     })) container.ports;
@@ -102,6 +103,7 @@ rec {
       ports = map (port: {
         port = port.port;
         targetPort = port.targetPort;
+        protocol = port.protocol;
       } // (optionalAttrs (port.name != null) {
         name = port.name;
       })) service.ports;
