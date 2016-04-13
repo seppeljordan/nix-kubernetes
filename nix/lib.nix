@@ -37,7 +37,7 @@ rec {
     resources.limits.memory = container.limits.memory;
   }) // (optionalAttrs (container.limits.cpu != null) {
     resources.limits.cpu = container.limits.cpu;
-  }) // (optionalAttrs (container.livenessProbe.httpGet.path != "") {
+  }) // (optionalAttrs (container.livenessProbe.httpGet.path != null) {
     livenessProbe = container.livenessProbe;
   });
 
