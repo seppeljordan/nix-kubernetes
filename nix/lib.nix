@@ -37,6 +37,8 @@ rec {
     resources.limits.memory = container.limits.memory;
   }) // (optionalAttrs (container.limits.cpu != null) {
     resources.limits.cpu = container.limits.cpu;
+  }) // (optionalAttrs (container.livenessProbe.httpGet.path != "") {
+    livenessProbe = container.livenessProbe;
   });
 
   mkSpec = resource: {
