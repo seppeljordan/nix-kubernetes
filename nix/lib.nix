@@ -171,6 +171,9 @@ rec {
           backend = path.backend;
         }) rule.http.paths;
       }) ing.rules;
+      tls = [{
+        secretName = ing.tls.secretName;
+      }];
     };
   };
 

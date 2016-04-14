@@ -408,6 +408,14 @@ let
         default = name;
       };
 
+      tls = {
+        secretName = mkOption {
+          description = "Name of the tls secret";
+          type = types.nullOr types.str;
+          default = null;
+        };
+      };
+
       rules = mkOption {
         description = "Attribute set of rules";
         type = types.attrsOf types.optionSet;
