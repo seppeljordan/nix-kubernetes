@@ -116,6 +116,22 @@ let
         };
       };
 
+      requests = {
+        memory = mkOption {
+          description = "Limit memory for container";
+          type = types.nullOr types.str;
+          example = "128Mi";
+          default = null;
+        };
+
+        cpu = mkOption {
+          description = "Limit cpu for container";
+          type = types.nullOr types.str;
+          example = "500m";
+          default = null;
+        };
+      };
+
       limits = {
         memory = mkOption {
           description = "Limit memory for container";
@@ -149,13 +165,13 @@ let
 
         initialDelaySeconds = mkOption {
           description = "Initial delay before checking";
-          default = 15;
+          default = 30;
           type = types.int;
         };
 
         timeoutSeconds = mkOption {
           description = "Check timeout";
-          default = 1;
+          default = 5;
           type = types.int;
         };
       };
@@ -267,7 +283,7 @@ let
       selector = mkOption {
         description = "Pod selector";
         type = types.attrsOf types.str;
-        default = { inherit name; };
+        default = { name = config.name; };
       };
 
       replicas = mkOption {
@@ -336,6 +352,12 @@ let
               type = types.int;
               description = "Pod target port";
             };
+
+            nodePort = mkOption {
+              default = null;
+              type = types.nullOr types.int;
+              description = "Port on the node";
+            };
           };
         };
       };
@@ -379,7 +401,7 @@ let
 
       accessModes = mkOption {
         description = "Requested acces modes";
-        type = types.listOf (types.enum ["ReadWriteOnce"]);
+        type = types.listOf (types.enum ["ReadWriteOnce" "ReadWriteMany"]);
         default = ["ReadWriteOnce"];
       };
     };

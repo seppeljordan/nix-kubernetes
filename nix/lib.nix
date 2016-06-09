@@ -5,6 +5,8 @@ with lib;
 rec {
   mkCommand = cmd: if isString cmd then ["sh" "-c" cmd] else cmd;
 
+  filterNull = attrs: (filterAttrs (n: v: v != null) attrs);
+
   mkContainer = container: {
     name = container.name;
     image = container.image;
@@ -27,16 +29,14 @@ rec {
     }) // (optionalAttrs (isString value) {
       inherit value;
     })) container.env;
+    resources.limits = filterNull container.limits;
+    resources.requests = filterNull container.requests;
   } // (optionalAttrs (container.command != null) {
     command = mkCommand container.command;
   }) // (optionalAttrs (container.args != null) {
     args = mkCommand container.args;
   }) // (optionalAttrs (container.postStart.command != null) {
     lifecycle.postStart.exec.command = mkCommand container.postStart.command;
-  }) // (optionalAttrs (container.limits.memory != null) {
-    resources.limits.memory = container.limits.memory;
-  }) // (optionalAttrs (container.limits.cpu != null) {
-    resources.limits.cpu = container.limits.cpu;
   }) // (optionalAttrs (container.livenessProbe.httpGet.path != null) {
     livenessProbe = container.livenessProbe;
   });
@@ -112,7 +112,9 @@ rec {
         protocol = port.protocol;
       } // (optionalAttrs (port.name != null) {
         name = port.name;
-      })) service.ports;
+      } // (optionalAttrs (port.nodePort != null) {
+        nodePort = port.nodePort;
+      }))) service.ports;
       selector = service.selector;
       type = service.type;
     };
@@ -171,10 +173,11 @@ rec {
           backend = path.backend;
         }) rule.http.paths;
       }) ing.rules;
+    } // (optionalAttrs (ing.tls.secretName != null) {
       tls = [{
         secretName = ing.tls.secretName;
       }];
-    };
+    });
   };
 
   mkJob = job: {
