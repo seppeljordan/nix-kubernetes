@@ -8,9 +8,6 @@
     "email": "jakahudoklin@gmail.com",
     "url": "https://x-truder.net"
   },
-  "files": [
-    "lib"
-  ],
   "bin": "bin/nix-kubernetes",
   "main": "lib/index.js",
   "keywords": [
