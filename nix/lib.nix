@@ -98,6 +98,27 @@ rec {
     };
   };
 
+  mkDeployment = deployment: {
+    apiVersion = "extensions/v1beta1";
+    kind = "Deployment";
+    metadata = {
+      name = deployment.name;
+      annotations = {
+        "x-truder.net/dependencies" = concatStringsSep "," deployment.dependencies;
+      } ;
+    };
+    spec = {
+      replicas = deployment.replicas;
+      template = {
+        metadata = {
+          labels = deployment.pod.labels;
+        };
+
+        spec = mkSpec deployment.pod;
+      };
+    };
+  };
+
   mkService = service: {
     apiVersion = "v1";
     kind = "Service";

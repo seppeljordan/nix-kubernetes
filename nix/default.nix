@@ -30,6 +30,8 @@ let
           mapAttrs (name: pod: mkPod pod) config.kubernetes.pods;
         replicationcontrollers =
           mapAttrs (name: ctrl: mkController ctrl) config.kubernetes.controllers;
+        deployments =
+          mapAttrs (name: deployment: mkDeployment deployment) config.kubernetes.deployments;
         services =
           mapAttrs (name: service: mkService service) config.kubernetes.services;
         pvc =

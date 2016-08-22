@@ -254,10 +254,56 @@ let
     } // podTemplate;
   };
 
+  deploymentOptions = { name, config, ... }: {
+    options = {
+      enable = mkOption {
+        description = "Whether to enable deployment";
+        default = false;
+        type = types.bool;
+      };
+
+      name = mkOption {
+        description = "Name of the deployment";
+        type = types.str;
+        default = name;
+      };
+
+      namespace = mkOption {
+        description = "Deployment namespace";
+        type = types.str;
+        default = "default";
+      };
+
+      labels = mkOption {
+        description = "Deployment labels";
+        type = types.attrsOf types.str;
+        default = {};
+      };
+
+      replicas = mkOption {
+        description = "Number of replicas to run";
+        default = 1;
+        type = types.int;
+      };
+
+      dependencies = mkOption {
+        description = "Deployment dependencies";
+        default = [];
+        type = types.listOf types.str;
+      };
+
+      pod = podTemplate;
+    };
+
+    config = {
+      pod.labels.name = mkDefault config.name;
+    };
+  };
+
   controllerOptions = { name, config, ... }: {
     options = {
       enable = mkOption {
-        description = "Whether to enable container";
+        description = "Whether to enable controller";
         default = false;
         type = types.bool;
       };
@@ -509,6 +555,13 @@ in {
       type = types.attrsOf types.optionSet;
       options = [ controllerOptions ];
       description = "Attribute set of controllers";
+      default = {};
+    };
+
+    deployments = mkOption {
+      type = types.attrsOf types.optionSet;
+      options = [ deploymentOptions ];
+      description = "Attribute set of deployments";
       default = {};
     };
 
