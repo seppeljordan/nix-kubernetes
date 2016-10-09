@@ -236,6 +236,12 @@ let
       type = types.enum ["Always" "OnFailure" "Never"];
       default = "Always";
     };
+
+    imagePullSecrets = mkOption {
+      description = "Name of the secret to use for pulling docker image";
+      type = types.nullOr (types.listOf types.str);
+      default = null;
+    };
   };
 
   podOptions = { name, config, ... }: {
