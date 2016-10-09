@@ -239,8 +239,8 @@ let
 
     imagePullSecrets = mkOption {
       description = "Name of the secret to use for pulling docker image";
-      type = types.nullOr (types.listOf types.str);
-      default = null;
+      type = types.listOf types.str;
+      default = [];
     };
   };
 

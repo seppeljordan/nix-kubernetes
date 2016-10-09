@@ -54,9 +54,9 @@ rec {
 
     restartPolicy = resource.restartPolicy;
 
-    imagePullSecrets = if resource.imagePullSecrets then (map (secret: {
+    imagePullSecrets = map (secret: {
       name = secret;
-    }) resource.imagePullSecrets) else [];
+    }) resource.imagePullSecrets;
   };
 
   mkPod = pod: {
