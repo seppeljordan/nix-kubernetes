@@ -454,6 +454,12 @@ let
         default = {};
       };
 
+      annotations = mkOption {
+        description = "Persistent volume claim annotations";
+        type = types.attrsOf types.str;
+        default = {};
+      };
+
       size = mkOption {
         description = "Size of storage requested by persistent volume claim";
         type = types.str;

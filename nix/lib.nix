@@ -151,6 +151,7 @@ rec {
     metadata = {
       name = pvc.name;
       labels = pvc.labels;
+      annotations = pvc.annotations;
     };
     spec = {
       accessModes = pvc.accessModes;
