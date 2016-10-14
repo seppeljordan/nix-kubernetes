@@ -2,7 +2,23 @@
 
 with lib;
 
-rec {
+let
+  mkResource = apiVersion: kind: { inherit apiVersion kind; };
+
+  mkMeta = resource: {
+    metadata.namespace = resource.namespace;
+    metadata.name = resource.name;
+    metadata.labels = resource.labels;
+    metadata.annotations = resource.annotations // {
+      "x-truder.net/dependencies" = concatStringsSep "," resource.dependencies;
+    };
+  };
+
+  mkSpecMeta = resource: {
+    metadata.labels = resource.labels;
+    metadata.annotations = resource.annotations;
+  };
+
   mkCommand = cmd: if isString cmd then ["sh" "-c" cmd] else cmd;
 
   filterNull = attrs: (filterAttrs (n: v: v != null) attrs);
@@ -41,95 +57,47 @@ rec {
     livenessProbe = container.livenessProbe;
   });
 
-  mkSpec = resource: {
-    nodeSelector = resource.nodeSelector;
-
-    containers = mapAttrsToList (name: container:
-      mkContainer container
-    ) resource.containers;
-
-    volumes = mapAttrsToList (name: volume:
-      mkVolume volume
-    ) resource.volumes;
-
-    restartPolicy = resource.restartPolicy;
-
-    imagePullSecrets = map (secret: {
-      name = secret;
-    }) resource.imagePullSecrets;
-  };
-
-  mkPod = pod: {
-    kind = "Pod";
-    apiVersion = "v1";
-
-    metadata = {
-      name = pod.name;
-      labels = pod.labels;
-      annotations = {
-        "x-truder.net/dependencies" = concatStringsSep "," pod.dependencies;
-      } // pod.annotations;
-    };
-
-    spec = mkSpec pod;
-  };
-
   mkVolume = volume: {
     name = volume.name;
     ${volume.type} = volume.options;
   };
 
-  mkController = rc: {
-    apiVersion = "v1";
-    kind = "ReplicationController";
-    metadata = {
-      name = rc.name;
-      labels = rc.labels;
-      annotations = {
-        "x-truder.net/dependencies" = concatStringsSep "," rc.dependencies;
-      } ;
+  mkPodSpec = resource: {
+    spec = {
+      nodeSelector = resource.nodeSelector;
+
+      containers = mapAttrsToList (name: container:
+        mkContainer container
+      ) resource.containers;
+
+      volumes = mapAttrsToList (name: volume:
+        mkVolume volume
+      ) resource.volumes;
+
+      restartPolicy = resource.restartPolicy;
+
+      imagePullSecrets = map (secret: {
+        name = secret;
+      }) resource.imagePullSecrets;
     };
+  };
+
+  mkControllerSpec = rc: {
     spec = {
       replicas = rc.replicas;
       selector = rc.selector;
-      template = {
-        metadata = {
-          labels = rc.pod.labels;
-        };
-
-        spec = mkSpec rc.pod;
-      };
+      template = (mkSpecMeta rc.pod) // (mkPodSpec rc.pod);
     };
   };
 
-  mkDeployment = deployment: {
-    apiVersion = "extensions/v1beta1";
-    kind = "Deployment";
-    metadata = {
-      name = deployment.name;
-      annotations = {
-        "x-truder.net/dependencies" = concatStringsSep "," deployment.dependencies;
-      } ;
-    };
+  mkDeploymentSpec = deployment: {
     spec = {
       replicas = deployment.replicas;
-      template = {
-        metadata = {
-          labels = deployment.pod.labels;
-        };
-
-        spec = mkSpec deployment.pod;
-      };
+      template = (mkSpecMeta deployment.pod) // (mkPodSpec deployment.pod);
     };
   };
 
-  mkService = service: {
-    apiVersion = "v1";
-    kind = "Service";
-    metadata = {
-      name = service.name;
-      labels = service.labels;
-    };
+  mkServiceSpec = service: {
     spec = {
       ports = map (port: {
         port = port.port;
@@ -145,14 +113,7 @@ rec {
     };
   };
 
-  mkPvc = pvc: {
-    apiVersion = "v1";
-    kind = "PersistentVolumeClaim";
-    metadata = {
-      name = pvc.name;
-      labels = pvc.labels;
-      annotations = pvc.annotations;
-    };
+  mkPvcSpec = pvc: {
     spec = {
       accessModes = pvc.accessModes;
       resources = {
@@ -163,21 +124,7 @@ rec {
     };
   };
 
-  mkNamespace = ns: {
-    apiVersion = "v1";
-    kind = "Namespace";
-    metadata = {
-      name = ns.name;
-      labels = ns.labels;
-    };
-  };
-
-  mkSecret = secret: {
-    apiVersion = "v1";
-    kind = "Secret";
-    metadata = {
-      name = secret.name;
-    };
+  mkSecretData = secret: {
     data = mapAttrs (name: secret:
       builtins.readFile (pkgs.stdenv.mkDerivation {
         name = "secret-${name}";
@@ -188,10 +135,7 @@ rec {
     ) secret.secrets;
   };
 
-  mkIngress = ing: {
-    apiVersion = "extensions/v1beta1";
-    kind = "Ingress";
-    metadata.name = ing.name;
+  mkIngressSpec = ing: {
     spec = {
       rules = mapAttrsToList (name: rule: {
         host = rule.host;
@@ -207,20 +151,54 @@ rec {
     });
   };
 
-  mkJob = job: {
-    apiVersion = "extensions/v1beta1";
-    kind = "Job";
-    metadata = {
-      name = job.name;
-    };
-    spec = {
-      template = {
-        metadata = {
-          labels = job.pod.labels;
-        };
+  mkJobSpec = job: {
+    spec.template = (mkSpecMeta job.pod) // (mkPodSpec job.pod);
+  };
 
-        spec = mkSpec job.pod;
-      };
+  mkScheduledJobSpec = scheduledJob: {
+    spec = {
+      suspend = !scheduledJob.enable;
+      schedule = scheduledJob.schedule;
+      jobTemplate = (mkSpecMeta scheduledJob.job) // (mkJobSpec scheduledJob.job);
     };
   };
+in {
+  mkNamespace = namespace:
+    (mkResource "v1" "Namespace") // (mkMeta namespace);
+
+  mkPod = pod:
+    (mkResource "v1" "Pod") // (mkMeta pod) //
+    (mkPodSpec pod);
+
+  mkService = service:
+    (mkResource "v1" "Service") // (mkMeta service) //
+    (mkServiceSpec service);
+
+  mkController = controller:
+    (mkResource "v1" "ReplicationController") // (mkMeta controller) //
+    (mkControllerSpec controller);
+
+  mkDeployment = deployment:
+    (mkResource "extensions/v1beta1" "Deployment") // (mkMeta deployment) //
+    (mkDeploymentSpec deployment);
+
+  mkScheduledJob = scheduledJob:
+    (mkResource "batch/v2alpha1" "ScheduledJob") // (mkMeta scheduledJob) //
+    (mkScheduledJobSpec scheduledJob);
+
+  mkJob = job:
+    (mkResource "extensions/v1beta1" "Job") // (mkMeta job) //
+    (mkJobSpec job);
+
+  mkIngress = ingress:
+    (mkResource "extensions/v1beta1" "Ingress") // (mkMeta ingress) //
+    (mkIngressSpec ingress);
+
+  mkSecret = secret:
+    (mkResource "v1" "Secret") // (mkMeta secret) //
+    (mkSecretData secret);
+
+  mkPvc = pvc:
+    (mkResource "v1" "PersistentVolumeClaim") // (mkMeta pvc) //
+    (mkPvcSpec pvc);
 }

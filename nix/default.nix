@@ -23,16 +23,10 @@ let
   result = mapAttrs (name: deployment: let
     config = (evalDeployment name deployment).config;
   in {
-    # Deployment options
-    options = {
-      namespace = config.kubernetes.namespace.name;
-    };
-
     # Deployment resources
     resources = {
-      namespaces = {
-        ${config.kubernetes.namespace.name} = mkNamespace config.kubernetes.namespace;
-      };
+      namespaces =
+        mapAttrs (name: ns: mkNamespace ns) config.kubernetes.namespaces;
       pods =
         mapAttrs (name: pod: mkPod pod) config.kubernetes.pods;
       replicationcontrollers =
@@ -47,6 +41,8 @@ let
         mapAttrs (name: secret: mkSecret secret) config.kubernetes.secrets;
       ingress =
         mapAttrs (name: ing: mkIngress ing) config.kubernetes.ingress;
+      scheduledjobs =
+        mapAttrs (name: scheduledJob: mkScheduledJob scheduledJob) config.kubernetes.scheduledJobs;
     };
 
     # Keep jobs separated from other resources, as they have to be explicitly

@@ -6,18 +6,52 @@ let
 
   cfg = config.kubernetes;
 
+  metaOptions = {name, config, ...}: {
+    options = {
+      name = mkOption {
+        description = "Name of the resource";
+        type = types.str;
+        default = name;
+      };
+
+      labels = mkOption {
+        description = "Pod labels";
+        type = types.attrsOf types.str;
+        default = {};
+      };
+
+      annotations = mkOption {
+        description = "Pod annotation";
+        type = types.attrsOf types.str;
+        default = {};
+      };
+
+      namespace = mkOption {
+        description = "Resource namespace";
+        type = types.str;
+        default = cfg.defaultNamespace;
+      };
+
+      dependencies = mkOption {
+        description = "Resource dependencies";
+        type = types.listOf types.str;
+        default = [];
+      };
+    };
+  };
+
   containerOptions = { name, config, ... }: {
     options = {
+      name = mkOption {
+        description = "Name of the container";
+        default = name;
+        type = types.str;
+      };
+
       enable = mkOption {
         description = "Whether to enable container";
         default = true;
         type = types.bool;
-      };
-
-      name = mkOption {
-        description = "Name of the pod";
-        type = types.str;
-        default = name;
       };
 
       image = mkOption {
@@ -202,18 +236,6 @@ let
   };
 
   podTemplateOptions = {
-    labels = mkOption {
-      description = "Pod labels";
-      type = types.attrsOf types.str;
-      default = {};
-    };
-
-    annotations = mkOption {
-      description = "Pod annotation";
-      type = types.attrsOf types.str;
-      default = {};
-    };
-
     nodeSelector = mkOption {
       description = "Node selector where to put pod";
       type = types.attrsOf types.str;
@@ -247,20 +269,7 @@ let
   };
 
   podOptions = { name, config, ... }: {
-    options = {
-      name = mkOption {
-        description = "Name of the pod";
-        type = types.str;
-        default = name;
-      };
-
-      dependencies = mkOption {
-        description = "Pod dependencies";
-        default = [];
-        type = types.listOf types.str;
-      };
-    } // podTemplateOptions;
-
+    options = podTemplateOptions;
     config = mkDefault cfg.defaults.pods;
   };
 
@@ -272,37 +281,25 @@ let
         type = types.bool;
       };
 
-      name = mkOption {
-        description = "Name of the deployment";
-        type = types.str;
-        default = name;
-      };
-
-      namespace = mkOption {
-        description = "Deployment namespace";
-        type = types.str;
-        default = "default";
-      };
-
-      labels = mkOption {
-        description = "Deployment labels";
-        type = types.attrsOf types.str;
-        default = {};
-      };
-
       replicas = mkOption {
         description = "Number of replicas to run";
         default = 1;
         type = types.int;
       };
 
-      dependencies = mkOption {
-        description = "Deployment dependencies";
-        default = [];
-        type = types.listOf types.str;
-      };
+      pod = podTemplateOptions // {
+        labels = mkOption {
+          description = "Pod labels";
+          type = types.attrsOf types.str;
+          default = {};
+        };
 
-      pod = podTemplateOptions;
+        annotations = mkOption {
+          description = "Pod annotation";
+          type = types.attrsOf types.str;
+          default = {};
+        };
+      };
     };
 
     config = mkMerge [{
@@ -310,30 +307,12 @@ let
     } (mkDefault cfg.defaults.deployments)];
   };
 
-  controllerOptions = { name, config, ... }: {
+  replicationControllerOptions = { name, config, ... }: {
     options = {
       enable = mkOption {
         description = "Whether to enable controller";
         default = false;
         type = types.bool;
-      };
-
-      name = mkOption {
-        description = "Name of the controller";
-        type = types.str;
-        default = name;
-      };
-
-      namespace = mkOption {
-        description = "Repplication controller namespace";
-        type = types.str;
-        default = "default";
-      };
-
-      labels = mkOption {
-        description = "Controller labels";
-        type = types.attrsOf types.str;
-        default = {};
       };
 
       selector = mkOption {
@@ -348,13 +327,19 @@ let
         type = types.int;
       };
 
-      dependencies = mkOption {
-        description = "Replication controller dependencies";
-        default = [];
-        type = types.listOf types.str;
-      };
+      pod = podTemplateOptions // {
+        labels = mkOption {
+          description = "Pod labels";
+          type = types.attrsOf types.str;
+          default = {};
+        };
 
-      pod = podTemplateOptions;
+        annotations = mkOption {
+          description = "Pod annotation";
+          type = types.attrsOf types.str;
+          default = {};
+        };
+      };
     };
 
     config = mkMerge [{
@@ -364,18 +349,6 @@ let
 
   serviceOptions = { name, config, ... }: {
     options = {
-      name = mkOption {
-        description = "Service name";
-        default = name;
-        type = types.str;
-      };
-
-      labels = mkOption {
-        description = "Service labels";
-        type = types.attrsOf types.str;
-        default = {};
-      };
-
       type = mkOption {
         description = "Service type (ClusterIP, NodePort, LoadBalancer)";
         type = types.enum ["ClusterIP" "NodePort" "LoadBalancer"];
@@ -426,40 +399,10 @@ let
     };
   };
 
-  namespaceOptions = {
-    name = mkOption {
-      description = "Namespace name";
-      default = "default";
-      type = types.str;
-    };
-
-    labels = mkOption {
-      description = "Namespace labels";
-      type = types.attrsOf types.str;
-      default = {};
-    };
-  };
+  namespaceOptions = {};
 
   pvcOptions = { name, config, ... }: {
     options = {
-      name = mkOption {
-        description = "Name of persistent volume claim";
-        type = types.str;
-        default = name;
-      };
-
-      labels = mkOption {
-        description = "Persistent volume claim labels";
-        type = types.attrsOf types.str;
-        default = {};
-      };
-
-      annotations = mkOption {
-        description = "Persistent volume claim annotations";
-        type = types.attrsOf types.str;
-        default = {};
-      };
-
       size = mkOption {
         description = "Size of storage requested by persistent volume claim";
         type = types.str;
@@ -479,12 +422,6 @@ let
 
   secretOptions = { name, config, ... }: {
     options = {
-      name = mkOption {
-        description = "Name of the secret";
-        type = types.str;
-        default = name;
-      };
-
       secrets = mkOption {
         description = "Files to include in secret";
         type = types.attrs;
@@ -494,12 +431,6 @@ let
 
   ingressOptions = { name, config, ... }: {
     options = {
-      name = mkOption {
-        description = "Name of the ingress";
-        type = types.str;
-        default = name;
-      };
-
       tls = {
         secretName = mkOption {
           description = "Name of the tls secret";
@@ -548,80 +479,135 @@ let
     };
   };
 
-  jobOptions = { name, config, ... }: {
-    options = {
-      name = mkOption {
-        description = "Name of the job";
-        type = types.str;
-        default = name;
+  jobOptions = {
+    pod = podTemplateOptions // {
+      labels = mkOption {
+        description = "Pod labels";
+        type = types.attrsOf types.str;
+        default = {};
       };
 
-      pod = podTemplateOptions;
+      annotations = mkOption {
+        description = "Pod annotation";
+        type = types.attrsOf types.str;
+        default = {};
+      };
+    };
+  };
+
+  scheduledJobOptions = { name, config, ... }: {
+    options = {
+      enable = mkOption {
+        description = "Whether to enable scheduled job";
+        default = true;
+        type = types.bool;
+      };
+
+      schedule = mkOption {
+        description = "job schedule";
+        type = types.str;
+      };
+
+      job = jobOptions // {
+        labels = mkOption {
+          description = "Pod labels";
+          type = types.attrsOf types.str;
+          default = {};
+        };
+
+        annotations = mkOption {
+          description = "Pod annotation";
+          type = types.attrsOf types.str;
+          default = {};
+        };
+      };
     };
 
-    config = mkMerge [{
-      pod.restartPolicy = mkDefault "Never";
-    } (mkDefault cfg.defaults.jobs)];
+    config = {
+      job.labels.scheduled-job-name = name;
+      job.pod.labels.scheduled-job-name = name;
+    };
   };
 
 in {
   options.kubernetes = {
-    namespace = namespaceOptions;
+    namespaces = mkOption {
+      type = types.attrsOf types.optionSet;
+      options = [ metaOptions namespaceOptions ];
+      description = "Attribute set of namespaces";
+      default = {};
+    };
 
     pods = mkOption {
       type = types.attrsOf types.optionSet;
-      options = [ podOptions ];
+      options = [ metaOptions podOptions ];
       description = "Attribute set of pods";
       default = {};
     };
 
     controllers = mkOption {
       type = types.attrsOf types.optionSet;
-      options = [ controllerOptions ];
+      options = [ metaOptions replicationControllerOptions ];
       description = "Attribute set of controllers";
       default = {};
     };
 
     deployments = mkOption {
       type = types.attrsOf types.optionSet;
-      options = [ deploymentOptions ];
+      options = [ metaOptions deploymentOptions ];
       description = "Attribute set of deployments";
       default = {};
     };
 
     services = mkOption {
       type = types.attrsOf types.optionSet;
-      options = [ serviceOptions ];
+      options = [ metaOptions serviceOptions ];
       description = "Attribute set of services";
       default = {};
     };
 
     pvc = mkOption {
       type = types.attrsOf types.optionSet;
-      options = [ pvcOptions ];
+      options = [ metaOptions pvcOptions ];
       description = "Attribute set of persistent volume claims";
       default = {};
     };
 
     secrets = mkOption {
       type = types.attrsOf types.optionSet;
-      options = [ secretOptions ];
+      options = [ metaOptions secretOptions ];
       description = "Attribute set of secrets";
       default = {};
     };
 
     ingress = mkOption {
       type = types.attrsOf types.optionSet;
-      options = [ ingressOptions ];
+      options = [ metaOptions ingressOptions ];
       description = "Attribute set of ingress";
       default = {};
     };
 
     jobs = mkOption {
       type = types.attrsOf types.optionSet;
-      options = [ jobOptions ];
+      options = [ metaOptions jobOptions ];
       description = "Attribute set of jobs";
       default = {};
+    };
+
+    scheduledJobs = mkOption {
+      type = types.attrsOf types.optionSet;
+      options = [ metaOptions scheduledJobOptions ];
+      description = "Attribute set of schedule job definitions";
+      default = {};
+    };
+
+    defaultNamespace = mkOption {
+      type = types.str;
+      default =
+        if length (attrNames cfg.namespaces) >= 1
+        then (getAttr (head (attrNames cfg.namespaces)) cfg.namespaces).name
+        else "default";
+      description = "Default namespace to put resources in";
     };
 
     defaults = {
