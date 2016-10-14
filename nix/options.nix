@@ -305,7 +305,9 @@ let
       pod = podTemplateOptions;
     };
 
-    config = cfg.defaults.deployments;
+    config = {
+      pod.labels.name = mkDefault config.name;
+    } // cfg.defaults.deployments;
   };
 
   controllerOptions = { name, config, ... }: {
