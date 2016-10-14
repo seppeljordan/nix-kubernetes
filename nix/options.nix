@@ -305,9 +305,9 @@ let
       pod = podTemplateOptions;
     };
 
-    config = {
+    config = mkMerge [{
       pod.labels.name = mkDefault config.name;
-    } // cfg.defaults.deployments;
+    } cfg.defaults.deployments];
   };
 
   controllerOptions = { name, config, ... }: {
@@ -357,9 +357,9 @@ let
       pod = podTemplateOptions;
     };
 
-    config = {
+    config = mkMerge [{
       pod.labels.name = mkDefault config.name;
-    } // cfg.defaults.replicationcontrollers;
+    } cfg.defaults.replicationcontrollers];
   };
 
   serviceOptions = { name, config, ... }: {
@@ -545,9 +545,9 @@ let
       pod = podTemplateOptions;
     };
 
-    config = {
+    config = mkMerge [{
       pod.restartPolicy = mkDefault "Never";
-    } // cfg.defaults.jobs;
+    } cfg.defaults.jobs];
   };
 
 in {
