@@ -150,6 +150,7 @@ rec {
     kind = "PersistentVolumeClaim";
     metadata = {
       name = pvc.name;
+      labels = pvc.labels;
     };
     spec = {
       accessModes = pvc.accessModes;
