@@ -657,7 +657,7 @@ in {
 
       pvc = mkOption {
         description = "Default config applied to persistent volume claims";
-        type = types.atrrs;
+        type = types.attrs;
         default = {};
       };
     };
