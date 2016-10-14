@@ -261,7 +261,7 @@ let
       };
     } // podTemplateOptions;
 
-    config = cfg.defaults.pods;
+    config = mkDefault cfg.defaults.pods;
   };
 
   deploymentOptions = { name, config, ... }: {
@@ -307,7 +307,7 @@ let
 
     config = mkMerge [{
       pod.labels.name = mkDefault config.name;
-    } cfg.defaults.deployments];
+    } (mkDefault cfg.defaults.deployments)];
   };
 
   controllerOptions = { name, config, ... }: {
@@ -359,7 +359,7 @@ let
 
     config = mkMerge [{
       pod.labels.name = mkDefault config.name;
-    } cfg.defaults.replicationcontrollers];
+    } (mkDefault cfg.defaults.replicationcontrollers)];
   };
 
   serviceOptions = { name, config, ... }: {
@@ -474,7 +474,7 @@ let
       };
     };
 
-    config = cfg.defaults.pvc;
+    config = mkDefault cfg.defaults.pvc;
   };
 
   secretOptions = { name, config, ... }: {
@@ -561,7 +561,7 @@ let
 
     config = mkMerge [{
       pod.restartPolicy = mkDefault "Never";
-    } cfg.defaults.jobs];
+    } (mkDefault cfg.defaults.jobs)];
   };
 
 in {
