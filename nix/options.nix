@@ -448,6 +448,12 @@ let
         default = name;
       };
 
+      labels = mkOption {
+        description = "Persistent volume claim labels";
+        type = types.attrsOf types.str;
+        default = {};
+      };
+
       size = mkOption {
         description = "Size of storage requested by persistent volume claim";
         type = types.str;
@@ -461,6 +467,8 @@ let
         default = ["ReadWriteOnce"];
       };
     };
+
+    config = cfg.defaults.pvc;
   };
 
   secretOptions = { name, config, ... }: {
@@ -612,19 +620,19 @@ in {
 
     defaults = {
       allPods = mkOption {
-        description = "Default options applied to all pods";
+        description = "Default config applied to all pods";
         type = types.attrs;
         default = {};
       };
 
       pods = mkOption {
-        description = "Default options applied to pods";
+        description = "Default config applied to pods";
         type = types.attrs;
         default = cfg.defaults.allPods;
       };
 
       jobs = mkOption {
-        description = "Default options applied to jobs";
+        description = "Default config applied to jobs";
         type = types.attrs;
         default = {
           pod = cfg.defaults.allPods;
@@ -632,7 +640,7 @@ in {
       };
 
       replicationcontrollers = mkOption {
-        description = "Default options applied to replication controllers";
+        description = "Default config applied to replication controllers";
         type = types.attrs;
         default = {
           pod = cfg.defaults.allPods;
@@ -640,11 +648,17 @@ in {
       };
 
       deployments = mkOption {
-        description = "Default options applied to deployments";
+        description = "Default config applied to deployments";
         type = types.attrs;
         default = {
           pod = cfg.defaults.allPods;
         };
+      };
+
+      pvc = mkOption {
+        description = "Default config applied to persistent volume claims";
+        type = types.atrrs;
+        default = {};
       };
     };
   };
