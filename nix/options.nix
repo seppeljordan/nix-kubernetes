@@ -4,6 +4,8 @@ with lib;
 
 let
 
+  cfg = config.kubernetes;
+
   containerOptions = { name, config, ... }: {
     options = {
       enable = mkOption {
@@ -199,7 +201,7 @@ let
     };
   };
 
-  podTemplate = {
+  podTemplateOptions = {
     labels = mkOption {
       description = "Pod labels";
       type = types.attrsOf types.str;
@@ -257,7 +259,9 @@ let
         default = [];
         type = types.listOf types.str;
       };
-    } // podTemplate;
+    } // podTemplateOptions;
+
+    config = cfg.defaults.pods;
   };
 
   deploymentOptions = { name, config, ... }: {
@@ -298,12 +302,10 @@ let
         type = types.listOf types.str;
       };
 
-      pod = podTemplate;
+      pod = podTemplateOptions;
     };
 
-    config = {
-      pod.labels.name = mkDefault config.name;
-    };
+    config = cfg.defaults.deployments;
   };
 
   controllerOptions = { name, config, ... }: {
@@ -350,12 +352,12 @@ let
         type = types.listOf types.str;
       };
 
-      pod = podTemplate;
+      pod = podTemplateOptions;
     };
 
     config = {
       pod.labels.name = mkDefault config.name;
-    };
+    } // cfg.defaults.replicationcontrollers;
   };
 
   serviceOptions = { name, config, ... }: {
@@ -538,12 +540,12 @@ let
         default = name;
       };
 
-      pod = podTemplate;
+      pod = podTemplateOptions;
     };
 
     config = {
       pod.restartPolicy = mkDefault "Never";
-    };
+    } // cfg.defaults.jobs;
   };
 
 in {
@@ -604,6 +606,44 @@ in {
       options = [ jobOptions ];
       description = "Attribute set of jobs";
       default = {};
+    };
+
+    defaults = {
+      allPods = mkOption {
+        description = "Default options applied to all pods";
+        type = types.attrs;
+        default = {};
+      };
+
+      pods = mkOption {
+        description = "Default options applied to pods";
+        type = types.attrs;
+        default = cfg.defaults.allPods;
+      };
+
+      jobs = mkOption {
+        description = "Default options applied to jobs";
+        type = types.attrs;
+        default = {
+          pod = cfg.defaults.allPods;
+        };
+      };
+
+      replicationcontrollers = mkOption {
+        description = "Default options applied to replication controllers";
+        type = types.attrs;
+        default = {
+          pod = cfg.defaults.allPods;
+        };
+      };
+
+      deployments = mkOption {
+        description = "Default options applied to deployments";
+        type = types.attrs;
+        default = {
+          pod = cfg.defaults.allPods;
+        };
+      };
     };
   };
 }
