@@ -307,6 +307,34 @@ let
     } (mkDefault cfg.defaults.deployments)];
   };
 
+  daemonSetOptions = { name, config, ... }: {
+    options = {
+      enable = mkOption {
+        description = "Whether to enable daemon set";
+        default = false;
+        type = types.bool;
+      };
+
+      pod = podTemplateOptions // {
+        labels = mkOption {
+          description = "Pod labels";
+          type = types.attrsOf types.str;
+          default = {};
+        };
+
+        annotations = mkOption {
+          description = "Pod annotation";
+          type = types.attrsOf types.str;
+          default = {};
+        };
+      };
+    };
+
+    config = mkMerge [{
+      pod.labels.name = mkDefault config.name;
+    } (mkDefault cfg.defaults.daemons)];
+  };
+
   replicationControllerOptions = { name, config, ... }: {
     options = {
       enable = mkOption {
@@ -529,6 +557,60 @@ let
     };
   };
 
+  networkPolicyOptions = { name, config, ... }: {
+    options = {
+      podSelector.matchLabels = mkOption {
+        description = "Match pod with labels";
+        type = types.attrs;
+        default = {};
+      };
+
+      ingress = mkOption {
+        type = types.attrsOf types.optionSet;
+        description = "Ingress rules";
+        options = [({ name, config, ... }:{
+          options = {
+            namespaceSelector.matchLabels = mkOption {
+              description = "Matches all pods in all namespaces selected by this label selector";
+              type = types.nullOr types.attrs;
+              default = null;
+            };
+
+            podSelector.matchLabels = mkOption {
+              description = "Label selector which selects pods in this namespace";
+              type = types.nullOr types.attrs;
+              default = {
+                name = name;
+              };
+            };
+
+            ports = mkOption {
+              description = "List of ports which should be made accessible on the pods selected for this rule.";
+              type = types.listOf types.attrs;
+              default = [];
+              options = {
+                protocol = mkOption {
+                  description = "The protocol (TCP or UDP) which traffic must match";
+                  type = types.str;
+                  default = "TCP";
+                };
+
+                port = mkOption {
+                  description = ''
+                    If specified, the port on the given protocol. If this field is not provided,
+                    this matches all port names and numbers.
+                  '';
+                  type = types.nullOr types.int;
+                  default = null;
+                };
+              };
+            };
+          };
+        })];
+      };
+    };
+  };
+
 in {
   options.kubernetes = {
     namespaces = mkOption {
@@ -556,6 +638,13 @@ in {
       type = types.attrsOf types.optionSet;
       options = [ metaOptions deploymentOptions ];
       description = "Attribute set of deployments";
+      default = {};
+    };
+
+    daemonsets = mkOption {
+      type = types.attrsOf types.optionSet;
+      options = [ metaOptions daemonSetOptions ];
+      description = "Attribute set of daemonsets";
       default = {};
     };
 
@@ -601,6 +690,13 @@ in {
       default = {};
     };
 
+    networkPolicies = mkOption {
+      type = types.attrsOf types.optionSet;
+      options = [ metaOptions networkPolicyOptions ];
+      description = "Attribute set of network policy definitions";
+      default = {};
+    };
+
     defaultNamespace = mkOption {
       type = types.str;
       default =
@@ -641,6 +737,14 @@ in {
 
       deployments = mkOption {
         description = "Default config applied to deployments";
+        type = types.attrs;
+        default = {
+          pod = cfg.defaults.allPods;
+        };
+      };
+
+      daemons = mkOption {
+        description = "Default config applied to daemons";
         type = types.attrs;
         default = {
           pod = cfg.defaults.allPods;

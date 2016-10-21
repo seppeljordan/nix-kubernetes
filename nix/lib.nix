@@ -97,6 +97,12 @@ let
     };
   };
 
+  mkDaemonSetSpec = daemon: {
+    spec = {
+      template = (mkSpecMeta daemon.pod) // (mkPodSpec daemon.pod);
+    };
+  };
+
   mkServiceSpec = service: {
     spec = {
       ports = map (port: {
@@ -162,6 +168,19 @@ let
       jobTemplate = (mkSpecMeta scheduledJob.job) // (mkJobSpec scheduledJob.job);
     };
   };
+
+  mkNetworkPolicy = policy: {
+    spec = {
+      podSelector.matchLabels = policy.podSelector.matchLabels;
+      ingress = mapAttrsToList (name: rule: {
+        from = mkMerge ((optionals rule.namespaceSelector [{
+          namespaceSelector.matchLabels = rule.namespaceSelector;
+        }]) (optionals rule.podSelector [{
+          podSelector.matchLabels = rule.podSelector.matchLabels;
+        }]));
+      }) policy.ingress;
+    };
+  };
 in {
   mkNamespace = namespace:
     (mkResource "v1" "Namespace") // (mkMeta namespace);
@@ -181,6 +200,10 @@ in {
   mkDeployment = deployment:
     (mkResource "extensions/v1beta1" "Deployment") // (mkMeta deployment) //
     (mkDeploymentSpec deployment);
+
+  mkDaemonSet = daemon:
+    (mkResource "extensions/v1beta1" "DaemonSet") // (mkMeta daemon) //
+    (mkDaemonSetSpec daemon);
 
   mkScheduledJob = scheduledJob:
     (mkResource "batch/v2alpha1" "ScheduledJob") // (mkMeta scheduledJob) //

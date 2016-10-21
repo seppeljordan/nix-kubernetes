@@ -33,6 +33,8 @@ let
         mapAttrs (name: ctrl: mkController ctrl) config.kubernetes.controllers;
       deployments =
         mapAttrs (name: deployment: mkDeployment deployment) config.kubernetes.deployments;
+      daemonsets =
+        mapAttrs (name: daemon: mkDaemonSet daemon) config.kubernetes.daemonsets;
       services =
         mapAttrs (name: service: mkService service) config.kubernetes.services;
       pvc =
