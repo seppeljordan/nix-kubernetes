@@ -139,6 +139,7 @@ let
         '';
       })
     ) secret.secrets;
+    type = secret.type;
   };
 
   mkIngressSpec = ing: {

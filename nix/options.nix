@@ -454,6 +454,12 @@ let
         description = "Files to include in secret";
         type = types.attrs;
       };
+
+      type = mkOption {
+        description = "Files to include in secret";
+        type = types.enum ["Opaque" "kubernetes.io/dockerconfigjson"];
+        default = "Opaque";
+      };
     };
   };
 
