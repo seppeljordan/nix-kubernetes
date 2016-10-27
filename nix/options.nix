@@ -149,6 +149,12 @@ let
             description = "Mount path of volume";
             type = types.path;
           };
+
+          subPath = mkOption {
+            description = "Sub path to mount";
+            type = types.nullOr types.str;
+            default = null;
+          };
         };
       };
 

@@ -37,6 +37,7 @@ let
     volumeMounts = map (volume: {
       name = volume.name;
       mountPath = volume.mountPath;
+      subPath = volume.subPath;
     }) container.mounts;
     env = mapAttrsToList (name: value: {
       inherit name;
