@@ -160,6 +160,7 @@ let
 
   mkJobSpec = job: {
     spec.template = (mkSpecMeta job.pod) // (mkPodSpec job.pod);
+    spec.activeDeadlineSeconds = job.activeDeadlineSeconds; 
   };
 
   mkScheduledJobSpec = scheduledJob: {

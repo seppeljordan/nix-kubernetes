@@ -527,6 +527,12 @@ let
         default = {};
       };
     };
+
+    activeDeadlineSeconds = mkOption {
+      description = "Job restart deadline";
+      default = null;
+      type = types.nullOr types.int;
+    };
   };
 
   scheduledJobOptions = { name, config, ... }: {
