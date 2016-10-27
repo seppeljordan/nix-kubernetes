@@ -168,6 +168,7 @@ let
       suspend = !scheduledJob.enable;
       schedule = scheduledJob.schedule;
       jobTemplate = (mkSpecMeta scheduledJob.job) // (mkJobSpec scheduledJob.job);
+      concurrencyPolicy = scheduledJob.concurrencyPolicy;
     };
   };
 

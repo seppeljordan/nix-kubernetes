@@ -548,6 +548,12 @@ let
         type = types.str;
       };
 
+      concurrencyPolicy = mkOption {
+        description = "How to treat concurrent executions of job";
+        default = "Forbid";
+        type = types.enum ["Forbid" "Allow" "Replace"];
+      };
+
       job = jobOptions // {
         labels = mkOption {
           description = "Pod labels";

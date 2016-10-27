@@ -2,6 +2,7 @@
   scheduledJobs = {
     kubernetes.scheduledJobs.everyminute = {
       schedule = "0/1 * * * ?";
+      concurrencyPolicy = "Forbid";
       job.pod.restartPolicy = "OnFailure";
       job.pod.containers.hello = {
         image = "busybox";
