@@ -1,11 +1,18 @@
-{ pkgs ? import <nixpkgs> {}, configuration ? ./test.nix }:
+{ pkgs ? import <nixpkgs> {}, configuration ? ./test.nix, args ? null, ... }:
 
 with pkgs.lib;
 
 with import ./lib.nix { inherit (pkgs) lib; inherit pkgs; };
 
 let
-  deployments = import configuration;
+  argsContent =
+    if args != null
+    then builtins.fromJSON (builtins.readFile args)
+    else {};
+
+  deployments = let
+    cfg = import configuration;
+  in if isFunction cfg then cfg argsContent else cfg;
 
   # Evaluates deployment
   evalDeployment = name: deployment: let
@@ -14,6 +21,7 @@ let
     modules = [./options.nix deployment];
     args = {
       inherit pkgs;
+      args = argsContent;
       deployments = mapAttrs (
         name: deployment: evalDeployment name deployment
       ) otherDeployments;
