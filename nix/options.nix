@@ -445,7 +445,7 @@ let
 
       clusterIP = mkOption {
         default = null;
-        type = types.either [null "None"];
+        type = types.nullOr types.str;
         description = "Cluster IP to set";
       };
     };
