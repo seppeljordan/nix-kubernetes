@@ -433,12 +433,6 @@ let
               type = types.nullOr types.int;
               description = "Port on the node";
             };
-
-            clusterIP = mkOption {
-              default = null;
-              type = types.either [null "None"];
-              description = "Cluster IP to set";
-            };
           };
         };
       };
@@ -447,6 +441,12 @@ let
         description = "Service selector";
         type = types.attrsOf types.str;
         default = { inherit name; };
+      };
+
+      clusterIP = mkOption {
+        default = null;
+        type = types.either [null "None"];
+        description = "Cluster IP to set";
       };
     };
   };
