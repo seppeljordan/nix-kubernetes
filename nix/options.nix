@@ -77,6 +77,18 @@ let
         type = types.attrsOf types.unspecified;
       };
 
+      tty = mkOption {
+        description = "Whether to enable tty";
+        default = false;
+        type = types.bool;
+      };
+
+      stdin = mkOption {
+        description = "Whether to enable stdin";
+        default = false;
+        type = types.bool;
+      };
+
       postStart = {
         command = mkOption {
           description = "Command to execute in post start phase";

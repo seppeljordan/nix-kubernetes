@@ -46,6 +46,8 @@ let
     }) // (optionalAttrs (isString value) {
       inherit value;
     })) container.env;
+    tty = container.tty;
+    stdin = container.stdin;
     resources.limits = filterNull container.limits;
     resources.requests = filterNull container.requests;
   } // (optionalAttrs (container.command != null) {
@@ -161,7 +163,7 @@ let
 
   mkJobSpec = job: {
     spec.template = (mkSpecMeta job.pod) // (mkPodSpec job.pod);
-    spec.activeDeadlineSeconds = job.activeDeadlineSeconds; 
+    spec.activeDeadlineSeconds = job.activeDeadlineSeconds;
   };
 
   mkScheduledJobSpec = scheduledJob: {
