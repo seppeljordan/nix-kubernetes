@@ -433,6 +433,12 @@ let
               type = types.nullOr types.int;
               description = "Port on the node";
             };
+
+            clusterIP = mkOption {
+              default = null;
+              type = types.either [null "None"];
+              description = "Cluster IP to set";
+            }
           };
         };
       };

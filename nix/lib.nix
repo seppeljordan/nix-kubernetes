@@ -119,7 +119,9 @@ let
       }))) service.ports;
       selector = service.selector;
       type = service.type;
-    };
+    } // (optionalAttrs (service.clusterIP != null) {
+      clusterIP = service.clusterIP;
+    });
   };
 
   mkPvcSpec = pvc: {
