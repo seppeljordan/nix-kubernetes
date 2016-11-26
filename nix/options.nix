@@ -438,7 +438,7 @@ let
               default = null;
               type = types.either [null "None"];
               description = "Cluster IP to set";
-            }
+            };
           };
         };
       };
