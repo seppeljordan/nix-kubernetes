@@ -89,6 +89,12 @@ let
         type = types.bool;
       };
 
+      workdir = mkOption {
+        description = "Container working directory";
+        default = null;
+        type = types.nullOr types.path;
+      };
+
       postStart = {
         command = mkOption {
           description = "Command to execute in post start phase";

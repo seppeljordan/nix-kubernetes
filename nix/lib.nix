@@ -58,6 +58,8 @@ let
     lifecycle.postStart.exec.command = mkCommand container.postStart.command;
   }) // (optionalAttrs (container.livenessProbe.httpGet.path != null) {
     livenessProbe = container.livenessProbe;
+  }) // (optionalAttrs (container.workdir != null) {
+    workingDir = container.workdir;
   });
 
   mkVolume = volume: {
