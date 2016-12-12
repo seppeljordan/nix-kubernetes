@@ -709,6 +709,12 @@ let
             description = "Name of the entity binding applies";
             default = types.str;
           };
+
+          namespace = mkOption {
+            description = "Namespace of the subject";
+            default = null;
+            type = types.nullOr types.str;
+          };
         }];
         default = [];
       };
