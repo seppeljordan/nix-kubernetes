@@ -53,6 +53,14 @@ let
         mapAttrs (name: ing: mkIngress ing) config.kubernetes.ingress;
       scheduledjobs =
         mapAttrs (name: scheduledJob: mkScheduledJob scheduledJob) config.kubernetes.scheduledJobs;
+      roles =
+        mapAttrs (name: role: mkRole role) config.kubernetes.roles;
+      clusterroles =
+        mapAttrs (name: role: mkClusterRole role) config.kubernetes.clusterRoles;
+      rolebindings =
+        mapAttrs (name: role: mkRoleBinding role) config.kubernetes.roleBindings;
+      clusterrolebindings =
+        mapAttrs (name: role: mkClusterRoleBinding role) config.kubernetes.clusterRoleBindings;
     };
 
     # Keep jobs separated from other resources, as they have to be explicitly

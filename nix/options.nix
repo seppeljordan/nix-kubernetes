@@ -659,6 +659,80 @@ let
     };
   };
 
+  roleOptions = { name, config, ... }: {
+    options = {
+      rules = mkOption {
+        type = types.listOf types.optionSet;
+        options = [{
+          apiGroups = mkOption {
+            description = "Matches list of API groups";
+            type = types.listOf types.str;
+            default = ["*"];
+          };
+
+          resources = mkOption {
+            description = "Matches list of resources that role allows";
+            type = types.listOf types.str;
+            default = ["*"];
+          };
+
+          verbs = mkOption {
+            description = "Matches list of verbs that role allows";
+            type = types.listOf types.str;
+            default = ["*"];
+          };
+
+          nonResourceURLs = mkOption {
+            description = "matches the non-resource request paths (like
+            /version and /apis)";
+            type = types.listOf types.str;
+            default = [];
+          };
+        }];
+        default = [];
+      };
+    };
+  };
+
+  roleBindingOptions = { name, config, ... }: {
+    options = {
+      subjects = mkOption {
+        type = types.listOf types.optionSet;
+        options = [{
+          kind = mkOption {
+            description = "To what kind of entities binding applies";
+            default = "User";
+            type = types.enum ["User" "Group" "ServiceAccount"];
+          };
+
+          name = mkOption {
+            description = "Name of the entity binding applies";
+            default = types.str;
+          };
+        }];
+        default = [];
+      };
+
+      roleRef = {
+        kind = mkOption {
+          description = "Kind of the role binding references";
+          default = "Role";
+          type = types.enum ["Role" "ClusterRole"];
+        };
+
+        name = mkOption {
+          description = "Name of the referenced role";
+          type = types.str;
+        };
+      };
+    };
+  };
+
+  serviceAccountOptions = { name, config, ... }: {
+    options = {
+    };
+  };
+
 in {
   options.kubernetes = {
     namespaces = mkOption {
@@ -742,6 +816,41 @@ in {
       type = types.attrsOf types.optionSet;
       options = [ metaOptions networkPolicyOptions ];
       description = "Attribute set of network policy definitions";
+      default = {};
+    };
+
+    roles = mkOption {
+      type = types.attrsOf types.optionSet;
+      options = [ metaOptions roleOptions ];
+      description = "Attribute set of role definitions";
+      default = {};
+    };
+
+    clusterRoles = mkOption {
+      type = types.attrsOf types.optionSet;
+      options = [ metaOptions roleOptions ];
+      description = "Attribute set of cluster role definitions";
+      default = {};
+    };
+
+    roleBindings = mkOption {
+      type = types.attrsOf types.optionSet;
+      options = [ metaOptions roleBindingOptions ];
+      description = "Attribute set of role binding definitions";
+      default = {};
+    };
+
+    clusterRoleBindings = mkOption {
+      type = types.attrsOf types.optionSet;
+      options = [ metaOptions roleBindingOptions ];
+      description = "Attribute set of cluster role binding definitions";
+      default = {};
+    };
+
+    serviceAccounts = mkOption {
+      type = types.attrsOf types.optionSet;
+      options = [ metaOptions serviceAccountOptions ];
+      description = "Attribute set of service account definitions";
       default = {};
     };
 

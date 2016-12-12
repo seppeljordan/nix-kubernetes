@@ -191,6 +191,20 @@ let
       }) policy.ingress;
     };
   };
+
+  mkRoleSpec = role: {
+    rules = map (rule: filterAttrs (n: v: n != "_module") rule) role.rules;
+  };
+
+  mkRoleBindingSpec = binding: {
+    subjects = map (binding: filterAttrs (n: v: n != "_module") binding) binding.subjects;
+    roleRef = binding.roleRef // {
+      apiVersion = "rbac.authorization.k8s.io/v1alpha1";
+    };
+  };
+
+  mkServiceAccountSpec = serviceAccount: {
+  };
 in {
   mkNamespace = namespace:
     (mkResource "v1" "Namespace") // (mkMeta namespace);
@@ -234,4 +248,24 @@ in {
   mkPvc = pvc:
     (mkResource "v1" "PersistentVolumeClaim") // (mkMeta pvc) //
     (mkPvcSpec pvc);
+
+  mkRole = role:
+     (mkResource "rbac.authorization.k8s.io/v1alpha1" "Role") // (mkMeta role) //
+     (mkRoleSpec role);
+
+  mkClusterRole = role:
+     (mkResource "rbac.authorization.k8s.io/v1alpha1" "ClusterRole") // (mkMeta role) //
+     (mkRoleSpec role);
+
+  mkRoleBinding = role:
+     (mkResource "rbac.authorization.k8s.io/v1alpha1" "RoleBinding") // (mkMeta role) //
+     (mkRoleBindingSpec role);
+
+  mkClusterRoleBinding = role:
+    (mkResource "rbac.authorization.k8s.io/v1alpha1" "ClusterRoleBinding") // (mkMeta role) //
+    (mkRoleBindingSpec role);
+
+  mkServiceAccount = serviceAccount:
+    (mkResource "v1" "ServiceAccount") // (mkMeta serviceAccount) //
+    (mkServiceAccountSpec serviceAccount);
 }
