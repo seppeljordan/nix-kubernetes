@@ -3,6 +3,14 @@
 with lib;
 
 let
+  flattenAttrs = attrs: listToAttrs (
+    collect (val: val ? "name" && val ? "value") (
+      mapAttrsRecursive (path: value:
+        nameValuePair (concatStringsSep "." path) value
+      ) attrs)
+  );
+
+
   mkResource = apiVersion: kind: { inherit apiVersion kind; };
 
   mkMeta = resource: {
@@ -205,6 +213,10 @@ let
 
   mkServiceAccountSpec = serviceAccount: {
   };
+
+  mkConfigMapSpec = configMap: {
+    data = flattenAttrs configMap.data;
+  };
 in {
   mkNamespace = namespace:
     (mkResource "v1" "Namespace") // (mkMeta namespace);
@@ -268,4 +280,8 @@ in {
   mkServiceAccount = serviceAccount:
     (mkResource "v1" "ServiceAccount") // (mkMeta serviceAccount) //
     (mkServiceAccountSpec serviceAccount);
+
+  mkConfigMap = configMap:
+    (mkResource "v1" "ConfigMap") // (mkMeta configMap) //
+    (mkConfigMapSpec configMap);
 }

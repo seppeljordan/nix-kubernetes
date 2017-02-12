@@ -739,6 +739,16 @@ let
     };
   };
 
+  configMapOptions = { name, config, ... }: {
+    options = {
+      data = mkOption {
+        description = "Configmap data";
+        type = types.attrs;
+        default = {};
+      };
+    };
+  };
+
 in {
   options.kubernetes = {
     namespaces = mkOption {
@@ -857,6 +867,13 @@ in {
       type = types.attrsOf types.optionSet;
       options = [ metaOptions serviceAccountOptions ];
       description = "Attribute set of service account definitions";
+      default = {};
+    };
+
+    configMaps = mkOption {
+      type = types.attrsOf types.optionSet;
+      options = [ metaOptions configMapOptions ];
+      description = "Attribute set of config map definitions";
       default = {};
     };
 

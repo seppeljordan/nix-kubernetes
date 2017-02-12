@@ -63,6 +63,8 @@ let
         mapAttrs (name: role: mkClusterRoleBinding role) config.kubernetes.clusterRoleBindings;
       serviceaccounts =
         mapAttrs (name: serviceAccount: mkServiceAccount serviceAccount) config.kubernetes.serviceAccounts;
+      configmaps =
+        mapAttrs (name: configMap: mkConfigMap configMap) config.kubernetes.configMaps;
     };
 
     # Keep jobs separated from other resources, as they have to be explicitly
