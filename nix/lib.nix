@@ -131,6 +131,8 @@ let
       type = service.type;
     } // (optionalAttrs (service.clusterIP != null) {
       clusterIP = service.clusterIP;
+    }) // (optionalAttrs (service.externalIPs != null) {
+      externalIPs = service.externalIPs;
     });
   };
 

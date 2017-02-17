@@ -454,6 +454,12 @@ let
         type = types.nullOr types.str;
         description = "Cluster IP to set";
       };
+
+      externalIPs = mkOption {
+        default = null;
+        type = types.nullOr (types.listOf types.str);
+        description = "List of external IPs";
+      };
     };
   };
 
