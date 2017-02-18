@@ -66,6 +66,8 @@ let
     lifecycle.postStart.exec.command = mkCommand container.postStart.command;
   }) // (optionalAttrs (container.livenessProbe.httpGet.path != null) {
     livenessProbe = container.livenessProbe;
+  }) // (optionalAttrs (container.readinessProbe.httpGet.path != null) {
+    readinessProbe = container.readinessProbe;
   }) // (optionalAttrs (container.workdir != null) {
     workingDir = container.workdir;
   });
