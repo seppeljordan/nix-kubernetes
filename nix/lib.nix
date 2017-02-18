@@ -171,9 +171,10 @@ let
         }) rule.http.paths;
       }) ing.rules;
     } // (optionalAttrs (ing.tls.secretName != null) {
-      tls = [{
-        secretName = ing.tls.secretName;
-      }];
+      tls = [
+        ({secretName = ing.tls.secretName;}
+          // (optionalAttrs (ing.tls.hosts != null) {hosts = ing.tls.hosts;}))
+      ];
     });
   };
 

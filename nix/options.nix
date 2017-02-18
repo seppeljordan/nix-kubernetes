@@ -535,6 +535,11 @@ let
           type = types.nullOr types.str;
           default = null;
         };
+        hosts = mkOption {
+          description = "List of domains and sub-domains covered by certificate";
+          type = types.nullOr (types.listOf types.str);
+          default = null;
+        };
       };
 
       rules = mkOption {
