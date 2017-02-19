@@ -235,6 +235,34 @@ let
           type = types.int;
         };
       };
+
+      readinessProbe = {
+        httpGet = {
+          path = mkOption {
+            description = "Http check path";
+            type = types.nullOr types.str;
+            default = null;
+          };
+
+          port = mkOption {
+            description = "Http check port";
+            type = types.int;
+            default = 80;
+          };
+        };
+
+        initialDelaySeconds = mkOption {
+          description = "Initial delay before checking";
+          default = 30;
+          type = types.int;
+        };
+
+        timeoutSeconds = mkOption {
+          description = "Check timeout";
+          default = 5;
+          type = types.int;
+        };
+      };
     };
   };
 
@@ -454,6 +482,12 @@ let
         type = types.nullOr types.str;
         description = "Cluster IP to set";
       };
+
+      externalIPs = mkOption {
+        default = null;
+        type = types.nullOr (types.listOf types.str);
+        description = "List of external IPs";
+      };
     };
   };
 
@@ -499,6 +533,11 @@ let
         secretName = mkOption {
           description = "Name of the tls secret";
           type = types.nullOr types.str;
+          default = null;
+        };
+        hosts = mkOption {
+          description = "List of domains and sub-domains covered by certificate";
+          type = types.nullOr (types.listOf types.str);
           default = null;
         };
       };

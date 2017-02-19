@@ -66,6 +66,8 @@ let
     lifecycle.postStart.exec.command = mkCommand container.postStart.command;
   }) // (optionalAttrs (container.livenessProbe.httpGet.path != null) {
     livenessProbe = container.livenessProbe;
+  }) // (optionalAttrs (container.readinessProbe.httpGet.path != null) {
+    readinessProbe = container.readinessProbe;
   }) // (optionalAttrs (container.workdir != null) {
     workingDir = container.workdir;
   });
@@ -131,6 +133,8 @@ let
       type = service.type;
     } // (optionalAttrs (service.clusterIP != null) {
       clusterIP = service.clusterIP;
+    }) // (optionalAttrs (service.externalIPs != null) {
+      externalIPs = service.externalIPs;
     });
   };
 
@@ -167,9 +171,10 @@ let
         }) rule.http.paths;
       }) ing.rules;
     } // (optionalAttrs (ing.tls.secretName != null) {
-      tls = [{
-        secretName = ing.tls.secretName;
-      }];
+      tls = [
+        ({secretName = ing.tls.secretName;}
+          // (optionalAttrs (ing.tls.hosts != null) {hosts = ing.tls.hosts;}))
+      ];
     });
   };
 
