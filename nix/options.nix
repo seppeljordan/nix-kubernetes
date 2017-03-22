@@ -72,7 +72,12 @@ let
       };
 
       env = mkOption {
-        description = "Environment variables to set";
+        description = ''
+          Environment variables to set. This can be any value that serializes to
+          string. If value starts with "secret:<name>:<key>" or
+          "configMap:<name>:<key>" if references respected secret or config map
+          values.
+        '';
         default = {};
         type = types.attrsOf types.unspecified;
       };

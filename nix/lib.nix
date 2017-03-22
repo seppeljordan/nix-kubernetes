@@ -49,10 +49,20 @@ let
     }) container.mounts;
     env = mapAttrsToList (name: value: {
       inherit name;
-    } // (optionalAttrs (isAttrs value) {
+    } // (if (isAttrs value) then {
       valueFrom = value;
-    }) // (optionalAttrs (isString value) {
-      inherit value;
+    } else if (isString value && hasPrefix "secret:" value) then {
+      valueFrom.secretKeyRef = {
+        name = head (splitString ":" (removePrefix "secret:" value));
+        key = head (tail (splitString ":" (removePrefix "secret:" value)));
+      };
+    } else if (isString value && hasPrefix "configMap:" value) then {
+       valueFrom.configMapKeyRef = {
+        name = head (splitString ":" (removePrefix "configMap:" value));
+        key = head (tail (splitString ":" (removePrefix "configMap:" value)));
+      };
+    } else {
+      value = toString value;
     })) container.env;
     tty = container.tty;
     stdin = container.stdin;
