@@ -12,6 +12,11 @@
         image = "redis";
         ports = [{port = 6379;}];
       };
+
+      volumeClaimTemplates.test = {
+        accessModes = ["ReadWriteOnce"];
+        size = "1G";
+      };
     };
   };
 }

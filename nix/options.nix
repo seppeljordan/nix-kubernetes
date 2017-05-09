@@ -828,10 +828,10 @@ let
       };
 
       volumeClaimTemplates = mkOption {
-        type = types.listOf types.optionSet;
+        type = types.attrsOf types.optionSet;
         options = [ metaOptions pvcOptions ];
-        default = [];
-        description = "Volume claim template";
+        default = {};
+        description = "Volume claim templates";
       };
     };
 

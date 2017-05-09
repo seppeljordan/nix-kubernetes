@@ -239,7 +239,7 @@ let
       serviceName = statufulset.serviceName;
       template = (mkSpecMeta statufulset.pod) // (mkPodSpec statufulset.pod);
       volumeClaimTemplates =
-        map (claimTemplate:
+        mapAttrsToList (name: claimTemplate:
           (mkMeta claimTemplate) // (mkPvcSpec claimTemplate)
         ) statufulset.volumeClaimTemplates;
     };
