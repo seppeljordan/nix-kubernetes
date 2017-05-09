@@ -65,6 +65,10 @@ let
         mapAttrs (name: serviceAccount: mkServiceAccount serviceAccount) config.kubernetes.serviceAccounts;
       configmaps =
         mapAttrs (name: configMap: mkConfigMap configMap) config.kubernetes.configMaps;
+      petsets =
+        mapAttrs (name: petset: mkPetSet petset) config.kubernetes.petSets;
+      statefulsets =
+        mapAttrs (name: statefulset: mkStatefulSet statefulset) config.kubernetes.statefulSets;
     };
 
     # Keep jobs separated from other resources, as they have to be explicitly

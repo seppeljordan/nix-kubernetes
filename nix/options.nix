@@ -793,6 +793,55 @@ let
     };
   };
 
+  statefulSetOptions = { name, config, ... }: {
+    options = {
+      enable = mkOption {
+        description = "Whether to enable stateful set";
+        default = false;
+        type = types.bool;
+      };
+
+      replicas = mkOption {
+        description = "Number of stateful set replicas to run";
+        default = 1;
+        type = types.int;
+      };
+
+      serviceName = mkOption {
+        description = "Name of the governing stateful set service";
+        default = name;
+        type = types.str;
+      };
+
+      pod = podTemplateOptions // {
+        labels = mkOption {
+          description = "Pod labels";
+          type = types.attrsOf types.str;
+          default = {};
+        };
+
+        annotations = mkOption {
+          description = "Pod annotation";
+          type = types.attrsOf types.str;
+          default = {};
+        };
+      };
+
+      volumeClaimTemplates = mkOption {
+        type = types.listOf types.optionSet;
+        options = [ metaOptions pvcOptions ];
+        default = [];
+        description = "Volume claim template";
+      };
+    };
+
+    config = mkMerge [{
+      pod.labels.name = mkDefault config.name;
+    } (mkDefault cfg.defaults.deployments)];
+  };
+
+  petSetOptions = statefulSetOptions;
+
 in {
   options.kubernetes = {
     namespaces = mkOption {
@@ -918,6 +967,20 @@ in {
       type = types.attrsOf types.optionSet;
       options = [ metaOptions configMapOptions ];
       description = "Attribute set of config map definitions";
+      default = {};
+    };
+
+    petSets = mkOption {
+      type = types.attrsOf types.optionSet;
+      options = [ metaOptions petSetOptions ];
+      description = "Attribute set of petset definitions";
+      default = {};
+    };
+
+    statefulSets = mkOption {
+      type = types.attrsOf types.optionSet;
+      options = [ metaOptions statefulSetOptions ];
+      description = "Attribute set of stateful set definitions";
       default = {};
     };
 

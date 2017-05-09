@@ -232,6 +232,20 @@ let
   mkConfigMapSpec = configMap: {
     data = flattenAttrs configMap.data;
   };
+
+  mkStatefulSetSpec = statufulset: {
+    spec = {
+      replicas = statufulset.replicas;
+      serviceName = statufulset.serviceName;
+      template = (mkSpecMeta statufulset.pod) // (mkPodSpec statufulset.pod);
+      volumeClaimTemplates =
+        map (claimTemplate:
+          (mkMeta claimTemplate) // (mkPvcSpec claimTemplate)
+        ) statufulset.volumeClaimTemplates;
+    };
+  };
+
+  mkPetSetSpec = petset: mkStatefulSetSpec petset;
 in {
   mkNamespace = namespace:
     (mkResource "v1" "Namespace") // (mkMeta namespace);
@@ -299,4 +313,12 @@ in {
   mkConfigMap = configMap:
     (mkResource "v1" "ConfigMap") // (mkMeta configMap) //
     (mkConfigMapSpec configMap);
+
+  mkPetSet = petset:
+    (mkResource "apps/v1alpha1" "PetSet") // (mkMeta petset) //
+    (mkPetSetSpec petset);
+
+  mkStatefulSet = statefulset:
+    (mkResource "apps/v1beta1" "StatefulSet") // (mkMeta statefulset) //
+    (mkStatefulSetSpec statefulset);
 }
