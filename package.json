@@ -29,7 +29,7 @@
     "gulp-line-ending-corrector": "^1.0.1",
     "gulp-mocha": "^2.0.0",
     "gulp-plumber": "^1.0.0",
-    "np": "^2.13.0"
+    "np": "^2.14.1"
   },
   "eslintConfig": {
     "extends": "xo-space",
