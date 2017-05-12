@@ -104,7 +104,8 @@ let
       imagePullSecrets = map (secret: {
         name = secret;
       }) resource.imagePullSecrets;
-    };
+
+    } // (optionalAttrs (resource.serviceAccountName != null) {serviceAccountName = resource.serviceAccountName;});
   };
 
   mkControllerSpec = rc: {

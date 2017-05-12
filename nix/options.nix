@@ -323,6 +323,12 @@ let
       type = types.listOf types.str;
       default = [];
     };
+
+    serviceAccountName = mkOption {
+      description = "Service account name for this resource";
+      default = null;
+      type = types.nullOr types.str;
+    };
   };
 
   podOptions = { name, config, ... }: {
