@@ -69,7 +69,9 @@ let
         mapAttrs (name: petset: mkPetSet petset) config.kubernetes.petSets;
       statefulsets =
         mapAttrs (name: statefulset: mkStatefulSet statefulset) config.kubernetes.statefulSets;
-    };
+    } // (mapAttrs (name: customResources: (
+      mapAttrs (name: customResource: mkCustomResource customResource) customResources
+    )) config.kubernetes.customResources);
 
     # Keep jobs separated from other resources, as they have to be explicitly
     # started

@@ -246,6 +246,10 @@ let
   };
 
   mkPetSetSpec = petset: mkStatefulSetSpec petset;
+
+  mkCustomResourceExtra = customResource:
+    mapAttrs (n: v: v) customResource.extra;
+
 in {
   mkNamespace = namespace:
     (mkResource "v1" "Namespace") // (mkMeta namespace);
@@ -321,4 +325,9 @@ in {
   mkStatefulSet = statefulset:
     (mkResource "apps/v1beta1" "StatefulSet") // (mkMeta statefulset) //
     (mkStatefulSetSpec statefulset);
+
+  mkCustomResource = customResource:
+    (mkResource customResource.apiVersion customResource.kind) //
+    (mkMeta customResource) //
+    (mkCustomResourceExtra customResource);
 }
