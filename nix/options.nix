@@ -330,6 +330,12 @@ let
       type = types.listOf types.str;
       default = [];
     };
+
+    serviceAccountName = mkOption {
+      description = "Service account name for this resource";
+      default = null;
+      type = types.nullOr types.str;
+    };
   };
 
   podOptions = { name, config, ... }: {
@@ -849,6 +855,26 @@ let
 
   petSetOptions = statefulSetOptions;
 
+  customResourceOptions = {name, config, ...}: {
+    options = {
+      kind = mkOption {
+        description = "Kind of the resource";
+        type = types.str;
+      };
+
+      apiVersion = mkOption {
+        description = "Api version of the resource";
+        type = types.str;
+      };
+
+      extra = mkOption {
+        type = types.attrs;
+        description = "Attribute set of custom resource";
+        default = {};
+      };
+    };
+  };
+
 in {
   options.kubernetes = {
     namespaces = mkOption {
@@ -1050,6 +1076,12 @@ in {
         type = types.attrs;
         default = {};
       };
+    };
+
+    customResources = mkOption {
+      description = "Attribute set of custom resources";
+      type = types.attrsOf (types.attrsOf (types.submodule [ customResourceOptions metaOptions ]));
+      default = {};
     };
   };
 }
