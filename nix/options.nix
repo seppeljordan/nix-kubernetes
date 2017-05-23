@@ -78,17 +78,25 @@ let
         default = {};
       };
 
-      namespace = mkOption {
-        description = "Resource namespace";
-        type = types.str;
-        default = cfg.defaultNamespace;
-      };
-
       dependencies = mkOption {
         description = "Resource dependencies";
         type = types.listOf types.str;
         default = [];
       };
+    };
+  };
+
+  nsMetaOptions = {name, config, ...}: {
+    options = {
+      namespace = mkOption {
+        description = "Resource namespace";
+        type = types.str;
+        default = cfg.defaultNamespace;
+      };
+    };
+
+    config = {
+      dependencies = [("namespaces/" + config.namespace)];
     };
   };
 
@@ -828,7 +836,7 @@ let
 
       volumeClaimTemplates = mkOption {
         type = types.attrsOf types.optionSet;
-        options = [ metaOptions pvcOptions ];
+        options = [ nsMetaOptions metaOptions pvcOptions ];
         default = {};
         description = "Volume claim templates";
       };
@@ -852,133 +860,133 @@ in {
 
     pods = mkOption {
       type = types.attrsOf types.optionSet;
-      options = [ metaOptions podOptions ];
+      options = [ nsMetaOptions metaOptions podOptions ];
       description = "Attribute set of pods";
       default = {};
     };
 
     controllers = mkOption {
       type = types.attrsOf types.optionSet;
-      options = [ metaOptions replicationControllerOptions ];
+      options = [ nsMetaOptions metaOptions replicationControllerOptions ];
       description = "Attribute set of controllers";
       default = {};
     };
 
     deployments = mkOption {
       type = types.attrsOf types.optionSet;
-      options = [ metaOptions deploymentOptions ];
+      options = [ nsMetaOptions metaOptions deploymentOptions ];
       description = "Attribute set of deployments";
       default = {};
     };
 
     daemonsets = mkOption {
       type = types.attrsOf types.optionSet;
-      options = [ metaOptions daemonSetOptions ];
+      options = [ nsMetaOptions metaOptions daemonSetOptions ];
       description = "Attribute set of daemonsets";
       default = {};
     };
 
     services = mkOption {
       type = types.attrsOf types.optionSet;
-      options = [ metaOptions serviceOptions ];
+      options = [ nsMetaOptions metaOptions serviceOptions ];
       description = "Attribute set of services";
       default = {};
     };
 
     pvc = mkOption {
       type = types.attrsOf types.optionSet;
-      options = [ metaOptions pvcOptions ];
+      options = [ nsMetaOptions metaOptions pvcOptions ];
       description = "Attribute set of persistent volume claims";
       default = {};
     };
 
     secrets = mkOption {
       type = types.attrsOf types.optionSet;
-      options = [ metaOptions secretOptions ];
+      options = [ nsMetaOptions metaOptions secretOptions ];
       description = "Attribute set of secrets";
       default = {};
     };
 
     ingress = mkOption {
       type = types.attrsOf types.optionSet;
-      options = [ metaOptions ingressOptions ];
+      options = [ nsMetaOptions metaOptions ingressOptions ];
       description = "Attribute set of ingress";
       default = {};
     };
 
     jobs = mkOption {
       type = types.attrsOf types.optionSet;
-      options = [ metaOptions jobOptions ];
+      options = [ nsMetaOptions metaOptions jobOptions ];
       description = "Attribute set of jobs";
       default = {};
     };
 
     scheduledJobs = mkOption {
       type = types.attrsOf types.optionSet;
-      options = [ metaOptions scheduledJobOptions ];
+      options = [ nsMetaOptions metaOptions scheduledJobOptions ];
       description = "Attribute set of schedule job definitions";
       default = {};
     };
 
     networkPolicies = mkOption {
       type = types.attrsOf types.optionSet;
-      options = [ metaOptions networkPolicyOptions ];
+      options = [ nsMetaOptions metaOptions networkPolicyOptions ];
       description = "Attribute set of network policy definitions";
       default = {};
     };
 
     roles = mkOption {
       type = types.attrsOf types.optionSet;
-      options = [ metaOptions roleOptions ];
+      options = [ nsMetaOptions metaOptions roleOptions ];
       description = "Attribute set of role definitions";
       default = {};
     };
 
     clusterRoles = mkOption {
       type = types.attrsOf types.optionSet;
-      options = [ metaOptions roleOptions ];
+      options = [ nsMetaOptions metaOptions roleOptions ];
       description = "Attribute set of cluster role definitions";
       default = {};
     };
 
     roleBindings = mkOption {
       type = types.attrsOf types.optionSet;
-      options = [ metaOptions roleBindingOptions ];
+      options = [ nsMetaOptions metaOptions roleBindingOptions ];
       description = "Attribute set of role binding definitions";
       default = {};
     };
 
     clusterRoleBindings = mkOption {
       type = types.attrsOf types.optionSet;
-      options = [ metaOptions roleBindingOptions ];
+      options = [ nsMetaOptions metaOptions roleBindingOptions ];
       description = "Attribute set of cluster role binding definitions";
       default = {};
     };
 
     serviceAccounts = mkOption {
       type = types.attrsOf types.optionSet;
-      options = [ metaOptions serviceAccountOptions ];
+      options = [ nsMetaOptions metaOptions serviceAccountOptions ];
       description = "Attribute set of service account definitions";
       default = {};
     };
 
     configMaps = mkOption {
       type = types.attrsOf types.optionSet;
-      options = [ metaOptions configMapOptions ];
+      options = [ nsMetaOptions metaOptions configMapOptions ];
       description = "Attribute set of config map definitions";
       default = {};
     };
 
     petSets = mkOption {
       type = types.attrsOf types.optionSet;
-      options = [ metaOptions petSetOptions ];
+      options = [ nsMetaOptions metaOptions petSetOptions ];
       description = "Attribute set of petset definitions";
       default = {};
     };
 
     statefulSets = mkOption {
       type = types.attrsOf types.optionSet;
-      options = [ metaOptions statefulSetOptions ];
+      options = [ nsMetaOptions metaOptions statefulSetOptions ];
       description = "Attribute set of stateful set definitions";
       default = {};
     };
