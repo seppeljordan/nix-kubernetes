@@ -6,7 +6,59 @@ let
 
   cfg = config.kubernetes;
 
-  metaOptions = {name, config, ...}: {
+  probeOptions = options: {
+    enable = mkOption {
+      description = "Whether to enable probe";
+      type = types.bool;
+      default =
+        options.httpGet.path != null ||
+        options.exec.command != null ||
+        options.tcpSocket.port != null;
+    };
+
+    httpGet = {
+      path = mkOption {
+        description = "Http check path";
+        type = types.nullOr types.str;
+        default = null;
+      };
+
+      port = mkOption {
+        description = "Http check port";
+        type = types.int;
+        default = 80;
+      };
+    };
+
+    exec = {
+      command = mkOption {
+        description = "Command to run for check";
+        default = null;
+      };
+    };
+
+    tcpSocket = {
+      port = mkOption {
+        description = "Port to connect to for check";
+        type = types.nullOr types.int;
+        default = null;
+      };
+    };
+
+    initialDelaySeconds = mkOption {
+      description = "Initial delay before checking";
+      default = 30;
+      type = types.int;
+    };
+
+    timeoutSeconds = mkOption {
+      description = "Check timeout";
+      default = 5;
+      type = types.int;
+    };
+  };
+
+  metaOptions = { name, config, ... } : {
     options = {
       name = mkOption {
         description = "Name of the resource";
@@ -213,61 +265,8 @@ let
         };
       };
 
-      livenessProbe = {
-        httpGet = {
-          path = mkOption {
-            description = "Http check path";
-            type = types.nullOr types.str;
-            default = null;
-          };
-
-          port = mkOption {
-            description = "Http check port";
-            type = types.int;
-            default = 80;
-          };
-        };
-
-        initialDelaySeconds = mkOption {
-          description = "Initial delay before checking";
-          default = 30;
-          type = types.int;
-        };
-
-        timeoutSeconds = mkOption {
-          description = "Check timeout";
-          default = 5;
-          type = types.int;
-        };
-      };
-
-      readinessProbe = {
-        httpGet = {
-          path = mkOption {
-            description = "Http check path";
-            type = types.nullOr types.str;
-            default = null;
-          };
-
-          port = mkOption {
-            description = "Http check port";
-            type = types.int;
-            default = 80;
-          };
-        };
-
-        initialDelaySeconds = mkOption {
-          description = "Initial delay before checking";
-          default = 30;
-          type = types.int;
-        };
-
-        timeoutSeconds = mkOption {
-          description = "Check timeout";
-          default = 5;
-          type = types.int;
-        };
-      };
+      livenessProbe = probeOptions config.livenessProbe;
+      readinessProbe = probeOptions config.readinessProbe;
     };
   };
 

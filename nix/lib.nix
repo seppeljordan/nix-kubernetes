@@ -31,6 +31,17 @@ let
 
   filterNull = attrs: (filterAttrs (n: v: v != null) attrs);
 
+  mkProbe = probe: {
+    initialDelaySeconds = probe.initialDelaySeconds;
+    timeoutSeconds = probe.timeoutSeconds;
+  } // (optionalAttrs (probe.httpGet.path != null) {
+    httpGet = probe.httpGet;
+  }) // (optionalAttrs (probe.tcpSocket.port != null) {
+    tcpSocket = probe.tcpSocket;
+  }) // (optionalAttrs (probe.exec.command != null) {
+    exec = probe.exec;
+  });
+
   mkContainer = container: {
     name = container.name;
     image = container.image;
@@ -74,10 +85,10 @@ let
     args = mkCommand container.args;
   }) // (optionalAttrs (container.postStart.command != null) {
     lifecycle.postStart.exec.command = mkCommand container.postStart.command;
-  }) // (optionalAttrs (container.livenessProbe.httpGet.path != null) {
-    livenessProbe = container.livenessProbe;
-  }) // (optionalAttrs (container.readinessProbe.httpGet.path != null) {
-    readinessProbe = container.readinessProbe;
+  }) // (optionalAttrs (container.livenessProbe.enable) {
+    livenessProbe = mkProbe container.livenessProbe;
+  }) // (optionalAttrs (container.readinessProbe.enable) {
+    readinessProbe = mkProbe container.readinessProbe;
   }) // (optionalAttrs (container.workdir != null) {
     workingDir = container.workdir;
   });
