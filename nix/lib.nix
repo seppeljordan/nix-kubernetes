@@ -217,15 +217,16 @@ let
     };
   };
 
-  mkNetworkPolicy = policy: {
+  mkNetworkPolicySpec = policy: {
     spec = {
       podSelector.matchLabels = policy.podSelector.matchLabels;
       ingress = mapAttrsToList (name: rule: {
-        from = mkMerge ((optionals rule.namespaceSelector [{
+        from = (optionals (rule.namespaceSelector.matchLabels != null) [{
           namespaceSelector.matchLabels = rule.namespaceSelector;
-        }]) (optionals rule.podSelector [{
+        }]) ++ (optionals (rule.podSelector.matchLabels != null) [{
           podSelector.matchLabels = rule.podSelector.matchLabels;
-        }]));
+        }]);
+        ports = rule.ports;
       }) policy.ingress;
     };
   };
@@ -340,6 +341,10 @@ in {
   mkStatefulSet = statefulset:
     (mkResource "apps/v1beta1" "StatefulSet") // (mkNsMeta statefulset) //
     (mkStatefulSetSpec statefulset);
+
+  mkNetworkPolicy = networkpolicy:
+    (mkResource "extensions/v1beta1" "NetworkPolicy") // (mkNsMeta networkpolicy) //
+    (mkNetworkPolicySpec networkpolicy);
 
   mkCustomResource = customResource:
     (mkResource customResource.apiVersion customResource.kind) //

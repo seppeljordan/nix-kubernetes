@@ -69,6 +69,8 @@ let
         mapAttrs (name: petset: mkPetSet petset) config.kubernetes.petSets;
       statefulsets =
         mapAttrs (name: statefulset: mkStatefulSet statefulset) config.kubernetes.statefulSets;
+      networkpolicies =
+         mapAttrs (name: networkpolicy: mkNetworkPolicy networkpolicy) config.kubernetes.networkPolicies;
     } // (mapAttrs (name: customResources: (
       mapAttrs (name: customResource: mkCustomResource customResource) customResources
     )) config.kubernetes.customResources);

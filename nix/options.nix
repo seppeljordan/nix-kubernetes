@@ -509,7 +509,21 @@ let
     };
   };
 
-  namespaceOptions = {};
+  namespaceOptions = { name, config, ... }: {
+    options = {
+      networkPolicy.ingress.isolation = mkOption {
+        description = "Namespace network policy";
+        type = types.enum [null "DefaultDeny"];
+        default = null;
+      };
+    };
+
+    config = mkIf (config.networkPolicy.ingress.isolation != null) {
+      annotations."net.beta.kubernetes.io/network-policy" = builtins.toJSON {
+        ingress.isolation = config.networkPolicy.ingress.isolation;
+      };
+    };
+  };
 
   pvcOptions = { name, config, ... }: {
     options = {
@@ -676,7 +690,7 @@ let
         options = [({ name, config, ... }:{
           options = {
             namespaceSelector.matchLabels = mkOption {
-              description = "Matches all pods in all namespaces selected by this label selector";
+              description = "Matches all pods in namespaces matched by this selector";
               type = types.nullOr types.attrs;
               default = null;
             };
