@@ -67,13 +67,13 @@ let
       };
 
       labels = mkOption {
-        description = "Pod labels";
+        description = "Resource labels";
         type = types.attrsOf types.str;
         default = {};
       };
 
       annotations = mkOption {
-        description = "Pod annotation";
+        description = "Resource annotation";
         type = types.attrsOf types.str;
         default = {};
       };
@@ -210,9 +210,12 @@ let
 
             containerPort = mkOption {
               description = "Port in container";
-              default = config.port;
               type = types.int;
             };
+          };
+
+          config = {
+            containerPort = mkDefault config.port;
           };
         };
       };
@@ -455,6 +458,7 @@ let
 
       ports = mkOption {
         type = types.listOf types.optionSet;
+        description = "Ports exposed by service";
         options = { config, ... }: {
           options = {
             name = mkOption {
@@ -475,7 +479,6 @@ let
             };
 
             targetPort = mkOption {
-              default = config.port;
               type = types.int;
               description = "Pod target port";
             };
@@ -485,6 +488,10 @@ let
               type = types.nullOr types.int;
               description = "Port on the node";
             };
+          };
+
+          config = {
+            targetPort = mkDefault config.port;
           };
         };
       };
@@ -734,6 +741,7 @@ let
     options = {
       rules = mkOption {
         type = types.listOf types.optionSet;
+        description = "List of role rules";
         options = [{
           apiGroups = mkOption {
             description = "Matches list of API groups";
@@ -765,10 +773,11 @@ let
     };
   };
 
-  roleBindingOptions = { name, config, ... }: {
+  roleBindingOptions = { config, ... }: {
     options = {
       subjects = mkOption {
         type = types.listOf types.optionSet;
+        description = "Subjects that cluster role applies to";
         options = [{
           kind = mkOption {
             description = "To what kind of entities binding applies";
@@ -778,7 +787,7 @@ let
 
           name = mkOption {
             description = "Name of the entity binding applies";
-            default = types.str;
+            type = types.str;
           };
 
           namespace = mkOption {

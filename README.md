@@ -45,7 +45,15 @@ $ nix-kubernetes deploy -d gatehub -n namespace
 
 ## Example deployment configurations
 
-look into examples folder with example deployment configurations. Repo with bundle of nix-kubernetes
+look into examples folder with example deployment configurations. 
+
+## Options
+
+For a list of all options look into [options.md](options.md)
+
+## Nix-kubernetes services
+
+Repo with bundle of nix-kubernetes
 services is avalible on [https://github.com/x-truder/services](https://github.com/x-truder/services).
 
 ## Development
