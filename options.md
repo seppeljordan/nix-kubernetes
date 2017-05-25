@@ -1375,11 +1375,850 @@ values.
   **Default:** 1
   **Example:** ...
 
-## daemonSets options
+## daemonsets options
+
+* `kubernetes.daemonsets`:
+
+  Attribute set of daemonsets
+
+  **Default:** {}
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.annotations`:
+
+  Resource annotation
+
+  **Default:** {}
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.dependencies`:
+
+  Resource dependencies
+
+  **Default:** []
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.enable`:
+
+  Whether to enable daemon set
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.labels`:
+
+  Resource labels
+
+  **Default:** {}
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.name`:
+
+  Name of the resource
+
+  **Default:** ""
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.namespace`:
+
+  Resource namespace
+
+  **Default:** "default"
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.annotations`:
+
+  Pod annotation
+
+  **Default:** {}
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.containers`:
+
+  Pod containers
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.containers.<name>.args`:
+
+  Arguments to command
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.containers.<name>.command`:
+
+  Command to run
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.containers.<name>.enable`:
+
+  Whether to enable container
+
+  **Default:** true
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.containers.<name>.env`:
+
+  Environment variables to set. This can be any value that serializes to
+string. If value starts with "secret:<name>:<key>" or
+"configMap:<name>:<key>" if references respected secret or config map
+values.
 
 
-## scheduledjobs options
+  **Default:** {}
+  **Example:** ...
 
+* `kubernetes.daemonsets.<name>.pod.containers.<name>.image`:
+
+  Image to use
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.containers.<name>.limits.cpu`:
+
+  Limit cpu for container
+
+  **Default:** null
+  **Example:** "500m"
+
+* `kubernetes.daemonsets.<name>.pod.containers.<name>.limits.memory`:
+
+  Limit memory for container
+
+  **Default:** null
+  **Example:** "128Mi"
+
+* `kubernetes.daemonsets.<name>.pod.containers.<name>.livenessProbe.enable`:
+
+  Whether to enable probe
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.containers.<name>.livenessProbe.exec.command`:
+
+  Command to run for check
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.containers.<name>.livenessProbe.httpGet.path`:
+
+  Http check path
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.containers.<name>.livenessProbe.httpGet.port`:
+
+  Http check port
+
+  **Default:** 80
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.containers.<name>.livenessProbe.initialDelaySeconds`:
+
+  Initial delay before checking
+
+  **Default:** 30
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.containers.<name>.livenessProbe.tcpSocket.port`:
+
+  Port to connect to for check
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.containers.<name>.livenessProbe.timeoutSeconds`:
+
+  Check timeout
+
+  **Default:** 5
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.containers.<name>.mounts`:
+
+  Volumes mounted in pod
+
+  **Default:** []
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.containers.<name>.mounts.*.mountPath`:
+
+  Mount path of volume
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.containers.<name>.mounts.*.name`:
+
+  Name of the volume
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.containers.<name>.mounts.*.subPath`:
+
+  Sub path to mount
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.containers.<name>.name`:
+
+  Name of the container
+
+  **Default:** ""
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.containers.<name>.ports`:
+
+  Ports exposed by pod
+
+  **Default:** []
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.containers.<name>.ports.*.containerPort`:
+
+  Port in container
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.containers.<name>.ports.*.name`:
+
+  Name of the port
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.containers.<name>.ports.*.port`:
+
+  Port to expose
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.containers.<name>.ports.*.protocol`:
+
+  Protocol to use
+
+  **Default:** "TCP"
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.containers.<name>.postStart.command`:
+
+  Command to execute in post start phase
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.containers.<name>.readinessProbe.enable`:
+
+  Whether to enable probe
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.containers.<name>.readinessProbe.exec.command`:
+
+  Command to run for check
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.containers.<name>.readinessProbe.httpGet.path`:
+
+  Http check path
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.containers.<name>.readinessProbe.httpGet.port`:
+
+  Http check port
+
+  **Default:** 80
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.containers.<name>.readinessProbe.initialDelaySeconds`:
+
+  Initial delay before checking
+
+  **Default:** 30
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.containers.<name>.readinessProbe.tcpSocket.port`:
+
+  Port to connect to for check
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.containers.<name>.readinessProbe.timeoutSeconds`:
+
+  Check timeout
+
+  **Default:** 5
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.containers.<name>.requests.cpu`:
+
+  Limit cpu for container
+
+  **Default:** null
+  **Example:** "500m"
+
+* `kubernetes.daemonsets.<name>.pod.containers.<name>.requests.memory`:
+
+  Limit memory for container
+
+  **Default:** null
+  **Example:** "128Mi"
+
+* `kubernetes.daemonsets.<name>.pod.containers.<name>.security.capabilities.add`:
+
+  Capabilites to add
+
+  **Default:** []
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.containers.<name>.security.privileged`:
+
+  Whether to run container as privileged
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.containers.<name>.stdin`:
+
+  Whether to enable stdin
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.containers.<name>.tty`:
+
+  Whether to enable tty
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.containers.<name>.workdir`:
+
+  Container working directory
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.imagePullSecrets`:
+
+  Name of the secret to use for pulling docker image
+
+  **Default:** []
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.labels`:
+
+  Pod labels
+
+  **Default:** {}
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.nodeSelector`:
+
+  Node selector where to put pod
+
+  **Default:** {}
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.restartPolicy`:
+
+  Pod restart policy
+
+  **Default:** "Always"
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.serviceAccountName`:
+
+  Service account name for this resource
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.volumes`:
+
+  Pod volumes
+
+  **Default:** {}
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.volumes.<name>.name`:
+
+  Name of the volume
+
+  **Default:** ""
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.volumes.<name>.options`:
+
+  Volume options
+
+  **Default:** {}
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.volumes.<name>.type`:
+
+  Volume type
+
+  **Default:** "..."
+  **Example:** ...
+
+## scheduledJobs options
+
+* `kubernetes.scheduledJobs`:
+
+  Attribute set of schedule job definitions
+
+  **Default:** {}
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.annotations`:
+
+  Resource annotation
+
+  **Default:** {}
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.concurrencyPolicy`:
+
+  How to treat concurrent executions of job
+
+  **Default:** "Forbid"
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.dependencies`:
+
+  Resource dependencies
+
+  **Default:** []
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.enable`:
+
+  Whether to enable scheduled job
+
+  **Default:** true
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.activeDeadlineSeconds`:
+
+  Job restart deadline
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.annotations`:
+
+  Pod annotation
+
+  **Default:** {}
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.labels`:
+
+  Pod labels
+
+  **Default:** {}
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.annotations`:
+
+  Pod annotation
+
+  **Default:** {}
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.containers`:
+
+  Pod containers
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.containers.<name>.args`:
+
+  Arguments to command
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.containers.<name>.command`:
+
+  Command to run
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.containers.<name>.enable`:
+
+  Whether to enable container
+
+  **Default:** true
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.containers.<name>.env`:
+
+  Environment variables to set. This can be any value that serializes to
+string. If value starts with "secret:<name>:<key>" or
+"configMap:<name>:<key>" if references respected secret or config map
+values.
+
+
+  **Default:** {}
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.containers.<name>.image`:
+
+  Image to use
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.containers.<name>.limits.cpu`:
+
+  Limit cpu for container
+
+  **Default:** null
+  **Example:** "500m"
+
+* `kubernetes.scheduledJobs.<name>.job.pod.containers.<name>.limits.memory`:
+
+  Limit memory for container
+
+  **Default:** null
+  **Example:** "128Mi"
+
+* `kubernetes.scheduledJobs.<name>.job.pod.containers.<name>.livenessProbe.enable`:
+
+  Whether to enable probe
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.containers.<name>.livenessProbe.exec.command`:
+
+  Command to run for check
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.containers.<name>.livenessProbe.httpGet.path`:
+
+  Http check path
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.containers.<name>.livenessProbe.httpGet.port`:
+
+  Http check port
+
+  **Default:** 80
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.containers.<name>.livenessProbe.initialDelaySeconds`:
+
+  Initial delay before checking
+
+  **Default:** 30
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.containers.<name>.livenessProbe.tcpSocket.port`:
+
+  Port to connect to for check
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.containers.<name>.livenessProbe.timeoutSeconds`:
+
+  Check timeout
+
+  **Default:** 5
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.containers.<name>.mounts`:
+
+  Volumes mounted in pod
+
+  **Default:** []
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.containers.<name>.mounts.*.mountPath`:
+
+  Mount path of volume
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.containers.<name>.mounts.*.name`:
+
+  Name of the volume
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.containers.<name>.mounts.*.subPath`:
+
+  Sub path to mount
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.containers.<name>.name`:
+
+  Name of the container
+
+  **Default:** ""
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.containers.<name>.ports`:
+
+  Ports exposed by pod
+
+  **Default:** []
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.containers.<name>.ports.*.containerPort`:
+
+  Port in container
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.containers.<name>.ports.*.name`:
+
+  Name of the port
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.containers.<name>.ports.*.port`:
+
+  Port to expose
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.containers.<name>.ports.*.protocol`:
+
+  Protocol to use
+
+  **Default:** "TCP"
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.containers.<name>.postStart.command`:
+
+  Command to execute in post start phase
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.containers.<name>.readinessProbe.enable`:
+
+  Whether to enable probe
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.containers.<name>.readinessProbe.exec.command`:
+
+  Command to run for check
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.containers.<name>.readinessProbe.httpGet.path`:
+
+  Http check path
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.containers.<name>.readinessProbe.httpGet.port`:
+
+  Http check port
+
+  **Default:** 80
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.containers.<name>.readinessProbe.initialDelaySeconds`:
+
+  Initial delay before checking
+
+  **Default:** 30
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.containers.<name>.readinessProbe.tcpSocket.port`:
+
+  Port to connect to for check
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.containers.<name>.readinessProbe.timeoutSeconds`:
+
+  Check timeout
+
+  **Default:** 5
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.containers.<name>.requests.cpu`:
+
+  Limit cpu for container
+
+  **Default:** null
+  **Example:** "500m"
+
+* `kubernetes.scheduledJobs.<name>.job.pod.containers.<name>.requests.memory`:
+
+  Limit memory for container
+
+  **Default:** null
+  **Example:** "128Mi"
+
+* `kubernetes.scheduledJobs.<name>.job.pod.containers.<name>.security.capabilities.add`:
+
+  Capabilites to add
+
+  **Default:** []
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.containers.<name>.security.privileged`:
+
+  Whether to run container as privileged
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.containers.<name>.stdin`:
+
+  Whether to enable stdin
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.containers.<name>.tty`:
+
+  Whether to enable tty
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.containers.<name>.workdir`:
+
+  Container working directory
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.imagePullSecrets`:
+
+  Name of the secret to use for pulling docker image
+
+  **Default:** []
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.labels`:
+
+  Pod labels
+
+  **Default:** {}
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.nodeSelector`:
+
+  Node selector where to put pod
+
+  **Default:** {}
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.restartPolicy`:
+
+  Pod restart policy
+
+  **Default:** "Always"
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.serviceAccountName`:
+
+  Service account name for this resource
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.volumes`:
+
+  Pod volumes
+
+  **Default:** {}
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.volumes.<name>.name`:
+
+  Name of the volume
+
+  **Default:** ""
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.volumes.<name>.options`:
+
+  Volume options
+
+  **Default:** {}
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.volumes.<name>.type`:
+
+  Volume type
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.labels`:
+
+  Resource labels
+
+  **Default:** {}
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.name`:
+
+  Name of the resource
+
+  **Default:** ""
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.namespace`:
+
+  Resource namespace
+
+  **Default:** "default"
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.schedule`:
+
+  job schedule
+
+  **Default:** "..."
+  **Example:** ...
 
 ## jobs options
 

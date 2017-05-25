@@ -32,8 +32,8 @@ let
     );
 
   sections = [
-    "namespaces" "pods" "services" "controllers" "deployments" "daemonSets"
-    "scheduledjobs" "jobs" "ingress" "secrets" "pvcs" "roles" "clusterRoles"
+    "namespaces" "pods" "services" "controllers" "deployments" "daemonsets"
+    "scheduledJobs" "jobs" "ingress" "secrets" "pvcs" "roles" "clusterRoles"
     "roleBindings" "clusterRoleBindings" "serviceAccounts" "configMaps"
     "petSets" "statefulSets" "networkPolicies" "customResources"
     "defaults"
