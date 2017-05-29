@@ -56,11 +56,12 @@ let
     } // (optionalAttrs (port.name != null) {
       name = port.name;
     })) container.ports;
-    volumeMounts = map (volume: {
+    volumeMounts = map (volume: ({
       name = volume.name;
       mountPath = volume.mountPath;
+    } // (optionalAttrs (volume.subPath != null) {
       subPath = volume.subPath;
-    }) container.mounts;
+    }))) container.mounts;
     env = mapAttrsToList (name: value: {
       inherit name;
     } // (if (isAttrs value) then {
