@@ -376,6 +376,7 @@ let
     };
 
     config = mkMerge [{
+      labels.name = mkDefault config.name;
       pod.labels.name = mkDefault config.name;
     } (mkDefault cfg.defaults.deployments)];
   };
