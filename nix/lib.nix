@@ -239,7 +239,7 @@ let
   mkRoleBindingSpec = binding: {
     subjects = map (binding: filterAttrs (n: v: n != "_module") binding) binding.subjects;
     roleRef = binding.roleRef // {
-      apiVersion = "rbac.authorization.k8s.io/v1alpha1";
+      apiGroups = "rbac.authorization.k8s.io";
     };
   };
 
