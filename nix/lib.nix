@@ -238,9 +238,7 @@ let
 
   mkRoleBindingSpec = binding: {
     subjects = map (binding: filterAttrs (n: v: n != "_module") binding) binding.subjects;
-    roleRef = binding.roleRef // {
-      apiGroups = "rbac.authorization.k8s.io";
-    };
+    roleRef = binding.roleRef;
   };
 
   mkServiceAccountSpec = serviceAccount: {
