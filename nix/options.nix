@@ -790,12 +790,6 @@ let
             type = types.str;
           };
 
-          apiGroup = mkOption {
-            description = "API group to use";
-            default = "rbac.authorization.k8s.io";
-            type = types.str;
-          };
-
           namespace = mkOption {
             description = "Namespace of the subject";
             default = null;
