@@ -2783,8 +2783,63 @@ values.
   **Default:** "Opaque"
   **Example:** ...
 
-## pvcs options
+## pvc options
 
+* `kubernetes.pvc`:
+
+  Attribute set of persistent volume claims
+
+  **Default:** {}
+  **Example:** ...
+
+* `kubernetes.pvc.<name>.accessModes`:
+
+  Requested acces modes
+
+  **Default:** ["ReadWriteOnce"]
+  **Example:** ...
+
+* `kubernetes.pvc.<name>.annotations`:
+
+  Resource annotation
+
+  **Default:** {}
+  **Example:** ...
+
+* `kubernetes.pvc.<name>.dependencies`:
+
+  Resource dependencies
+
+  **Default:** []
+  **Example:** ...
+
+* `kubernetes.pvc.<name>.labels`:
+
+  Resource labels
+
+  **Default:** {}
+  **Example:** ...
+
+* `kubernetes.pvc.<name>.name`:
+
+  Name of the resource
+
+  **Default:** ""
+  **Example:** ...
+
+* `kubernetes.pvc.<name>.namespace`:
+
+  Resource namespace
+
+  **Default:** "default"
+  **Example:** ...
+
+* `kubernetes.pvc.<name>.size`:
+
+  Size of storage requested by persistent volume claim
+
+  **Default:** "1G"
+  **Example:** "10G"
 
 ## roles options
 
@@ -2990,6 +3045,13 @@ values.
   **Default:** "default"
   **Example:** ...
 
+* `kubernetes.roleBindings.<name>.roleRef.apiGroup`:
+
+  API group to use
+
+  **Default:** "rbac.authorization.k8s.io"
+  **Example:** ...
+
 * `kubernetes.roleBindings.<name>.roleRef.kind`:
 
   Kind of the role binding references
@@ -3074,6 +3136,13 @@ values.
   Resource namespace
 
   **Default:** "default"
+  **Example:** ...
+
+* `kubernetes.clusterRoleBindings.<name>.roleRef.apiGroup`:
+
+  API group to use
+
+  **Default:** "rbac.authorization.k8s.io"
   **Example:** ...
 
 * `kubernetes.clusterRoleBindings.<name>.roleRef.kind`:

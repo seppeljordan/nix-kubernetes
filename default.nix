@@ -33,7 +33,7 @@ let
 
   sections = [
     "namespaces" "pods" "services" "controllers" "deployments" "daemonsets"
-    "scheduledJobs" "jobs" "ingress" "secrets" "pvcs" "roles" "clusterRoles"
+    "scheduledJobs" "jobs" "ingress" "secrets" "pvc" "roles" "clusterRoles"
     "roleBindings" "clusterRoleBindings" "serviceAccounts" "configMaps"
     "petSets" "statefulSets" "networkPolicies" "customResources"
     "defaults"
