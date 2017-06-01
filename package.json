@@ -37,7 +37,7 @@
       "mocha": true
     }
   },
-  "repository": "git@github.com:x-truder/nix-kubernetes.git",
+  "repository": "https://github.com/xtruder/nix-kubernetes.git",
   "scripts": {
     "test": "gulp"
   },
