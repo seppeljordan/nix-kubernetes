@@ -906,6 +906,12 @@ let
 
 in {
   options.kubernetes = {
+    gcNamespaces = mkOption {
+      type = types.listOf types.str;
+      description = "List of namespaces to garbage collect";
+      default = attrNames config.kubernetes.namespaces;
+    };
+
     namespaces = mkOption {
       type = types.attrsOf types.optionSet;
       options = [ metaOptions namespaceOptions ];

@@ -18,6 +18,8 @@ let
     metadata.labels = resource.labels;
     metadata.annotations = resource.annotations // {
       "x-truder.net/dependencies" = concatStringsSep "," resource.dependencies;
+      "x-truder.net/kind" = "nix-kubernetes";
+      "x-truder.net/version" = "v1";
     };
   };
 

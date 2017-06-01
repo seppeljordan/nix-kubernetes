@@ -78,6 +78,8 @@ let
     # Keep jobs separated from other resources, as they have to be explicitly
     # started
     jobs = mapAttrs (name: job: mkJob job) config.kubernetes.jobs;
+
+    gcNamespaces = config.kubernetes.gcNamespaces;
   }) deployments;
 in pkgs.stdenv.mkDerivation {
   name = "configurations";
