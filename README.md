@@ -10,7 +10,7 @@ $ npm install -g nix-kubernetes
 ## Usage
 
 ```bash
-Usage: /home/offlinehacker/.npm/bin/nix-kubernetes <command> [options]
+Usage: bin/nix-kubernetes <command> [options]
 
 Commands:
   create <file>   Create deployment
@@ -18,20 +18,43 @@ Commands:
   delete          Delete deployment
   describe        Describes deployment
   deploy          Deploy configuration
+  config          Manage deployment
   run-job <name>  Run distributed kubernetes job
+  gc              Garbage collect resources (will only gc nix-kubernetes resources)
 
 Options:
-  -c, --config  path to configuration file
-                                        [default: "~/.kube/nix-kubernetes.json"]
-  -h, --help    Show help                                              [boolean]
+  -c, --config  path to configuration file  [default: "~/.kube/nix-kubernetes.json"]
+  -h, --help    Show help  [boolean]
 
 Examples:
-  /home/offlinehacker/.npm/bin/nix-kuberne  create deployment
-  tes create -d name deploy.nix
-  /home/offlinehacker/.npm/bin/nix-kuberne  deploy resources
-  tes deploy -d name -n namespace
-  /home/offlinehacker/.npm/bin/nix-kuberne  only build
-  tes deploy -d name --build-only
+  bin/nix-kubernetes create -d name deploy.nix                         create deployment
+  bin/nix-kubernetes deploy -d name -n namespace --context my-cluster  deploy resources
+  bin/nix-kubernetes deploy -d name --build-only                       only build
+```
+
+**Deploy**
+
+```bash
+nix-kubernetes deploy
+
+Options:
+  -c, --config      path to configuration file  [default: "~/.kube/nix-kubernetes.json"]
+  -h, --help        Show help  [boolean]
+  -f, --file        Use prebuild deployment file
+  -d, --deployment  Deployment name
+  -n, --namespace   Namespace to deploy
+  -i, --include     Resources to include in deployment
+  -o, --output      Output generated config to file
+  --context         Kubernetes config context to use for deployment
+  --build-only      only build
+  --dry-run         dry run
+  --restart         restart replication controllers
+  --rolling-update  do a rolling update of a controller
+  --gc              garbage collect resources (will only gc nix-kubernetes resources)
+
+Examples:
+  nix-kubernetes deploy -d deployment -n namespace -i replicationcontrollers/gitlab --gc --context my-cluster
+  nix-kubernetes deploy -d deployment -n namespace -i services/mysql --dry-run
 ```
 
 ## Example usage
@@ -40,7 +63,7 @@ Examples:
 $ nix-kubernetes create -d gatehub deploy.nix
 $ export NIX_PATH="services=/home/offlinehacker/projects/x-truder.net/services:$NIX_PATH"
 $ nix-kubernetes deploy -d gatehub --build-only
-$ nix-kubernetes deploy -d gatehub -n namespace
+$ nix-kubernetes deploy -d gatehub -n namespace --context my-cluster --gc
 ```
 
 ## Example deployment configurations
