@@ -59,8 +59,7 @@ let
       name = port.name;
     })) container.ports;
     volumeMounts = map (volume: ({
-      name = volume.name;
-      mountPath = volume.mountPath;
+      inherit (volume) name mountPath readOnly;
     } // (optionalAttrs (volume.subPath != null) {
       subPath = volume.subPath;
     }))) container.mounts;

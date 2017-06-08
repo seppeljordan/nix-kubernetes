@@ -241,6 +241,12 @@ let
             type = types.nullOr types.str;
             default = null;
           };
+
+          readOnly = mkOption {
+            description = "Whether to mount read only";
+            type = types.bool;
+            default = false;
+          };
         };
       };
 
