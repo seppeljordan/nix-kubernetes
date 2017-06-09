@@ -1,6 +1,17 @@
 # nix-kubernetes [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage percentage][coveralls-image]][coveralls-url]
 > Kubernetes deployment manager written in nix
 
+## About
+
+Nix-kubernetes is deployment manager for kubernetes that users nixos module
+system to do declarative kubernetes configuration and deployment. By combining
+nix package manager and nix-kubernetes declarative cluster configuration it can
+do fully deterministic deployments from packages to configuration.
+
+## Depencies
+
+- nix (for installation instructions go to https://nixos.org/nix/)
+
 ## Installation
 
 ```sh
