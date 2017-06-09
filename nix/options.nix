@@ -212,6 +212,12 @@ let
               description = "Port in container";
               type = types.int;
             };
+
+            hostPort = mkOption {
+              description = "Port on the host to bind to";
+              type = types.int;
+              default = null;
+            };
           };
 
           config = {
