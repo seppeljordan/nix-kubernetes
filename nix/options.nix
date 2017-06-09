@@ -215,7 +215,7 @@ let
 
             hostPort = mkOption {
               description = "Port on the host to bind to";
-              type = types.int;
+              type = types.nullOr types.int;
               default = null;
             };
           };
