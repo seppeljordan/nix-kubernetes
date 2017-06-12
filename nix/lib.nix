@@ -53,8 +53,10 @@ let
     imagePullPolicy = "Always";
     securityContext = container.security;
     ports = map (port: {
-      inherit (port) name containerPort protocol;
-    } // (optionalAttrs (port.hostPort != null) {
+      inherit (port) containerPort protocol;
+    } // (optionalAttrs (port.name != null) {
+      inherit (port) name;
+    }) // (optionalAttrs (port.hostPort != null) {
       inherit (port) hostPort;
     })) container.ports;
     volumeMounts = map (volume: ({
