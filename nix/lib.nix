@@ -60,10 +60,8 @@ let
       inherit (port) hostPort;
     })) container.ports;
     volumeMounts = map (volume: ({
-      inherit (volume) mountPath readOnly;
-    } // (optionalAttrs (volume.name != null) {
-      inherit (volume) name;
-    }) // (optionalAttrs (volume.subPath != null) {
+      inherit (volume) name mountPath readOnly;
+    } // (optionalAttrs (volume.subPath != null) {
       subPath = volume.subPath;
     }))) container.mounts;
     env = mapAttrsToList (name: value: {
