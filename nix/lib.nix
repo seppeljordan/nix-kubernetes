@@ -235,13 +235,13 @@ let
   };
 
   mkRoleSpec = role: {
-    rules = map (rule: (optionalAttrs (cfg.apiGroups != null) {
+    rules = map (rule: (optionalAttrs (rule.apiGroups != null) {
       apiGroups = rule.apiGroups;
-    }) // (optionalAttrs (cfg.resources != null) {
+    }) // (optionalAttrs (rule.resources != null) {
       resources = rule.resources;
-    }) // (optionalAttrs (cfg.verbs != null) {
+    }) // (optionalAttrs (rule.verbs != null) {
       verbs = rule.verbs;
-    }) // (optionalAttrs (cfg.nonResourceURLs != null) {
+    }) // (optionalAttrs (rule.nonResourceURLs != null) {
       nonResourceURLs = rule.nonResourceURLs;
     })) role.rules;
   };
