@@ -757,27 +757,27 @@ let
         options = [{
           apiGroups = mkOption {
             description = "Matches list of API groups";
-            type = types.listOf types.str;
-            default = ["*"];
+            type = types.nullOr (types.listOf types.str);
+            default = null;
           };
 
           resources = mkOption {
             description = "Matches list of resources that role allows";
-            type = types.listOf types.str;
-            default = ["*"];
+            type = types.nullOr (types.listOf types.str);
+            default = null;
           };
 
           verbs = mkOption {
             description = "Matches list of verbs that role allows";
-            type = types.listOf types.str;
-            default = ["*"];
+            type = types.nullOr (types.listOf types.str);
+            default = null;
           };
 
           nonResourceURLs = mkOption {
             description = "matches the non-resource request paths (like
             /version and /apis)";
-            type = types.listOf types.str;
-            default = [];
+            type = types.nullOr (types.listOf types.str);
+            default = null;
           };
         }];
         default = [];

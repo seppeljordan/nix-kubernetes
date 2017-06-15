@@ -235,7 +235,15 @@ let
   };
 
   mkRoleSpec = role: {
-    rules = map (rule: filterAttrs (n: v: n != "_module") rule) role.rules;
+    rules = map (rule: (optionalAttrs (cfg.apiGroups != null) {
+      apiGroups = rule.apiGroups;
+    }) // (optionalAttrs (cfg.resources != null) {
+      resources = rule.resources;
+    }) // (optionalAttrs (cfg.verbs != null) {
+      verbs = rule.verbs;
+    }) // (optionalAttrs (cfg.nonResourceURLs != null) {
+      nonResourceURLs = rule.nonResourceURLs;
+    })) role.rules;
   };
 
   mkRoleBindingSpec = binding: {
