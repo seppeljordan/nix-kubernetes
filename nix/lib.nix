@@ -52,8 +52,6 @@ let
     image = container.image;
     imagePullPolicy = "Always";
     securityContext = container.security;
-    hostNetwork = container.hostNetwork;
-    hostPID = container.hostPID;
     ports = map (port: {
       inherit (port) containerPort protocol;
     } // (optionalAttrs (port.name != null) {
@@ -124,7 +122,12 @@ let
         name = secret;
       }) resource.imagePullSecrets;
 
-    } // (optionalAttrs (resource.serviceAccountName != null) {serviceAccountName = resource.serviceAccountName;});
+      hostNetwork = resource.hostNetwork;
+      hostPID = resource.hostPID;
+
+    } // (optionalAttrs (resource.serviceAccountName != null) {
+      serviceAccountName = resource.serviceAccountName;
+    });
   };
 
   mkControllerSpec = rc: {

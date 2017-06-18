@@ -184,18 +184,6 @@ let
         };
       };
 
-      hostNetwork = mkOption {
-        description = "Whether to use host networking";
-        type = types.bool;
-        default = false;
-      };
-
-      hostPID = mkOption {
-        description = "Whether to use host PID";
-        type = types.bool;
-        default = false;
-      };
-
       ports = mkOption {
         description = "Ports exposed by pod";
         type = types.listOf types.optionSet;
@@ -362,6 +350,18 @@ let
       description = "Service account name for this resource";
       default = null;
       type = types.nullOr types.str;
+    };
+
+    hostNetwork = mkOption {
+      description = "Whether to use host networking";
+      type = types.bool;
+      default = false;
+    };
+
+    hostPID = mkOption {
+      description = "Whether to use host PID";
+      type = types.bool;
+      default = false;
     };
   };
 
