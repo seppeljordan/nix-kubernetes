@@ -184,6 +184,18 @@ let
         };
       };
 
+      hostNetwork = mkOption {
+        description = "Whether to use host networking";
+        type = types.bool;
+        default = false;
+      };
+
+      hostPID = mkOption {
+        description = "Whether to use host PID";
+        type = types.bool;
+        default = false;
+      };
+
       ports = mkOption {
         description = "Ports exposed by pod";
         type = types.listOf types.optionSet;
