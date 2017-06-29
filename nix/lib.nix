@@ -182,6 +182,10 @@ let
     };
   };
 
+  mkStorageClassSpec = storageClass: {
+    inherit (storageClass) provisioner parameters;
+  };
+
   mkSecretData = secret: {
     data = mapAttrs (name: secret:
       builtins.readFile (pkgs.stdenv.mkDerivation {
@@ -323,6 +327,10 @@ in {
   mkPvc = pvc:
     (mkResource "v1" "PersistentVolumeClaim") // (mkNsMeta pvc) //
     (mkPvcSpec pvc);
+
+  mkStorageClass = storageClass:
+    (mkResource "storage.k8s.io/v1beta1" "StorageClass") // (mkMeta storageClass) //
+    (mkStorageClassSpec storageClass);
 
   mkRole = role:
      (mkResource "rbac.authorization.k8s.io/v1beta1" "Role") // (mkNsMeta role) //

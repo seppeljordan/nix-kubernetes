@@ -314,6 +314,21 @@ let
     };
   };
 
+  storageClassOptions = { name, config, ... }: {
+    options = {
+      provisioner = mkOption {
+        description = "Name of the provisioner to use";
+        type = types.str;
+      };
+
+      parameters = mkOption {
+        description = "Storage provisioning parameters";
+        type = types.attrs;
+        default = {};
+      };
+    };
+  };
+
   podTemplateOptions = {
     nodeSelector = mkOption {
       description = "Node selector where to put pod";
@@ -982,6 +997,13 @@ in {
       type = types.attrsOf types.optionSet;
       options = [ nsMetaOptions metaOptions pvcOptions ];
       description = "Attribute set of persistent volume claims";
+      default = {};
+    };
+
+    storageClass = mkOption {
+      type = types.attrsOf types.optionSet;
+      options = [ metaOptions storageClassOptions ];
+      description = "Attribute set of storage classes";
       default = {};
     };
 
