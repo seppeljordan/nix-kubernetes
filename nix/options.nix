@@ -119,6 +119,12 @@ let
         type = types.str;
       };
 
+      imagePullPolicy = mkOption {
+        description = "When to pull new container image";
+        type = types.enum ["Always" "iIfNotPresent" "Never"];
+        default = "Always";
+      };
+
       command = mkOption {
         description = "Command to run";
         type = types.nullOr (types.either (types.listOf types.str) types.str);

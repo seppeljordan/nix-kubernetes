@@ -50,7 +50,7 @@ let
   mkContainer = container: {
     name = container.name;
     image = container.image;
-    imagePullPolicy = "Always";
+    imagePullPolicy = container.imagePullPolicy;
     securityContext = container.security;
     ports = map (port: {
       inherit (port) containerPort protocol;
