@@ -112,6 +112,10 @@ let
         mkContainer container
       ) resource.containers;
 
+      initContainers = mapAttrsToList (name: container:
+        mkContainer container
+      ) resource.initContainers;
+
       volumes = mapAttrsToList (name: volume:
         mkVolume volume
       ) resource.volumes;

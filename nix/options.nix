@@ -342,6 +342,12 @@ let
       options = [ containerOptions ];
     };
 
+    initContainers = mkOption {
+      description = "Pod init containers";
+      type = types.attrsOf types.optionSet;
+      options = [ containerOptions ];
+    };
+
     volumes = mkOption {
       description = "Pod volumes";
       type = types.attrsOf types.optionSet;

@@ -4,6 +4,10 @@
 
     kubernetes.pods.test = {
       annotations.environment = "production";
+      initContainers.init-test = {
+        image = "busybox";
+        command = "echo true";
+      };
       containers.test = {
         image = "redis";
         ports = [{port = 6379;}];
