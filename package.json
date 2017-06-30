@@ -1,6 +1,6 @@
 {
   "name": "nix-kubernetes",
-  "version": "0.12.1",
+  "version": "0.13.0",
   "description": "Kubernetes deployment manager written in nix",
   "homepage": "https://github.com/x-truder/nix-kubernetes",
   "author": {
