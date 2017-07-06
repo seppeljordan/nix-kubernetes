@@ -10,18 +10,15 @@ let
     then builtins.fromJSON (builtins.readFile args)
     else {};
 
-  deployments = let
-    cfg = import configuration;
-  in if isFunction cfg then cfg argsContent else cfg;
+  deployments = import configuration;
 
   # Evaluates deployment
   evalDeployment = name: deployment: let
     otherDeployments = filterAttrs (name2: _: name != name2) deployments;
   in (evalModules {
-    modules = [./options.nix deployment];
+    modules = [./options.nix deployment argsContent];
     args = {
       inherit pkgs;
-      args = argsContent;
       deployments = mapAttrs (
         name: deployment: evalDeployment name deployment
       ) otherDeployments;
