@@ -112,10 +112,6 @@ let
         mkContainer container
       ) resource.containers;
 
-      initContainers = mapAttrsToList (name: container:
-        mkContainer container
-      ) resource.initContainers;
-
       volumes = mapAttrsToList (name: volume:
         mkVolume volume
       ) resource.volumes;
@@ -131,6 +127,10 @@ let
 
     } // (optionalAttrs (resource.serviceAccountName != null) {
       serviceAccountName = resource.serviceAccountName;
+    }) // (optionalAttrs (resource.initContainers != {}) {
+      initContainers = mapAttrsToList (name: container:
+        mkContainer container
+      ) resource.initContainers;
     });
   };
 
