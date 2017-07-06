@@ -672,25 +672,31 @@ let
     };
   };
 
-  jobOptions = {
-    pod = podTemplateOptions // {
-      labels = mkOption {
-        description = "Pod labels";
-        type = types.attrsOf types.str;
-        default = {};
+  jobOptions = {config, ...}: {
+    options = {
+      pod = podTemplateOptions // {
+        labels = mkOption {
+          description = "Pod labels";
+          type = types.attrsOf types.str;
+          default = {};
+        };
+
+        annotations = mkOption {
+          description = "Pod annotation";
+          type = types.attrsOf types.str;
+          default = {};
+        };
       };
 
-      annotations = mkOption {
-        description = "Pod annotation";
-        type = types.attrsOf types.str;
-        default = {};
+      activeDeadlineSeconds = mkOption {
+        description = "Job restart deadline";
+        default = null;
+        type = types.nullOr types.int;
       };
     };
 
-    activeDeadlineSeconds = mkOption {
-      description = "Job restart deadline";
-      default = null;
-      type = types.nullOr types.int;
+    config = {
+      pod.restartPolicy = mkDefault "OnFailure";
     };
   };
 

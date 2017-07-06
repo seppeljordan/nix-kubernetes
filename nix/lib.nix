@@ -317,7 +317,7 @@ in {
     (mkScheduledJobSpec scheduledJob);
 
   mkJob = job:
-    (mkResource "extensions/v1beta1" "Job") // (mkNsMeta job) //
+    (mkResource "batch/v1" "Job") // (mkNsMeta job) //
     (mkJobSpec job);
 
   mkIngress = ingress:
