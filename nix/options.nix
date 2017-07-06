@@ -673,29 +673,30 @@ let
     };
   };
 
-  jobOptions = {config, ...}: {
-    options = {
-      pod = podTemplateOptions // {
-        labels = mkOption {
-          description = "Pod labels";
-          type = types.attrsOf types.str;
-          default = {};
-        };
-
-        annotations = mkOption {
-          description = "Pod annotation";
-          type = types.attrsOf types.str;
-          default = {};
-        };
+  jobTemplateOptions = {
+    pod = podTemplateOptions // {
+      labels = mkOption {
+        description = "Pod labels";
+        type = types.attrsOf types.str;
+        default = {};
       };
 
-      activeDeadlineSeconds = mkOption {
-        description = "Job restart deadline";
-        default = null;
-        type = types.nullOr types.int;
+      annotations = mkOption {
+        description = "Pod annotation";
+        type = types.attrsOf types.str;
+        default = {};
       };
     };
 
+    activeDeadlineSeconds = mkOption {
+      description = "Job restart deadline";
+      default = null;
+      type = types.nullOr types.int;
+    };
+  };
+
+  jobOptions = { name, config, ... }: {
+    options = jobTemplateOptions;
     config = mkMerge [{
       pod.restartPolicy = mkDefault "OnFailure";
     } (mkDefault cfg.defaults.jobs)];
@@ -720,7 +721,7 @@ let
         type = types.enum ["Forbid" "Allow" "Replace"];
       };
 
-      job = jobOptions // {
+      job = jobTemplateOptions // {
         labels = mkOption {
           description = "Pod labels";
           type = types.attrsOf types.str;
@@ -735,10 +736,13 @@ let
       };
     };
 
-    config = {
+    config = mkMerge [{
       job.labels.scheduled-job-name = name;
       job.pod.labels.scheduled-job-name = name;
-    };
+      job.pod.restartPolicy = mkDefault "OnFailure";
+    } {
+      job = mkDefault cfg.defaults.jobs;
+    }];
   };
 
   networkPolicyOptions = { name, config, ... }: {
