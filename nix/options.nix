@@ -698,6 +698,7 @@ let
   jobOptions = { name, config, ... }: {
     options = jobTemplateOptions;
     config = mkMerge [{
+      labels.job = name;
       pod.restartPolicy = mkDefault "OnFailure";
     } (mkDefault cfg.defaults.jobs)];
   };
