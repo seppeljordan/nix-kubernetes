@@ -696,9 +696,9 @@ let
       };
     };
 
-    config = {
+    config = mkMerge [{
       pod.restartPolicy = mkDefault "OnFailure";
-    };
+    } (mkDefault cfg.defaults.jobs)];
   };
 
   scheduledJobOptions = { name, config, ... }: {
