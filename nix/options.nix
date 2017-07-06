@@ -352,6 +352,7 @@ let
       description = "Pod init containers";
       type = types.attrsOf types.optionSet;
       options = [ containerOptions ];
+      default = {};
     };
 
     volumes = mkOption {
