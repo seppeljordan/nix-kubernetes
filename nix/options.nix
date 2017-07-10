@@ -906,6 +906,12 @@ let
         type = types.bool;
       };
 
+      terminationGracePeriodSeconds = mkOption {
+        description = "Number of seconds to wait for termination";
+        default = null;
+        type = types.nullOr types.int;
+      };
+
       replicas = mkOption {
         description = "Number of stateful set replicas to run";
         default = 1;

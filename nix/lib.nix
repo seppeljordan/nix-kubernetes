@@ -280,7 +280,9 @@ let
         mapAttrsToList (name: claimTemplate:
           (mkNsMeta claimTemplate) // (mkPvcSpec claimTemplate)
         ) statufulset.volumeClaimTemplates;
-    };
+      } // (optionalAttrs (statefulset.terminationGracePeriodSeconds != null) {
+        terminationGracePeriodSeconds = statefulset.terminationGracePeriodSeconds;
+      });
   };
 
   mkPetSetSpec = petset: mkStatefulSetSpec petset;
