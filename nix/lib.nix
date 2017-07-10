@@ -271,18 +271,18 @@ let
     data = flattenAttrs configMap.data;
   };
 
-  mkStatefulSetSpec = statufulset: {
+  mkStatefulSetSpec = stetufulset: {
     spec = {
-      replicas = statufulset.replicas;
-      serviceName = statufulset.serviceName;
-      template = (mkSpecMeta statufulset.pod) // (mkPodSpec statufulset.pod);
+      replicas = statefulset.replicas;
+      serviceName = statefelset.serviceName;
+      template = (mkSpecMeta statefulset.pod) // (mkPodSpec statefulset.pod);
       volumeClaimTemplates =
         mapAttrsToList (name: claimTemplate:
           (mkNsMeta claimTemplate) // (mkPvcSpec claimTemplate)
-        ) statufulset.volumeClaimTemplates;
-      } // (optionalAttrs (statefulset.terminationGracePeriodSeconds != null) {
-        terminationGracePeriodSeconds = statefulset.terminationGracePeriodSeconds;
-      });
+        ) statefulset.volumeClaimTemplates;
+    } // (optionalAttrs (statefulset.terminationGracePeriodSeconds != null) {
+      terminationGracePeriodSeconds = statefulset.terminationGracePeriodSeconds;
+    });
   };
 
   mkPetSetSpec = petset: mkStatefulSetSpec petset;
