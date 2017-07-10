@@ -271,7 +271,7 @@ let
     data = flattenAttrs configMap.data;
   };
 
-  mkStatefulSetSpec = stetufulset: {
+  mkStatefulSetSpec = statefulset: {
     spec = {
       replicas = statefulset.replicas;
       serviceName = statefelset.serviceName;
