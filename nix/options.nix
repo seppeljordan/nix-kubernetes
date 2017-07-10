@@ -350,9 +350,9 @@ let
 
     initContainers = mkOption {
       description = "Pod init containers";
-      type = types.attrsOf types.optionSet;
+      type = types.listOf types.optionSet;
       options = [ containerOptions ];
-      default = {};
+      default = [];
     };
 
     volumes = mkOption {

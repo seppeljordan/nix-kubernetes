@@ -127,8 +127,8 @@ let
 
     } // (optionalAttrs (resource.serviceAccountName != null) {
       serviceAccountName = resource.serviceAccountName;
-    }) // (optionalAttrs (resource.initContainers != {}) {
-      initContainers = mapAttrsToList (name: container:
+    }) // (optionalAttrs (resource.initContainers != []) {
+      initContainers = map (name: container:
         mkContainer container
       ) resource.initContainers;
     });
