@@ -69,7 +69,9 @@ let
       statefulsets =
         mapAttrs (name: statefulset: mkStatefulSet statefulset) config.kubernetes.statefulSets;
       networkpolicies =
-         mapAttrs (name: networkpolicy: mkNetworkPolicy networkpolicy) config.kubernetes.networkPolicies;
+        mapAttrs (name: networkpolicy: mkNetworkPolicy networkpolicy) config.kubernetes.networkPolicies;
+      poddistributionbudgets =
+        mapAttrs (name: pdb: mkPodDistributionBudget pdb) config.kubernetes.podDistributionBudgets;
     } // (mapAttrs (name: customResources: (
       mapAttrs (name: customResource: mkCustomResource customResource) customResources
     )) config.kubernetes.customResources);

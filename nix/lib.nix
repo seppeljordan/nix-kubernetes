@@ -285,6 +285,16 @@ let
 
   mkPetSetSpec = petset: mkStatefulSetSpec petset;
 
+  mkPodDistributionBudgetSpec = pdb: {
+    spec = {
+      selector.matchLabels = pdb.selector.matchLabels;
+    } // (optionalAttrs (pdb.minAvailable != null) {
+      inherit (pdb) minAvailable;
+    }) // (optionalAttrs (pdb.maxUnavailable != null) {
+      inherit (pdb) maxUnavailable;
+    });
+  };
+
   mkCustomResourceExtra = customResource:
     mapAttrs (n: v: v) customResource.extra;
 
@@ -371,6 +381,10 @@ in {
   mkNetworkPolicy = networkpolicy:
     (mkResource "extensions/v1beta1" "NetworkPolicy") // (mkNsMeta networkpolicy) //
     (mkNetworkPolicySpec networkpolicy);
+
+  mkPodDistributionBudget = pdb:
+    (mkResource "policy/v1beta1" "PodDisruptionBudget") // (mkNsMeta pdb) //
+    (mkPodDistributionBudgetSpec pdb);
 
   mkCustomResource = customResource:
     (mkResource customResource.apiVersion customResource.kind) //

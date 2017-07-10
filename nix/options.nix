@@ -967,6 +967,29 @@ let
     };
   };
 
+  podDistributionBudgetOptions = {name, config, ...}: {
+    options = {
+      minAvailable = mkOption {
+        description = "Minimal number of available nodes";
+        type = types.nullOr (types.either types.str types.int);
+        default = null;
+        example = "60%";
+      };
+
+      maxUnavailable = mkOption {
+        description =" Maximal number of unavailable nodes";
+        type = types.nullOr (types.either types.str types.int);
+        default = null;
+        example = "30%";
+      };
+
+      selector.matchLabels = mkOption {
+        type = types.attrs;
+        description = "Labels to match pods";
+      };
+    };
+  };
+
 in {
   options.kubernetes = {
     gcNamespaces = mkOption {
@@ -1119,6 +1142,13 @@ in {
       type = types.attrsOf types.optionSet;
       options = [ nsMetaOptions metaOptions statefulSetOptions ];
       description = "Attribute set of stateful set definitions";
+      default = {};
+    };
+
+    podDistributionBudgets = mkOption {
+      type = types.attrsOf types.optionSet;
+      options = [ nsMetaOptions metaOptions podDistributionBudgetOptions ];
+      description = "Attribute set of pod distribution budgets";
       default = {};
     };
 
