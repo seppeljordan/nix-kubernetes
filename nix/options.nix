@@ -121,7 +121,7 @@ let
 
       imagePullPolicy = mkOption {
         description = "When to pull new container image";
-        type = types.enum ["Always" "iIfNotPresent" "Never"];
+        type = types.enum ["Always" "IfNotPresent" "Never"];
         default = "Always";
       };
 
