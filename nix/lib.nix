@@ -51,7 +51,7 @@ let
     name = container.name;
     image = container.image;
     imagePullPolicy = container.imagePullPolicy;
-    securityContext = container.securityContext;
+    securityContext = container.security;
     ports = map (port: {
       inherit (port) containerPort protocol;
     } // (optionalAttrs (port.name != null) {
