@@ -188,6 +188,18 @@ let
           type = types.bool;
           default = false;
         };
+
+        runAsUser = mkOption {
+          description = "Run container as user id";
+          type = types.nullOr types.int;
+          default = null;
+        };
+
+        fsGroup = mkOption {
+          description = "Container filesystem group id";
+          type = types.nullOr types.int;
+          default = null;
+        };
       };
 
       ports = mkOption {
