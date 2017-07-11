@@ -1006,6 +1006,12 @@ let
         description = "Labels to match pods";
       };
     };
+
+    config = {
+      selector.matchLabels = mkDefault {
+        inherit name;
+      };
+    };
   };
 
 in {
