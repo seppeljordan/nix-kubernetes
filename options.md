@@ -108,6 +108,13 @@ values.
   **Default:** "..."
   **Example:** ...
 
+* `kubernetes.pods.<name>.containers.<name>.imagePullPolicy`:
+
+  When to pull new container image
+
+  **Default:** "Always"
+  **Example:** ...
+
 * `kubernetes.pods.<name>.containers.<name>.limits.cpu`:
 
   Limit cpu for container
@@ -192,6 +199,13 @@ values.
   **Default:** "..."
   **Example:** ...
 
+* `kubernetes.pods.<name>.containers.<name>.mounts.*.readOnly`:
+
+  Whether to mount read only
+
+  **Default:** false
+  **Example:** ...
+
 * `kubernetes.pods.<name>.containers.<name>.mounts.*.subPath`:
 
   Sub path to mount
@@ -218,6 +232,13 @@ values.
   Port in container
 
   **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.pods.<name>.containers.<name>.ports.*.hostPort`:
+
+  Port on the host to bind to
+
+  **Default:** null
   **Example:** ...
 
 * `kubernetes.pods.<name>.containers.<name>.ports.*.name`:
@@ -353,11 +374,330 @@ values.
   **Default:** []
   **Example:** ...
 
+* `kubernetes.pods.<name>.hostNetwork`:
+
+  Whether to use host networking
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.pods.<name>.hostPID`:
+
+  Whether to use host PID
+
+  **Default:** false
+  **Example:** ...
+
 * `kubernetes.pods.<name>.imagePullSecrets`:
 
   Name of the secret to use for pulling docker image
 
   **Default:** []
+  **Example:** ...
+
+* `kubernetes.pods.<name>.initContainers`:
+
+  Pod init containers
+
+  **Default:** []
+  **Example:** ...
+
+* `kubernetes.pods.<name>.initContainers.*.args`:
+
+  Arguments to command
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.pods.<name>.initContainers.*.command`:
+
+  Command to run
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.pods.<name>.initContainers.*.enable`:
+
+  Whether to enable container
+
+  **Default:** true
+  **Example:** ...
+
+* `kubernetes.pods.<name>.initContainers.*.env`:
+
+  Environment variables to set. This can be any value that serializes to
+string. If value starts with "secret:<name>:<key>" or
+"configMap:<name>:<key>" if references respected secret or config map
+values.
+
+
+  **Default:** {}
+  **Example:** ...
+
+* `kubernetes.pods.<name>.initContainers.*.image`:
+
+  Image to use
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.pods.<name>.initContainers.*.imagePullPolicy`:
+
+  When to pull new container image
+
+  **Default:** "Always"
+  **Example:** ...
+
+* `kubernetes.pods.<name>.initContainers.*.limits.cpu`:
+
+  Limit cpu for container
+
+  **Default:** null
+  **Example:** "500m"
+
+* `kubernetes.pods.<name>.initContainers.*.limits.memory`:
+
+  Limit memory for container
+
+  **Default:** null
+  **Example:** "128Mi"
+
+* `kubernetes.pods.<name>.initContainers.*.livenessProbe.enable`:
+
+  Whether to enable probe
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.pods.<name>.initContainers.*.livenessProbe.exec.command`:
+
+  Command to run for check
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.pods.<name>.initContainers.*.livenessProbe.httpGet.path`:
+
+  Http check path
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.pods.<name>.initContainers.*.livenessProbe.httpGet.port`:
+
+  Http check port
+
+  **Default:** 80
+  **Example:** ...
+
+* `kubernetes.pods.<name>.initContainers.*.livenessProbe.initialDelaySeconds`:
+
+  Initial delay before checking
+
+  **Default:** 30
+  **Example:** ...
+
+* `kubernetes.pods.<name>.initContainers.*.livenessProbe.tcpSocket.port`:
+
+  Port to connect to for check
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.pods.<name>.initContainers.*.livenessProbe.timeoutSeconds`:
+
+  Check timeout
+
+  **Default:** 5
+  **Example:** ...
+
+* `kubernetes.pods.<name>.initContainers.*.mounts`:
+
+  Volumes mounted in pod
+
+  **Default:** []
+  **Example:** ...
+
+* `kubernetes.pods.<name>.initContainers.*.mounts.*.mountPath`:
+
+  Mount path of volume
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.pods.<name>.initContainers.*.mounts.*.name`:
+
+  Name of the volume
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.pods.<name>.initContainers.*.mounts.*.readOnly`:
+
+  Whether to mount read only
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.pods.<name>.initContainers.*.mounts.*.subPath`:
+
+  Sub path to mount
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.pods.<name>.initContainers.*.name`:
+
+  Name of the container
+
+  **Default:** ""
+  **Example:** ...
+
+* `kubernetes.pods.<name>.initContainers.*.ports`:
+
+  Ports exposed by pod
+
+  **Default:** []
+  **Example:** ...
+
+* `kubernetes.pods.<name>.initContainers.*.ports.*.containerPort`:
+
+  Port in container
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.pods.<name>.initContainers.*.ports.*.hostPort`:
+
+  Port on the host to bind to
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.pods.<name>.initContainers.*.ports.*.name`:
+
+  Name of the port
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.pods.<name>.initContainers.*.ports.*.port`:
+
+  Port to expose
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.pods.<name>.initContainers.*.ports.*.protocol`:
+
+  Protocol to use
+
+  **Default:** "TCP"
+  **Example:** ...
+
+* `kubernetes.pods.<name>.initContainers.*.postStart.command`:
+
+  Command to execute in post start phase
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.pods.<name>.initContainers.*.readinessProbe.enable`:
+
+  Whether to enable probe
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.pods.<name>.initContainers.*.readinessProbe.exec.command`:
+
+  Command to run for check
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.pods.<name>.initContainers.*.readinessProbe.httpGet.path`:
+
+  Http check path
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.pods.<name>.initContainers.*.readinessProbe.httpGet.port`:
+
+  Http check port
+
+  **Default:** 80
+  **Example:** ...
+
+* `kubernetes.pods.<name>.initContainers.*.readinessProbe.initialDelaySeconds`:
+
+  Initial delay before checking
+
+  **Default:** 30
+  **Example:** ...
+
+* `kubernetes.pods.<name>.initContainers.*.readinessProbe.tcpSocket.port`:
+
+  Port to connect to for check
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.pods.<name>.initContainers.*.readinessProbe.timeoutSeconds`:
+
+  Check timeout
+
+  **Default:** 5
+  **Example:** ...
+
+* `kubernetes.pods.<name>.initContainers.*.requests.cpu`:
+
+  Limit cpu for container
+
+  **Default:** null
+  **Example:** "500m"
+
+* `kubernetes.pods.<name>.initContainers.*.requests.memory`:
+
+  Limit memory for container
+
+  **Default:** null
+  **Example:** "128Mi"
+
+* `kubernetes.pods.<name>.initContainers.*.security.capabilities.add`:
+
+  Capabilites to add
+
+  **Default:** []
+  **Example:** ...
+
+* `kubernetes.pods.<name>.initContainers.*.security.privileged`:
+
+  Whether to run container as privileged
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.pods.<name>.initContainers.*.stdin`:
+
+  Whether to enable stdin
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.pods.<name>.initContainers.*.tty`:
+
+  Whether to enable tty
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.pods.<name>.initContainers.*.workdir`:
+
+  Container working directory
+
+  **Default:** null
   **Example:** ...
 
 * `kubernetes.pods.<name>.labels`:
@@ -393,6 +733,20 @@ values.
   Pod restart policy
 
   **Default:** "Always"
+  **Example:** ...
+
+* `kubernetes.pods.<name>.securityContext.fsGroup`:
+
+  Container filesystem group id
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.pods.<name>.securityContext.runAsUser`:
+
+  Run container as user id
+
+  **Default:** null
   **Example:** ...
 
 * `kubernetes.pods.<name>.serviceAccountName`:
@@ -648,6 +1002,13 @@ values.
   **Default:** "..."
   **Example:** ...
 
+* `kubernetes.controllers.<name>.pod.containers.<name>.imagePullPolicy`:
+
+  When to pull new container image
+
+  **Default:** "Always"
+  **Example:** ...
+
 * `kubernetes.controllers.<name>.pod.containers.<name>.limits.cpu`:
 
   Limit cpu for container
@@ -732,6 +1093,13 @@ values.
   **Default:** "..."
   **Example:** ...
 
+* `kubernetes.controllers.<name>.pod.containers.<name>.mounts.*.readOnly`:
+
+  Whether to mount read only
+
+  **Default:** false
+  **Example:** ...
+
 * `kubernetes.controllers.<name>.pod.containers.<name>.mounts.*.subPath`:
 
   Sub path to mount
@@ -758,6 +1126,13 @@ values.
   Port in container
 
   **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.controllers.<name>.pod.containers.<name>.ports.*.hostPort`:
+
+  Port on the host to bind to
+
+  **Default:** null
   **Example:** ...
 
 * `kubernetes.controllers.<name>.pod.containers.<name>.ports.*.name`:
@@ -886,11 +1261,330 @@ values.
   **Default:** null
   **Example:** ...
 
+* `kubernetes.controllers.<name>.pod.hostNetwork`:
+
+  Whether to use host networking
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.controllers.<name>.pod.hostPID`:
+
+  Whether to use host PID
+
+  **Default:** false
+  **Example:** ...
+
 * `kubernetes.controllers.<name>.pod.imagePullSecrets`:
 
   Name of the secret to use for pulling docker image
 
   **Default:** []
+  **Example:** ...
+
+* `kubernetes.controllers.<name>.pod.initContainers`:
+
+  Pod init containers
+
+  **Default:** []
+  **Example:** ...
+
+* `kubernetes.controllers.<name>.pod.initContainers.*.args`:
+
+  Arguments to command
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.controllers.<name>.pod.initContainers.*.command`:
+
+  Command to run
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.controllers.<name>.pod.initContainers.*.enable`:
+
+  Whether to enable container
+
+  **Default:** true
+  **Example:** ...
+
+* `kubernetes.controllers.<name>.pod.initContainers.*.env`:
+
+  Environment variables to set. This can be any value that serializes to
+string. If value starts with "secret:<name>:<key>" or
+"configMap:<name>:<key>" if references respected secret or config map
+values.
+
+
+  **Default:** {}
+  **Example:** ...
+
+* `kubernetes.controllers.<name>.pod.initContainers.*.image`:
+
+  Image to use
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.controllers.<name>.pod.initContainers.*.imagePullPolicy`:
+
+  When to pull new container image
+
+  **Default:** "Always"
+  **Example:** ...
+
+* `kubernetes.controllers.<name>.pod.initContainers.*.limits.cpu`:
+
+  Limit cpu for container
+
+  **Default:** null
+  **Example:** "500m"
+
+* `kubernetes.controllers.<name>.pod.initContainers.*.limits.memory`:
+
+  Limit memory for container
+
+  **Default:** null
+  **Example:** "128Mi"
+
+* `kubernetes.controllers.<name>.pod.initContainers.*.livenessProbe.enable`:
+
+  Whether to enable probe
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.controllers.<name>.pod.initContainers.*.livenessProbe.exec.command`:
+
+  Command to run for check
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.controllers.<name>.pod.initContainers.*.livenessProbe.httpGet.path`:
+
+  Http check path
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.controllers.<name>.pod.initContainers.*.livenessProbe.httpGet.port`:
+
+  Http check port
+
+  **Default:** 80
+  **Example:** ...
+
+* `kubernetes.controllers.<name>.pod.initContainers.*.livenessProbe.initialDelaySeconds`:
+
+  Initial delay before checking
+
+  **Default:** 30
+  **Example:** ...
+
+* `kubernetes.controllers.<name>.pod.initContainers.*.livenessProbe.tcpSocket.port`:
+
+  Port to connect to for check
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.controllers.<name>.pod.initContainers.*.livenessProbe.timeoutSeconds`:
+
+  Check timeout
+
+  **Default:** 5
+  **Example:** ...
+
+* `kubernetes.controllers.<name>.pod.initContainers.*.mounts`:
+
+  Volumes mounted in pod
+
+  **Default:** []
+  **Example:** ...
+
+* `kubernetes.controllers.<name>.pod.initContainers.*.mounts.*.mountPath`:
+
+  Mount path of volume
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.controllers.<name>.pod.initContainers.*.mounts.*.name`:
+
+  Name of the volume
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.controllers.<name>.pod.initContainers.*.mounts.*.readOnly`:
+
+  Whether to mount read only
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.controllers.<name>.pod.initContainers.*.mounts.*.subPath`:
+
+  Sub path to mount
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.controllers.<name>.pod.initContainers.*.name`:
+
+  Name of the container
+
+  **Default:** ""
+  **Example:** ...
+
+* `kubernetes.controllers.<name>.pod.initContainers.*.ports`:
+
+  Ports exposed by pod
+
+  **Default:** []
+  **Example:** ...
+
+* `kubernetes.controllers.<name>.pod.initContainers.*.ports.*.containerPort`:
+
+  Port in container
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.controllers.<name>.pod.initContainers.*.ports.*.hostPort`:
+
+  Port on the host to bind to
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.controllers.<name>.pod.initContainers.*.ports.*.name`:
+
+  Name of the port
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.controllers.<name>.pod.initContainers.*.ports.*.port`:
+
+  Port to expose
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.controllers.<name>.pod.initContainers.*.ports.*.protocol`:
+
+  Protocol to use
+
+  **Default:** "TCP"
+  **Example:** ...
+
+* `kubernetes.controllers.<name>.pod.initContainers.*.postStart.command`:
+
+  Command to execute in post start phase
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.controllers.<name>.pod.initContainers.*.readinessProbe.enable`:
+
+  Whether to enable probe
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.controllers.<name>.pod.initContainers.*.readinessProbe.exec.command`:
+
+  Command to run for check
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.controllers.<name>.pod.initContainers.*.readinessProbe.httpGet.path`:
+
+  Http check path
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.controllers.<name>.pod.initContainers.*.readinessProbe.httpGet.port`:
+
+  Http check port
+
+  **Default:** 80
+  **Example:** ...
+
+* `kubernetes.controllers.<name>.pod.initContainers.*.readinessProbe.initialDelaySeconds`:
+
+  Initial delay before checking
+
+  **Default:** 30
+  **Example:** ...
+
+* `kubernetes.controllers.<name>.pod.initContainers.*.readinessProbe.tcpSocket.port`:
+
+  Port to connect to for check
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.controllers.<name>.pod.initContainers.*.readinessProbe.timeoutSeconds`:
+
+  Check timeout
+
+  **Default:** 5
+  **Example:** ...
+
+* `kubernetes.controllers.<name>.pod.initContainers.*.requests.cpu`:
+
+  Limit cpu for container
+
+  **Default:** null
+  **Example:** "500m"
+
+* `kubernetes.controllers.<name>.pod.initContainers.*.requests.memory`:
+
+  Limit memory for container
+
+  **Default:** null
+  **Example:** "128Mi"
+
+* `kubernetes.controllers.<name>.pod.initContainers.*.security.capabilities.add`:
+
+  Capabilites to add
+
+  **Default:** []
+  **Example:** ...
+
+* `kubernetes.controllers.<name>.pod.initContainers.*.security.privileged`:
+
+  Whether to run container as privileged
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.controllers.<name>.pod.initContainers.*.stdin`:
+
+  Whether to enable stdin
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.controllers.<name>.pod.initContainers.*.tty`:
+
+  Whether to enable tty
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.controllers.<name>.pod.initContainers.*.workdir`:
+
+  Container working directory
+
+  **Default:** null
   **Example:** ...
 
 * `kubernetes.controllers.<name>.pod.labels`:
@@ -912,6 +1606,20 @@ values.
   Pod restart policy
 
   **Default:** "Always"
+  **Example:** ...
+
+* `kubernetes.controllers.<name>.pod.securityContext.fsGroup`:
+
+  Container filesystem group id
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.controllers.<name>.pod.securityContext.runAsUser`:
+
+  Run container as user id
+
+  **Default:** null
   **Example:** ...
 
 * `kubernetes.controllers.<name>.pod.serviceAccountName`:
@@ -1067,6 +1775,13 @@ values.
   **Default:** "..."
   **Example:** ...
 
+* `kubernetes.deployments.<name>.pod.containers.<name>.imagePullPolicy`:
+
+  When to pull new container image
+
+  **Default:** "Always"
+  **Example:** ...
+
 * `kubernetes.deployments.<name>.pod.containers.<name>.limits.cpu`:
 
   Limit cpu for container
@@ -1151,6 +1866,13 @@ values.
   **Default:** "..."
   **Example:** ...
 
+* `kubernetes.deployments.<name>.pod.containers.<name>.mounts.*.readOnly`:
+
+  Whether to mount read only
+
+  **Default:** false
+  **Example:** ...
+
 * `kubernetes.deployments.<name>.pod.containers.<name>.mounts.*.subPath`:
 
   Sub path to mount
@@ -1177,6 +1899,13 @@ values.
   Port in container
 
   **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.deployments.<name>.pod.containers.<name>.ports.*.hostPort`:
+
+  Port on the host to bind to
+
+  **Default:** null
   **Example:** ...
 
 * `kubernetes.deployments.<name>.pod.containers.<name>.ports.*.name`:
@@ -1305,11 +2034,330 @@ values.
   **Default:** null
   **Example:** ...
 
+* `kubernetes.deployments.<name>.pod.hostNetwork`:
+
+  Whether to use host networking
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.deployments.<name>.pod.hostPID`:
+
+  Whether to use host PID
+
+  **Default:** false
+  **Example:** ...
+
 * `kubernetes.deployments.<name>.pod.imagePullSecrets`:
 
   Name of the secret to use for pulling docker image
 
   **Default:** []
+  **Example:** ...
+
+* `kubernetes.deployments.<name>.pod.initContainers`:
+
+  Pod init containers
+
+  **Default:** []
+  **Example:** ...
+
+* `kubernetes.deployments.<name>.pod.initContainers.*.args`:
+
+  Arguments to command
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.deployments.<name>.pod.initContainers.*.command`:
+
+  Command to run
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.deployments.<name>.pod.initContainers.*.enable`:
+
+  Whether to enable container
+
+  **Default:** true
+  **Example:** ...
+
+* `kubernetes.deployments.<name>.pod.initContainers.*.env`:
+
+  Environment variables to set. This can be any value that serializes to
+string. If value starts with "secret:<name>:<key>" or
+"configMap:<name>:<key>" if references respected secret or config map
+values.
+
+
+  **Default:** {}
+  **Example:** ...
+
+* `kubernetes.deployments.<name>.pod.initContainers.*.image`:
+
+  Image to use
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.deployments.<name>.pod.initContainers.*.imagePullPolicy`:
+
+  When to pull new container image
+
+  **Default:** "Always"
+  **Example:** ...
+
+* `kubernetes.deployments.<name>.pod.initContainers.*.limits.cpu`:
+
+  Limit cpu for container
+
+  **Default:** null
+  **Example:** "500m"
+
+* `kubernetes.deployments.<name>.pod.initContainers.*.limits.memory`:
+
+  Limit memory for container
+
+  **Default:** null
+  **Example:** "128Mi"
+
+* `kubernetes.deployments.<name>.pod.initContainers.*.livenessProbe.enable`:
+
+  Whether to enable probe
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.deployments.<name>.pod.initContainers.*.livenessProbe.exec.command`:
+
+  Command to run for check
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.deployments.<name>.pod.initContainers.*.livenessProbe.httpGet.path`:
+
+  Http check path
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.deployments.<name>.pod.initContainers.*.livenessProbe.httpGet.port`:
+
+  Http check port
+
+  **Default:** 80
+  **Example:** ...
+
+* `kubernetes.deployments.<name>.pod.initContainers.*.livenessProbe.initialDelaySeconds`:
+
+  Initial delay before checking
+
+  **Default:** 30
+  **Example:** ...
+
+* `kubernetes.deployments.<name>.pod.initContainers.*.livenessProbe.tcpSocket.port`:
+
+  Port to connect to for check
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.deployments.<name>.pod.initContainers.*.livenessProbe.timeoutSeconds`:
+
+  Check timeout
+
+  **Default:** 5
+  **Example:** ...
+
+* `kubernetes.deployments.<name>.pod.initContainers.*.mounts`:
+
+  Volumes mounted in pod
+
+  **Default:** []
+  **Example:** ...
+
+* `kubernetes.deployments.<name>.pod.initContainers.*.mounts.*.mountPath`:
+
+  Mount path of volume
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.deployments.<name>.pod.initContainers.*.mounts.*.name`:
+
+  Name of the volume
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.deployments.<name>.pod.initContainers.*.mounts.*.readOnly`:
+
+  Whether to mount read only
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.deployments.<name>.pod.initContainers.*.mounts.*.subPath`:
+
+  Sub path to mount
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.deployments.<name>.pod.initContainers.*.name`:
+
+  Name of the container
+
+  **Default:** ""
+  **Example:** ...
+
+* `kubernetes.deployments.<name>.pod.initContainers.*.ports`:
+
+  Ports exposed by pod
+
+  **Default:** []
+  **Example:** ...
+
+* `kubernetes.deployments.<name>.pod.initContainers.*.ports.*.containerPort`:
+
+  Port in container
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.deployments.<name>.pod.initContainers.*.ports.*.hostPort`:
+
+  Port on the host to bind to
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.deployments.<name>.pod.initContainers.*.ports.*.name`:
+
+  Name of the port
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.deployments.<name>.pod.initContainers.*.ports.*.port`:
+
+  Port to expose
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.deployments.<name>.pod.initContainers.*.ports.*.protocol`:
+
+  Protocol to use
+
+  **Default:** "TCP"
+  **Example:** ...
+
+* `kubernetes.deployments.<name>.pod.initContainers.*.postStart.command`:
+
+  Command to execute in post start phase
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.deployments.<name>.pod.initContainers.*.readinessProbe.enable`:
+
+  Whether to enable probe
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.deployments.<name>.pod.initContainers.*.readinessProbe.exec.command`:
+
+  Command to run for check
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.deployments.<name>.pod.initContainers.*.readinessProbe.httpGet.path`:
+
+  Http check path
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.deployments.<name>.pod.initContainers.*.readinessProbe.httpGet.port`:
+
+  Http check port
+
+  **Default:** 80
+  **Example:** ...
+
+* `kubernetes.deployments.<name>.pod.initContainers.*.readinessProbe.initialDelaySeconds`:
+
+  Initial delay before checking
+
+  **Default:** 30
+  **Example:** ...
+
+* `kubernetes.deployments.<name>.pod.initContainers.*.readinessProbe.tcpSocket.port`:
+
+  Port to connect to for check
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.deployments.<name>.pod.initContainers.*.readinessProbe.timeoutSeconds`:
+
+  Check timeout
+
+  **Default:** 5
+  **Example:** ...
+
+* `kubernetes.deployments.<name>.pod.initContainers.*.requests.cpu`:
+
+  Limit cpu for container
+
+  **Default:** null
+  **Example:** "500m"
+
+* `kubernetes.deployments.<name>.pod.initContainers.*.requests.memory`:
+
+  Limit memory for container
+
+  **Default:** null
+  **Example:** "128Mi"
+
+* `kubernetes.deployments.<name>.pod.initContainers.*.security.capabilities.add`:
+
+  Capabilites to add
+
+  **Default:** []
+  **Example:** ...
+
+* `kubernetes.deployments.<name>.pod.initContainers.*.security.privileged`:
+
+  Whether to run container as privileged
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.deployments.<name>.pod.initContainers.*.stdin`:
+
+  Whether to enable stdin
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.deployments.<name>.pod.initContainers.*.tty`:
+
+  Whether to enable tty
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.deployments.<name>.pod.initContainers.*.workdir`:
+
+  Container working directory
+
+  **Default:** null
   **Example:** ...
 
 * `kubernetes.deployments.<name>.pod.labels`:
@@ -1331,6 +2379,20 @@ values.
   Pod restart policy
 
   **Default:** "Always"
+  **Example:** ...
+
+* `kubernetes.deployments.<name>.pod.securityContext.fsGroup`:
+
+  Container filesystem group id
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.deployments.<name>.pod.securityContext.runAsUser`:
+
+  Run container as user id
+
+  **Default:** null
   **Example:** ...
 
 * `kubernetes.deployments.<name>.pod.serviceAccountName`:
@@ -1479,6 +2541,13 @@ values.
   **Default:** "..."
   **Example:** ...
 
+* `kubernetes.daemonsets.<name>.pod.containers.<name>.imagePullPolicy`:
+
+  When to pull new container image
+
+  **Default:** "Always"
+  **Example:** ...
+
 * `kubernetes.daemonsets.<name>.pod.containers.<name>.limits.cpu`:
 
   Limit cpu for container
@@ -1563,6 +2632,13 @@ values.
   **Default:** "..."
   **Example:** ...
 
+* `kubernetes.daemonsets.<name>.pod.containers.<name>.mounts.*.readOnly`:
+
+  Whether to mount read only
+
+  **Default:** false
+  **Example:** ...
+
 * `kubernetes.daemonsets.<name>.pod.containers.<name>.mounts.*.subPath`:
 
   Sub path to mount
@@ -1589,6 +2665,13 @@ values.
   Port in container
 
   **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.containers.<name>.ports.*.hostPort`:
+
+  Port on the host to bind to
+
+  **Default:** null
   **Example:** ...
 
 * `kubernetes.daemonsets.<name>.pod.containers.<name>.ports.*.name`:
@@ -1717,11 +2800,330 @@ values.
   **Default:** null
   **Example:** ...
 
+* `kubernetes.daemonsets.<name>.pod.hostNetwork`:
+
+  Whether to use host networking
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.hostPID`:
+
+  Whether to use host PID
+
+  **Default:** false
+  **Example:** ...
+
 * `kubernetes.daemonsets.<name>.pod.imagePullSecrets`:
 
   Name of the secret to use for pulling docker image
 
   **Default:** []
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.initContainers`:
+
+  Pod init containers
+
+  **Default:** []
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.initContainers.*.args`:
+
+  Arguments to command
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.initContainers.*.command`:
+
+  Command to run
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.initContainers.*.enable`:
+
+  Whether to enable container
+
+  **Default:** true
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.initContainers.*.env`:
+
+  Environment variables to set. This can be any value that serializes to
+string. If value starts with "secret:<name>:<key>" or
+"configMap:<name>:<key>" if references respected secret or config map
+values.
+
+
+  **Default:** {}
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.initContainers.*.image`:
+
+  Image to use
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.initContainers.*.imagePullPolicy`:
+
+  When to pull new container image
+
+  **Default:** "Always"
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.initContainers.*.limits.cpu`:
+
+  Limit cpu for container
+
+  **Default:** null
+  **Example:** "500m"
+
+* `kubernetes.daemonsets.<name>.pod.initContainers.*.limits.memory`:
+
+  Limit memory for container
+
+  **Default:** null
+  **Example:** "128Mi"
+
+* `kubernetes.daemonsets.<name>.pod.initContainers.*.livenessProbe.enable`:
+
+  Whether to enable probe
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.initContainers.*.livenessProbe.exec.command`:
+
+  Command to run for check
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.initContainers.*.livenessProbe.httpGet.path`:
+
+  Http check path
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.initContainers.*.livenessProbe.httpGet.port`:
+
+  Http check port
+
+  **Default:** 80
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.initContainers.*.livenessProbe.initialDelaySeconds`:
+
+  Initial delay before checking
+
+  **Default:** 30
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.initContainers.*.livenessProbe.tcpSocket.port`:
+
+  Port to connect to for check
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.initContainers.*.livenessProbe.timeoutSeconds`:
+
+  Check timeout
+
+  **Default:** 5
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.initContainers.*.mounts`:
+
+  Volumes mounted in pod
+
+  **Default:** []
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.initContainers.*.mounts.*.mountPath`:
+
+  Mount path of volume
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.initContainers.*.mounts.*.name`:
+
+  Name of the volume
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.initContainers.*.mounts.*.readOnly`:
+
+  Whether to mount read only
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.initContainers.*.mounts.*.subPath`:
+
+  Sub path to mount
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.initContainers.*.name`:
+
+  Name of the container
+
+  **Default:** ""
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.initContainers.*.ports`:
+
+  Ports exposed by pod
+
+  **Default:** []
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.initContainers.*.ports.*.containerPort`:
+
+  Port in container
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.initContainers.*.ports.*.hostPort`:
+
+  Port on the host to bind to
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.initContainers.*.ports.*.name`:
+
+  Name of the port
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.initContainers.*.ports.*.port`:
+
+  Port to expose
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.initContainers.*.ports.*.protocol`:
+
+  Protocol to use
+
+  **Default:** "TCP"
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.initContainers.*.postStart.command`:
+
+  Command to execute in post start phase
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.initContainers.*.readinessProbe.enable`:
+
+  Whether to enable probe
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.initContainers.*.readinessProbe.exec.command`:
+
+  Command to run for check
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.initContainers.*.readinessProbe.httpGet.path`:
+
+  Http check path
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.initContainers.*.readinessProbe.httpGet.port`:
+
+  Http check port
+
+  **Default:** 80
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.initContainers.*.readinessProbe.initialDelaySeconds`:
+
+  Initial delay before checking
+
+  **Default:** 30
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.initContainers.*.readinessProbe.tcpSocket.port`:
+
+  Port to connect to for check
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.initContainers.*.readinessProbe.timeoutSeconds`:
+
+  Check timeout
+
+  **Default:** 5
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.initContainers.*.requests.cpu`:
+
+  Limit cpu for container
+
+  **Default:** null
+  **Example:** "500m"
+
+* `kubernetes.daemonsets.<name>.pod.initContainers.*.requests.memory`:
+
+  Limit memory for container
+
+  **Default:** null
+  **Example:** "128Mi"
+
+* `kubernetes.daemonsets.<name>.pod.initContainers.*.security.capabilities.add`:
+
+  Capabilites to add
+
+  **Default:** []
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.initContainers.*.security.privileged`:
+
+  Whether to run container as privileged
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.initContainers.*.stdin`:
+
+  Whether to enable stdin
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.initContainers.*.tty`:
+
+  Whether to enable tty
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.initContainers.*.workdir`:
+
+  Container working directory
+
+  **Default:** null
   **Example:** ...
 
 * `kubernetes.daemonsets.<name>.pod.labels`:
@@ -1743,6 +3145,20 @@ values.
   Pod restart policy
 
   **Default:** "Always"
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.securityContext.fsGroup`:
+
+  Container filesystem group id
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.daemonsets.<name>.pod.securityContext.runAsUser`:
+
+  Run container as user id
+
+  **Default:** null
   **Example:** ...
 
 * `kubernetes.daemonsets.<name>.pod.serviceAccountName`:
@@ -1891,6 +3307,13 @@ values.
   **Default:** "..."
   **Example:** ...
 
+* `kubernetes.scheduledJobs.<name>.job.pod.containers.<name>.imagePullPolicy`:
+
+  When to pull new container image
+
+  **Default:** "Always"
+  **Example:** ...
+
 * `kubernetes.scheduledJobs.<name>.job.pod.containers.<name>.limits.cpu`:
 
   Limit cpu for container
@@ -1975,6 +3398,13 @@ values.
   **Default:** "..."
   **Example:** ...
 
+* `kubernetes.scheduledJobs.<name>.job.pod.containers.<name>.mounts.*.readOnly`:
+
+  Whether to mount read only
+
+  **Default:** false
+  **Example:** ...
+
 * `kubernetes.scheduledJobs.<name>.job.pod.containers.<name>.mounts.*.subPath`:
 
   Sub path to mount
@@ -2001,6 +3431,13 @@ values.
   Port in container
 
   **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.containers.<name>.ports.*.hostPort`:
+
+  Port on the host to bind to
+
+  **Default:** null
   **Example:** ...
 
 * `kubernetes.scheduledJobs.<name>.job.pod.containers.<name>.ports.*.name`:
@@ -2129,11 +3566,330 @@ values.
   **Default:** null
   **Example:** ...
 
+* `kubernetes.scheduledJobs.<name>.job.pod.hostNetwork`:
+
+  Whether to use host networking
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.hostPID`:
+
+  Whether to use host PID
+
+  **Default:** false
+  **Example:** ...
+
 * `kubernetes.scheduledJobs.<name>.job.pod.imagePullSecrets`:
 
   Name of the secret to use for pulling docker image
 
   **Default:** []
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.initContainers`:
+
+  Pod init containers
+
+  **Default:** []
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.initContainers.*.args`:
+
+  Arguments to command
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.initContainers.*.command`:
+
+  Command to run
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.initContainers.*.enable`:
+
+  Whether to enable container
+
+  **Default:** true
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.initContainers.*.env`:
+
+  Environment variables to set. This can be any value that serializes to
+string. If value starts with "secret:<name>:<key>" or
+"configMap:<name>:<key>" if references respected secret or config map
+values.
+
+
+  **Default:** {}
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.initContainers.*.image`:
+
+  Image to use
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.initContainers.*.imagePullPolicy`:
+
+  When to pull new container image
+
+  **Default:** "Always"
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.initContainers.*.limits.cpu`:
+
+  Limit cpu for container
+
+  **Default:** null
+  **Example:** "500m"
+
+* `kubernetes.scheduledJobs.<name>.job.pod.initContainers.*.limits.memory`:
+
+  Limit memory for container
+
+  **Default:** null
+  **Example:** "128Mi"
+
+* `kubernetes.scheduledJobs.<name>.job.pod.initContainers.*.livenessProbe.enable`:
+
+  Whether to enable probe
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.initContainers.*.livenessProbe.exec.command`:
+
+  Command to run for check
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.initContainers.*.livenessProbe.httpGet.path`:
+
+  Http check path
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.initContainers.*.livenessProbe.httpGet.port`:
+
+  Http check port
+
+  **Default:** 80
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.initContainers.*.livenessProbe.initialDelaySeconds`:
+
+  Initial delay before checking
+
+  **Default:** 30
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.initContainers.*.livenessProbe.tcpSocket.port`:
+
+  Port to connect to for check
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.initContainers.*.livenessProbe.timeoutSeconds`:
+
+  Check timeout
+
+  **Default:** 5
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.initContainers.*.mounts`:
+
+  Volumes mounted in pod
+
+  **Default:** []
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.initContainers.*.mounts.*.mountPath`:
+
+  Mount path of volume
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.initContainers.*.mounts.*.name`:
+
+  Name of the volume
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.initContainers.*.mounts.*.readOnly`:
+
+  Whether to mount read only
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.initContainers.*.mounts.*.subPath`:
+
+  Sub path to mount
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.initContainers.*.name`:
+
+  Name of the container
+
+  **Default:** ""
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.initContainers.*.ports`:
+
+  Ports exposed by pod
+
+  **Default:** []
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.initContainers.*.ports.*.containerPort`:
+
+  Port in container
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.initContainers.*.ports.*.hostPort`:
+
+  Port on the host to bind to
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.initContainers.*.ports.*.name`:
+
+  Name of the port
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.initContainers.*.ports.*.port`:
+
+  Port to expose
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.initContainers.*.ports.*.protocol`:
+
+  Protocol to use
+
+  **Default:** "TCP"
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.initContainers.*.postStart.command`:
+
+  Command to execute in post start phase
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.initContainers.*.readinessProbe.enable`:
+
+  Whether to enable probe
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.initContainers.*.readinessProbe.exec.command`:
+
+  Command to run for check
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.initContainers.*.readinessProbe.httpGet.path`:
+
+  Http check path
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.initContainers.*.readinessProbe.httpGet.port`:
+
+  Http check port
+
+  **Default:** 80
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.initContainers.*.readinessProbe.initialDelaySeconds`:
+
+  Initial delay before checking
+
+  **Default:** 30
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.initContainers.*.readinessProbe.tcpSocket.port`:
+
+  Port to connect to for check
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.initContainers.*.readinessProbe.timeoutSeconds`:
+
+  Check timeout
+
+  **Default:** 5
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.initContainers.*.requests.cpu`:
+
+  Limit cpu for container
+
+  **Default:** null
+  **Example:** "500m"
+
+* `kubernetes.scheduledJobs.<name>.job.pod.initContainers.*.requests.memory`:
+
+  Limit memory for container
+
+  **Default:** null
+  **Example:** "128Mi"
+
+* `kubernetes.scheduledJobs.<name>.job.pod.initContainers.*.security.capabilities.add`:
+
+  Capabilites to add
+
+  **Default:** []
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.initContainers.*.security.privileged`:
+
+  Whether to run container as privileged
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.initContainers.*.stdin`:
+
+  Whether to enable stdin
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.initContainers.*.tty`:
+
+  Whether to enable tty
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.initContainers.*.workdir`:
+
+  Container working directory
+
+  **Default:** null
   **Example:** ...
 
 * `kubernetes.scheduledJobs.<name>.job.pod.labels`:
@@ -2155,6 +3911,20 @@ values.
   Pod restart policy
 
   **Default:** "Always"
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.securityContext.fsGroup`:
+
+  Container filesystem group id
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.scheduledJobs.<name>.job.pod.securityContext.runAsUser`:
+
+  Run container as user id
+
+  **Default:** null
   **Example:** ...
 
 * `kubernetes.scheduledJobs.<name>.job.pod.serviceAccountName`:
@@ -2324,6 +4094,13 @@ values.
   **Default:** "..."
   **Example:** ...
 
+* `kubernetes.jobs.<name>.pod.containers.<name>.imagePullPolicy`:
+
+  When to pull new container image
+
+  **Default:** "Always"
+  **Example:** ...
+
 * `kubernetes.jobs.<name>.pod.containers.<name>.limits.cpu`:
 
   Limit cpu for container
@@ -2408,6 +4185,13 @@ values.
   **Default:** "..."
   **Example:** ...
 
+* `kubernetes.jobs.<name>.pod.containers.<name>.mounts.*.readOnly`:
+
+  Whether to mount read only
+
+  **Default:** false
+  **Example:** ...
+
 * `kubernetes.jobs.<name>.pod.containers.<name>.mounts.*.subPath`:
 
   Sub path to mount
@@ -2434,6 +4218,13 @@ values.
   Port in container
 
   **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.jobs.<name>.pod.containers.<name>.ports.*.hostPort`:
+
+  Port on the host to bind to
+
+  **Default:** null
   **Example:** ...
 
 * `kubernetes.jobs.<name>.pod.containers.<name>.ports.*.name`:
@@ -2562,11 +4353,330 @@ values.
   **Default:** null
   **Example:** ...
 
+* `kubernetes.jobs.<name>.pod.hostNetwork`:
+
+  Whether to use host networking
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.jobs.<name>.pod.hostPID`:
+
+  Whether to use host PID
+
+  **Default:** false
+  **Example:** ...
+
 * `kubernetes.jobs.<name>.pod.imagePullSecrets`:
 
   Name of the secret to use for pulling docker image
 
   **Default:** []
+  **Example:** ...
+
+* `kubernetes.jobs.<name>.pod.initContainers`:
+
+  Pod init containers
+
+  **Default:** []
+  **Example:** ...
+
+* `kubernetes.jobs.<name>.pod.initContainers.*.args`:
+
+  Arguments to command
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.jobs.<name>.pod.initContainers.*.command`:
+
+  Command to run
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.jobs.<name>.pod.initContainers.*.enable`:
+
+  Whether to enable container
+
+  **Default:** true
+  **Example:** ...
+
+* `kubernetes.jobs.<name>.pod.initContainers.*.env`:
+
+  Environment variables to set. This can be any value that serializes to
+string. If value starts with "secret:<name>:<key>" or
+"configMap:<name>:<key>" if references respected secret or config map
+values.
+
+
+  **Default:** {}
+  **Example:** ...
+
+* `kubernetes.jobs.<name>.pod.initContainers.*.image`:
+
+  Image to use
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.jobs.<name>.pod.initContainers.*.imagePullPolicy`:
+
+  When to pull new container image
+
+  **Default:** "Always"
+  **Example:** ...
+
+* `kubernetes.jobs.<name>.pod.initContainers.*.limits.cpu`:
+
+  Limit cpu for container
+
+  **Default:** null
+  **Example:** "500m"
+
+* `kubernetes.jobs.<name>.pod.initContainers.*.limits.memory`:
+
+  Limit memory for container
+
+  **Default:** null
+  **Example:** "128Mi"
+
+* `kubernetes.jobs.<name>.pod.initContainers.*.livenessProbe.enable`:
+
+  Whether to enable probe
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.jobs.<name>.pod.initContainers.*.livenessProbe.exec.command`:
+
+  Command to run for check
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.jobs.<name>.pod.initContainers.*.livenessProbe.httpGet.path`:
+
+  Http check path
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.jobs.<name>.pod.initContainers.*.livenessProbe.httpGet.port`:
+
+  Http check port
+
+  **Default:** 80
+  **Example:** ...
+
+* `kubernetes.jobs.<name>.pod.initContainers.*.livenessProbe.initialDelaySeconds`:
+
+  Initial delay before checking
+
+  **Default:** 30
+  **Example:** ...
+
+* `kubernetes.jobs.<name>.pod.initContainers.*.livenessProbe.tcpSocket.port`:
+
+  Port to connect to for check
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.jobs.<name>.pod.initContainers.*.livenessProbe.timeoutSeconds`:
+
+  Check timeout
+
+  **Default:** 5
+  **Example:** ...
+
+* `kubernetes.jobs.<name>.pod.initContainers.*.mounts`:
+
+  Volumes mounted in pod
+
+  **Default:** []
+  **Example:** ...
+
+* `kubernetes.jobs.<name>.pod.initContainers.*.mounts.*.mountPath`:
+
+  Mount path of volume
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.jobs.<name>.pod.initContainers.*.mounts.*.name`:
+
+  Name of the volume
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.jobs.<name>.pod.initContainers.*.mounts.*.readOnly`:
+
+  Whether to mount read only
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.jobs.<name>.pod.initContainers.*.mounts.*.subPath`:
+
+  Sub path to mount
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.jobs.<name>.pod.initContainers.*.name`:
+
+  Name of the container
+
+  **Default:** ""
+  **Example:** ...
+
+* `kubernetes.jobs.<name>.pod.initContainers.*.ports`:
+
+  Ports exposed by pod
+
+  **Default:** []
+  **Example:** ...
+
+* `kubernetes.jobs.<name>.pod.initContainers.*.ports.*.containerPort`:
+
+  Port in container
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.jobs.<name>.pod.initContainers.*.ports.*.hostPort`:
+
+  Port on the host to bind to
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.jobs.<name>.pod.initContainers.*.ports.*.name`:
+
+  Name of the port
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.jobs.<name>.pod.initContainers.*.ports.*.port`:
+
+  Port to expose
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.jobs.<name>.pod.initContainers.*.ports.*.protocol`:
+
+  Protocol to use
+
+  **Default:** "TCP"
+  **Example:** ...
+
+* `kubernetes.jobs.<name>.pod.initContainers.*.postStart.command`:
+
+  Command to execute in post start phase
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.jobs.<name>.pod.initContainers.*.readinessProbe.enable`:
+
+  Whether to enable probe
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.jobs.<name>.pod.initContainers.*.readinessProbe.exec.command`:
+
+  Command to run for check
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.jobs.<name>.pod.initContainers.*.readinessProbe.httpGet.path`:
+
+  Http check path
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.jobs.<name>.pod.initContainers.*.readinessProbe.httpGet.port`:
+
+  Http check port
+
+  **Default:** 80
+  **Example:** ...
+
+* `kubernetes.jobs.<name>.pod.initContainers.*.readinessProbe.initialDelaySeconds`:
+
+  Initial delay before checking
+
+  **Default:** 30
+  **Example:** ...
+
+* `kubernetes.jobs.<name>.pod.initContainers.*.readinessProbe.tcpSocket.port`:
+
+  Port to connect to for check
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.jobs.<name>.pod.initContainers.*.readinessProbe.timeoutSeconds`:
+
+  Check timeout
+
+  **Default:** 5
+  **Example:** ...
+
+* `kubernetes.jobs.<name>.pod.initContainers.*.requests.cpu`:
+
+  Limit cpu for container
+
+  **Default:** null
+  **Example:** "500m"
+
+* `kubernetes.jobs.<name>.pod.initContainers.*.requests.memory`:
+
+  Limit memory for container
+
+  **Default:** null
+  **Example:** "128Mi"
+
+* `kubernetes.jobs.<name>.pod.initContainers.*.security.capabilities.add`:
+
+  Capabilites to add
+
+  **Default:** []
+  **Example:** ...
+
+* `kubernetes.jobs.<name>.pod.initContainers.*.security.privileged`:
+
+  Whether to run container as privileged
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.jobs.<name>.pod.initContainers.*.stdin`:
+
+  Whether to enable stdin
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.jobs.<name>.pod.initContainers.*.tty`:
+
+  Whether to enable tty
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.jobs.<name>.pod.initContainers.*.workdir`:
+
+  Container working directory
+
+  **Default:** null
   **Example:** ...
 
 * `kubernetes.jobs.<name>.pod.labels`:
@@ -2588,6 +4698,20 @@ values.
   Pod restart policy
 
   **Default:** "Always"
+  **Example:** ...
+
+* `kubernetes.jobs.<name>.pod.securityContext.fsGroup`:
+
+  Container filesystem group id
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.jobs.<name>.pod.securityContext.runAsUser`:
+
+  Run container as user id
+
+  **Default:** null
   **Example:** ...
 
 * `kubernetes.jobs.<name>.pod.serviceAccountName`:
@@ -2896,7 +5020,7 @@ values.
 
   Matches list of API groups
 
-  **Default:** ["*"]
+  **Default:** null
   **Example:** ...
 
 * `kubernetes.roles.<name>.rules.*.nonResourceURLs`:
@@ -2904,21 +5028,21 @@ values.
   matches the non-resource request paths (like
             /version and /apis)
 
-  **Default:** []
+  **Default:** null
   **Example:** ...
 
 * `kubernetes.roles.<name>.rules.*.resources`:
 
   Matches list of resources that role allows
 
-  **Default:** ["*"]
+  **Default:** null
   **Example:** ...
 
 * `kubernetes.roles.<name>.rules.*.verbs`:
 
   Matches list of verbs that role allows
 
-  **Default:** ["*"]
+  **Default:** null
   **Example:** ...
 
 ## clusterRoles options
@@ -2976,7 +5100,7 @@ values.
 
   Matches list of API groups
 
-  **Default:** ["*"]
+  **Default:** null
   **Example:** ...
 
 * `kubernetes.clusterRoles.<name>.rules.*.nonResourceURLs`:
@@ -2984,21 +5108,21 @@ values.
   matches the non-resource request paths (like
             /version and /apis)
 
-  **Default:** []
+  **Default:** null
   **Example:** ...
 
 * `kubernetes.clusterRoles.<name>.rules.*.resources`:
 
   Matches list of resources that role allows
 
-  **Default:** ["*"]
+  **Default:** null
   **Example:** ...
 
 * `kubernetes.clusterRoles.<name>.rules.*.verbs`:
 
   Matches list of verbs that role allows
 
-  **Default:** ["*"]
+  **Default:** null
   **Example:** ...
 
 ## roleBindings options
@@ -3386,6 +5510,13 @@ values.
   **Default:** "..."
   **Example:** ...
 
+* `kubernetes.petSets.<name>.pod.containers.<name>.imagePullPolicy`:
+
+  When to pull new container image
+
+  **Default:** "Always"
+  **Example:** ...
+
 * `kubernetes.petSets.<name>.pod.containers.<name>.limits.cpu`:
 
   Limit cpu for container
@@ -3470,6 +5601,13 @@ values.
   **Default:** "..."
   **Example:** ...
 
+* `kubernetes.petSets.<name>.pod.containers.<name>.mounts.*.readOnly`:
+
+  Whether to mount read only
+
+  **Default:** false
+  **Example:** ...
+
 * `kubernetes.petSets.<name>.pod.containers.<name>.mounts.*.subPath`:
 
   Sub path to mount
@@ -3496,6 +5634,13 @@ values.
   Port in container
 
   **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.petSets.<name>.pod.containers.<name>.ports.*.hostPort`:
+
+  Port on the host to bind to
+
+  **Default:** null
   **Example:** ...
 
 * `kubernetes.petSets.<name>.pod.containers.<name>.ports.*.name`:
@@ -3624,11 +5769,330 @@ values.
   **Default:** null
   **Example:** ...
 
+* `kubernetes.petSets.<name>.pod.hostNetwork`:
+
+  Whether to use host networking
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.petSets.<name>.pod.hostPID`:
+
+  Whether to use host PID
+
+  **Default:** false
+  **Example:** ...
+
 * `kubernetes.petSets.<name>.pod.imagePullSecrets`:
 
   Name of the secret to use for pulling docker image
 
   **Default:** []
+  **Example:** ...
+
+* `kubernetes.petSets.<name>.pod.initContainers`:
+
+  Pod init containers
+
+  **Default:** []
+  **Example:** ...
+
+* `kubernetes.petSets.<name>.pod.initContainers.*.args`:
+
+  Arguments to command
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.petSets.<name>.pod.initContainers.*.command`:
+
+  Command to run
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.petSets.<name>.pod.initContainers.*.enable`:
+
+  Whether to enable container
+
+  **Default:** true
+  **Example:** ...
+
+* `kubernetes.petSets.<name>.pod.initContainers.*.env`:
+
+  Environment variables to set. This can be any value that serializes to
+string. If value starts with "secret:<name>:<key>" or
+"configMap:<name>:<key>" if references respected secret or config map
+values.
+
+
+  **Default:** {}
+  **Example:** ...
+
+* `kubernetes.petSets.<name>.pod.initContainers.*.image`:
+
+  Image to use
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.petSets.<name>.pod.initContainers.*.imagePullPolicy`:
+
+  When to pull new container image
+
+  **Default:** "Always"
+  **Example:** ...
+
+* `kubernetes.petSets.<name>.pod.initContainers.*.limits.cpu`:
+
+  Limit cpu for container
+
+  **Default:** null
+  **Example:** "500m"
+
+* `kubernetes.petSets.<name>.pod.initContainers.*.limits.memory`:
+
+  Limit memory for container
+
+  **Default:** null
+  **Example:** "128Mi"
+
+* `kubernetes.petSets.<name>.pod.initContainers.*.livenessProbe.enable`:
+
+  Whether to enable probe
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.petSets.<name>.pod.initContainers.*.livenessProbe.exec.command`:
+
+  Command to run for check
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.petSets.<name>.pod.initContainers.*.livenessProbe.httpGet.path`:
+
+  Http check path
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.petSets.<name>.pod.initContainers.*.livenessProbe.httpGet.port`:
+
+  Http check port
+
+  **Default:** 80
+  **Example:** ...
+
+* `kubernetes.petSets.<name>.pod.initContainers.*.livenessProbe.initialDelaySeconds`:
+
+  Initial delay before checking
+
+  **Default:** 30
+  **Example:** ...
+
+* `kubernetes.petSets.<name>.pod.initContainers.*.livenessProbe.tcpSocket.port`:
+
+  Port to connect to for check
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.petSets.<name>.pod.initContainers.*.livenessProbe.timeoutSeconds`:
+
+  Check timeout
+
+  **Default:** 5
+  **Example:** ...
+
+* `kubernetes.petSets.<name>.pod.initContainers.*.mounts`:
+
+  Volumes mounted in pod
+
+  **Default:** []
+  **Example:** ...
+
+* `kubernetes.petSets.<name>.pod.initContainers.*.mounts.*.mountPath`:
+
+  Mount path of volume
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.petSets.<name>.pod.initContainers.*.mounts.*.name`:
+
+  Name of the volume
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.petSets.<name>.pod.initContainers.*.mounts.*.readOnly`:
+
+  Whether to mount read only
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.petSets.<name>.pod.initContainers.*.mounts.*.subPath`:
+
+  Sub path to mount
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.petSets.<name>.pod.initContainers.*.name`:
+
+  Name of the container
+
+  **Default:** ""
+  **Example:** ...
+
+* `kubernetes.petSets.<name>.pod.initContainers.*.ports`:
+
+  Ports exposed by pod
+
+  **Default:** []
+  **Example:** ...
+
+* `kubernetes.petSets.<name>.pod.initContainers.*.ports.*.containerPort`:
+
+  Port in container
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.petSets.<name>.pod.initContainers.*.ports.*.hostPort`:
+
+  Port on the host to bind to
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.petSets.<name>.pod.initContainers.*.ports.*.name`:
+
+  Name of the port
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.petSets.<name>.pod.initContainers.*.ports.*.port`:
+
+  Port to expose
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.petSets.<name>.pod.initContainers.*.ports.*.protocol`:
+
+  Protocol to use
+
+  **Default:** "TCP"
+  **Example:** ...
+
+* `kubernetes.petSets.<name>.pod.initContainers.*.postStart.command`:
+
+  Command to execute in post start phase
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.petSets.<name>.pod.initContainers.*.readinessProbe.enable`:
+
+  Whether to enable probe
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.petSets.<name>.pod.initContainers.*.readinessProbe.exec.command`:
+
+  Command to run for check
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.petSets.<name>.pod.initContainers.*.readinessProbe.httpGet.path`:
+
+  Http check path
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.petSets.<name>.pod.initContainers.*.readinessProbe.httpGet.port`:
+
+  Http check port
+
+  **Default:** 80
+  **Example:** ...
+
+* `kubernetes.petSets.<name>.pod.initContainers.*.readinessProbe.initialDelaySeconds`:
+
+  Initial delay before checking
+
+  **Default:** 30
+  **Example:** ...
+
+* `kubernetes.petSets.<name>.pod.initContainers.*.readinessProbe.tcpSocket.port`:
+
+  Port to connect to for check
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.petSets.<name>.pod.initContainers.*.readinessProbe.timeoutSeconds`:
+
+  Check timeout
+
+  **Default:** 5
+  **Example:** ...
+
+* `kubernetes.petSets.<name>.pod.initContainers.*.requests.cpu`:
+
+  Limit cpu for container
+
+  **Default:** null
+  **Example:** "500m"
+
+* `kubernetes.petSets.<name>.pod.initContainers.*.requests.memory`:
+
+  Limit memory for container
+
+  **Default:** null
+  **Example:** "128Mi"
+
+* `kubernetes.petSets.<name>.pod.initContainers.*.security.capabilities.add`:
+
+  Capabilites to add
+
+  **Default:** []
+  **Example:** ...
+
+* `kubernetes.petSets.<name>.pod.initContainers.*.security.privileged`:
+
+  Whether to run container as privileged
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.petSets.<name>.pod.initContainers.*.stdin`:
+
+  Whether to enable stdin
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.petSets.<name>.pod.initContainers.*.tty`:
+
+  Whether to enable tty
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.petSets.<name>.pod.initContainers.*.workdir`:
+
+  Container working directory
+
+  **Default:** null
   **Example:** ...
 
 * `kubernetes.petSets.<name>.pod.labels`:
@@ -3650,6 +6114,20 @@ values.
   Pod restart policy
 
   **Default:** "Always"
+  **Example:** ...
+
+* `kubernetes.petSets.<name>.pod.securityContext.fsGroup`:
+
+  Container filesystem group id
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.petSets.<name>.pod.securityContext.runAsUser`:
+
+  Run container as user id
+
+  **Default:** null
   **Example:** ...
 
 * `kubernetes.petSets.<name>.pod.serviceAccountName`:
@@ -3699,6 +6177,13 @@ values.
   Name of the governing stateful set service
 
   **Default:** ""
+  **Example:** ...
+
+* `kubernetes.petSets.<name>.terminationGracePeriodSeconds`:
+
+  Number of seconds to wait for termination
+
+  **Default:** null
   **Example:** ...
 
 * `kubernetes.petSets.<name>.volumeClaimTemplates`:
@@ -3861,6 +6346,13 @@ values.
   **Default:** "..."
   **Example:** ...
 
+* `kubernetes.statefulSets.<name>.pod.containers.<name>.imagePullPolicy`:
+
+  When to pull new container image
+
+  **Default:** "Always"
+  **Example:** ...
+
 * `kubernetes.statefulSets.<name>.pod.containers.<name>.limits.cpu`:
 
   Limit cpu for container
@@ -3945,6 +6437,13 @@ values.
   **Default:** "..."
   **Example:** ...
 
+* `kubernetes.statefulSets.<name>.pod.containers.<name>.mounts.*.readOnly`:
+
+  Whether to mount read only
+
+  **Default:** false
+  **Example:** ...
+
 * `kubernetes.statefulSets.<name>.pod.containers.<name>.mounts.*.subPath`:
 
   Sub path to mount
@@ -3971,6 +6470,13 @@ values.
   Port in container
 
   **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.statefulSets.<name>.pod.containers.<name>.ports.*.hostPort`:
+
+  Port on the host to bind to
+
+  **Default:** null
   **Example:** ...
 
 * `kubernetes.statefulSets.<name>.pod.containers.<name>.ports.*.name`:
@@ -4099,11 +6605,330 @@ values.
   **Default:** null
   **Example:** ...
 
+* `kubernetes.statefulSets.<name>.pod.hostNetwork`:
+
+  Whether to use host networking
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.statefulSets.<name>.pod.hostPID`:
+
+  Whether to use host PID
+
+  **Default:** false
+  **Example:** ...
+
 * `kubernetes.statefulSets.<name>.pod.imagePullSecrets`:
 
   Name of the secret to use for pulling docker image
 
   **Default:** []
+  **Example:** ...
+
+* `kubernetes.statefulSets.<name>.pod.initContainers`:
+
+  Pod init containers
+
+  **Default:** []
+  **Example:** ...
+
+* `kubernetes.statefulSets.<name>.pod.initContainers.*.args`:
+
+  Arguments to command
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.statefulSets.<name>.pod.initContainers.*.command`:
+
+  Command to run
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.statefulSets.<name>.pod.initContainers.*.enable`:
+
+  Whether to enable container
+
+  **Default:** true
+  **Example:** ...
+
+* `kubernetes.statefulSets.<name>.pod.initContainers.*.env`:
+
+  Environment variables to set. This can be any value that serializes to
+string. If value starts with "secret:<name>:<key>" or
+"configMap:<name>:<key>" if references respected secret or config map
+values.
+
+
+  **Default:** {}
+  **Example:** ...
+
+* `kubernetes.statefulSets.<name>.pod.initContainers.*.image`:
+
+  Image to use
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.statefulSets.<name>.pod.initContainers.*.imagePullPolicy`:
+
+  When to pull new container image
+
+  **Default:** "Always"
+  **Example:** ...
+
+* `kubernetes.statefulSets.<name>.pod.initContainers.*.limits.cpu`:
+
+  Limit cpu for container
+
+  **Default:** null
+  **Example:** "500m"
+
+* `kubernetes.statefulSets.<name>.pod.initContainers.*.limits.memory`:
+
+  Limit memory for container
+
+  **Default:** null
+  **Example:** "128Mi"
+
+* `kubernetes.statefulSets.<name>.pod.initContainers.*.livenessProbe.enable`:
+
+  Whether to enable probe
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.statefulSets.<name>.pod.initContainers.*.livenessProbe.exec.command`:
+
+  Command to run for check
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.statefulSets.<name>.pod.initContainers.*.livenessProbe.httpGet.path`:
+
+  Http check path
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.statefulSets.<name>.pod.initContainers.*.livenessProbe.httpGet.port`:
+
+  Http check port
+
+  **Default:** 80
+  **Example:** ...
+
+* `kubernetes.statefulSets.<name>.pod.initContainers.*.livenessProbe.initialDelaySeconds`:
+
+  Initial delay before checking
+
+  **Default:** 30
+  **Example:** ...
+
+* `kubernetes.statefulSets.<name>.pod.initContainers.*.livenessProbe.tcpSocket.port`:
+
+  Port to connect to for check
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.statefulSets.<name>.pod.initContainers.*.livenessProbe.timeoutSeconds`:
+
+  Check timeout
+
+  **Default:** 5
+  **Example:** ...
+
+* `kubernetes.statefulSets.<name>.pod.initContainers.*.mounts`:
+
+  Volumes mounted in pod
+
+  **Default:** []
+  **Example:** ...
+
+* `kubernetes.statefulSets.<name>.pod.initContainers.*.mounts.*.mountPath`:
+
+  Mount path of volume
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.statefulSets.<name>.pod.initContainers.*.mounts.*.name`:
+
+  Name of the volume
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.statefulSets.<name>.pod.initContainers.*.mounts.*.readOnly`:
+
+  Whether to mount read only
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.statefulSets.<name>.pod.initContainers.*.mounts.*.subPath`:
+
+  Sub path to mount
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.statefulSets.<name>.pod.initContainers.*.name`:
+
+  Name of the container
+
+  **Default:** ""
+  **Example:** ...
+
+* `kubernetes.statefulSets.<name>.pod.initContainers.*.ports`:
+
+  Ports exposed by pod
+
+  **Default:** []
+  **Example:** ...
+
+* `kubernetes.statefulSets.<name>.pod.initContainers.*.ports.*.containerPort`:
+
+  Port in container
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.statefulSets.<name>.pod.initContainers.*.ports.*.hostPort`:
+
+  Port on the host to bind to
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.statefulSets.<name>.pod.initContainers.*.ports.*.name`:
+
+  Name of the port
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.statefulSets.<name>.pod.initContainers.*.ports.*.port`:
+
+  Port to expose
+
+  **Default:** "..."
+  **Example:** ...
+
+* `kubernetes.statefulSets.<name>.pod.initContainers.*.ports.*.protocol`:
+
+  Protocol to use
+
+  **Default:** "TCP"
+  **Example:** ...
+
+* `kubernetes.statefulSets.<name>.pod.initContainers.*.postStart.command`:
+
+  Command to execute in post start phase
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.statefulSets.<name>.pod.initContainers.*.readinessProbe.enable`:
+
+  Whether to enable probe
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.statefulSets.<name>.pod.initContainers.*.readinessProbe.exec.command`:
+
+  Command to run for check
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.statefulSets.<name>.pod.initContainers.*.readinessProbe.httpGet.path`:
+
+  Http check path
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.statefulSets.<name>.pod.initContainers.*.readinessProbe.httpGet.port`:
+
+  Http check port
+
+  **Default:** 80
+  **Example:** ...
+
+* `kubernetes.statefulSets.<name>.pod.initContainers.*.readinessProbe.initialDelaySeconds`:
+
+  Initial delay before checking
+
+  **Default:** 30
+  **Example:** ...
+
+* `kubernetes.statefulSets.<name>.pod.initContainers.*.readinessProbe.tcpSocket.port`:
+
+  Port to connect to for check
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.statefulSets.<name>.pod.initContainers.*.readinessProbe.timeoutSeconds`:
+
+  Check timeout
+
+  **Default:** 5
+  **Example:** ...
+
+* `kubernetes.statefulSets.<name>.pod.initContainers.*.requests.cpu`:
+
+  Limit cpu for container
+
+  **Default:** null
+  **Example:** "500m"
+
+* `kubernetes.statefulSets.<name>.pod.initContainers.*.requests.memory`:
+
+  Limit memory for container
+
+  **Default:** null
+  **Example:** "128Mi"
+
+* `kubernetes.statefulSets.<name>.pod.initContainers.*.security.capabilities.add`:
+
+  Capabilites to add
+
+  **Default:** []
+  **Example:** ...
+
+* `kubernetes.statefulSets.<name>.pod.initContainers.*.security.privileged`:
+
+  Whether to run container as privileged
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.statefulSets.<name>.pod.initContainers.*.stdin`:
+
+  Whether to enable stdin
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.statefulSets.<name>.pod.initContainers.*.tty`:
+
+  Whether to enable tty
+
+  **Default:** false
+  **Example:** ...
+
+* `kubernetes.statefulSets.<name>.pod.initContainers.*.workdir`:
+
+  Container working directory
+
+  **Default:** null
   **Example:** ...
 
 * `kubernetes.statefulSets.<name>.pod.labels`:
@@ -4125,6 +6950,20 @@ values.
   Pod restart policy
 
   **Default:** "Always"
+  **Example:** ...
+
+* `kubernetes.statefulSets.<name>.pod.securityContext.fsGroup`:
+
+  Container filesystem group id
+
+  **Default:** null
+  **Example:** ...
+
+* `kubernetes.statefulSets.<name>.pod.securityContext.runAsUser`:
+
+  Run container as user id
+
+  **Default:** null
   **Example:** ...
 
 * `kubernetes.statefulSets.<name>.pod.serviceAccountName`:
@@ -4174,6 +7013,13 @@ values.
   Name of the governing stateful set service
 
   **Default:** ""
+  **Example:** ...
+
+* `kubernetes.statefulSets.<name>.terminationGracePeriodSeconds`:
+
+  Number of seconds to wait for termination
+
+  **Default:** null
   **Example:** ...
 
 * `kubernetes.statefulSets.<name>.volumeClaimTemplates`:
