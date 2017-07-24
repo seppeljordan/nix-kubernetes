@@ -277,6 +277,7 @@ let
     spec = {
       replicas = statefulset.replicas;
       serviceName = statefulset.serviceName;
+      updateStrategy.type = statefulset.updateStrategy.type;
       template = (mkSpecMeta statefulset.pod) // (mkPodSpec statefulset.pod);
       volumeClaimTemplates =
         mapAttrsToList (name: claimTemplate:

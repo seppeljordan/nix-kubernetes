@@ -938,6 +938,14 @@ let
         type = types.str;
       };
 
+      updateStrategy = {
+        type = mkOption {
+          description = "SatetefulSet update strategy";
+          type = types.enum ["OnDelete" "RollingUpdate"];
+          default = "RollingUpdate";
+        };
+      };
+
       pod = podTemplateOptions // {
         labels = mkOption {
           description = "Pod labels";
