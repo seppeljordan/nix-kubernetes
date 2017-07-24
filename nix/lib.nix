@@ -279,12 +279,13 @@ let
       serviceName = statefulset.serviceName;
       updateStrategy.type = statefulset.updateStrategy.type;
       template = (mkSpecMeta statefulset.pod) // (mkPodSpec statefulset.pod);
+    } // (optionalAttrs (statefulset.terminationGracePeriodSeconds != null) {
+      terminationGracePeriodSeconds = statefulset.terminationGracePeriodSeconds;
+    }) // (optionalAttrs (statefulset.volumeClaimTemplates != []) {
       volumeClaimTemplates =
         mapAttrsToList (name: claimTemplate:
           (mkNsMeta claimTemplate) // (mkPvcSpec claimTemplate)
         ) statefulset.volumeClaimTemplates;
-    } // (optionalAttrs (statefulset.terminationGracePeriodSeconds != null) {
-      terminationGracePeriodSeconds = statefulset.terminationGracePeriodSeconds;
     });
   };
 
