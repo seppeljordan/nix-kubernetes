@@ -281,7 +281,7 @@ let
       template = (mkSpecMeta statefulset.pod) // (mkPodSpec statefulset.pod);
     } // (optionalAttrs (statefulset.terminationGracePeriodSeconds != null) {
       terminationGracePeriodSeconds = statefulset.terminationGracePeriodSeconds;
-    }) // (optionalAttrs (statefulset.volumeClaimTemplates != []) {
+    }) // (optionalAttrs ((attrNames statefulset.volumeClaimTemplates) != []) {
       volumeClaimTemplates =
         mapAttrsToList (name: claimTemplate:
           (mkNsMeta claimTemplate) // (mkPvcSpec claimTemplate)
