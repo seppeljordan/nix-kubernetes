@@ -617,6 +617,38 @@ let
     config = mkDefault cfg.defaults.pvc;
   };
 
+  pvOptions = { name, config, ... }: {
+    options = {
+      capacity.storage = mkOption {
+        description = "Persistent volume storage capacity";
+        type = types.str;
+      };
+
+      accessModes = mkOption {
+        description ="Persistent volume access modes";
+        type = types.listOf (types.enum ["ReadWriteOnce" "ReadWriteMany"]);
+        default = ["ReadWriteOnce"];
+      };
+
+      persistentVolumeReclaimPolicy = mkOption {
+        description = "Persistent volume recalim policy";
+        type = types.enum ["Delete"];
+        default = "Delete";
+      };
+
+      storageClassName = mkOption {
+        description = "Name of the storage class";
+        type = types.str;
+      };
+
+      local.path = mkOption {
+        description = "Whether this persistent volume is for local path";
+        type = types.nullOr types.path;
+        default = null;
+      };
+    };
+  };
+
   secretOptions = { name, config, ... }: {
     options = {
       secrets = mkOption {
@@ -1078,6 +1110,13 @@ in {
       type = types.attrsOf types.optionSet;
       options = [ nsMetaOptions metaOptions pvcOptions ];
       description = "Attribute set of persistent volume claims";
+      default = {};
+    };
+
+    pv = mkOption {
+      type = types.attrsOf types.optionSet;
+      options = [ metaOptions pvOptions ];
+      description = "Attibute set of persistent volumes";
       default = {};
     };
 

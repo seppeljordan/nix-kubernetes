@@ -188,6 +188,16 @@ let
     };
   };
 
+  mkPvSpec = pv: {
+    spec = {
+      capacity.storage = pv.capacity.storage;
+      accessModes = pv.accessModes;
+      persistentVolumeReclaimPolicy = pv.persistentVolumeReclaimPolicy;
+      storageClassName = pv.storageClassName;
+      local.path = pv.local.path;
+    };
+  };
+
   mkStorageClassSpec = storageClass: {
     inherit (storageClass) provisioner parameters;
   };
@@ -347,6 +357,10 @@ in {
   mkPvc = pvc:
     (mkResource "v1" "PersistentVolumeClaim") // (mkNsMeta pvc) //
     (mkPvcSpec pvc);
+
+  mkPv = pv:
+    (mkResource "v1" "PersistentVolume") // (mkMeta pv) //
+    (mkPvSpec pv);
 
   mkStorageClass = storageClass:
     (mkResource "storage.k8s.io/v1beta1" "StorageClass") // (mkMeta storageClass) //

@@ -44,6 +44,8 @@ let
         mapAttrs (name: service: mkService service) config.kubernetes.services;
       pvc =
         mapAttrs (name: pvc: mkPvc pvc) config.kubernetes.pvc;
+      pv =
+        mapAttrs (name: pv: mkPv pv) config.kubernetes.pv;
       storageclasses =
         mapAttrs (name: storageclass: mkStorageClass storageclass) config.kubernetes.storageClass;
       secrets =
