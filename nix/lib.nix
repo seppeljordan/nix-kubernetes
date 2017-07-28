@@ -186,6 +186,9 @@ let
           storage = pvc.size;
         };
       };
+      selector = {
+        inherit (pvc.selector) matchLabels;
+      };
     };
   };
 

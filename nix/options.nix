@@ -618,6 +618,12 @@ let
         type = types.str;
         default = "default";
       };
+
+      selector.matchLabels = mkOption {
+        description = "Persistent volume label selector";
+        type = types.attrs;
+        default = {};
+      };
     };
 
     config = mkDefault cfg.defaults.pvc;
