@@ -180,6 +180,7 @@ let
   mkPvcSpec = pvc: {
     spec = {
       accessModes = pvc.accessModes;
+      storageClassName = pvc.storageClassName;
       resources = {
         requests = {
           storage = pvc.size;

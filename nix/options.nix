@@ -612,6 +612,12 @@ let
         type = types.listOf (types.enum ["ReadWriteOnce" "ReadWriteMany"]);
         default = ["ReadWriteOnce"];
       };
+
+      storageClassName = mkOption {
+        description = "Name of storage class requested by persistent volume claim";
+        type = types.str;
+        default = "default";
+      };
     };
 
     config = mkDefault cfg.defaults.pvc;
