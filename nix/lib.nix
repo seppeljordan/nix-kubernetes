@@ -292,6 +292,7 @@ let
       replicas = statefulset.replicas;
       serviceName = statefulset.serviceName;
       updateStrategy.type = statefulset.updateStrategy.type;
+      podManagementPolicy = statefulset.podManagementPolicy;
       template = (mkSpecMeta statefulset.pod) // (mkPodSpec statefulset.pod);
     } // (optionalAttrs (statefulset.terminationGracePeriodSeconds != null) {
       terminationGracePeriodSeconds = statefulset.terminationGracePeriodSeconds;

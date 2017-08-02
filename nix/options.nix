@@ -990,6 +990,12 @@ let
         };
       };
 
+      podManagementPolicy = mkOption {
+        description = "Kubernetes pod ordering stategy";
+        type = types.enum ["OrderedReady" "Parallel"];
+        default = "Parallel";
+      };
+
       pod = podTemplateOptions // {
         labels = mkOption {
           description = "Pod labels";
