@@ -186,7 +186,7 @@ let
           storage = pvc.size;
         };
       };
-    } // (optionalAttrs (pvc.selector != {}) {
+    } // (optionalAttrs (pvc.selector.matchLabels != {}) {
       selector = {
         inherit (pvc.selector) matchLabels;
       };
