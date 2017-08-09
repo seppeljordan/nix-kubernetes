@@ -186,10 +186,11 @@ let
           storage = pvc.size;
         };
       };
+    } // (optionalAttrs (pvc.selector != {}) {
       selector = {
         inherit (pvc.selector) matchLabels;
       };
-    };
+    });
   };
 
   mkPvSpec = pv: {
