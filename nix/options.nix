@@ -175,7 +175,7 @@ let
       };
 
       preStop = {
-        comand = mkOption {
+        command = mkOption {
           description = "Command to execute before stoping container";
           type = types.nullOr (types.either (types.listOf types.str) types.str);
           default = null;
