@@ -174,6 +174,14 @@ let
         };
       };
 
+      preStop = {
+        comand = mkOption {
+          description = "Command to execute before stoping container";
+          type = types.nullOr (types.either (types.listOf types.str) types.str);
+          default = null;
+        };
+      };
+
       security = {
         capabilities = {
           add = mkOption {

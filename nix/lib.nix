@@ -91,6 +91,8 @@ let
     args = mkCommand container.args;
   }) // (optionalAttrs (container.postStart.command != null) {
     lifecycle.postStart.exec.command = mkCommand container.postStart.command;
+  }) // (optionalAttrs (container.preStop.command != null) {
+    lifecycle.preStop.exec.command = mkCommand container.preStop.command;
   }) // (optionalAttrs (container.livenessProbe.enable) {
     livenessProbe = mkProbe container.livenessProbe;
   }) // (optionalAttrs (container.readinessProbe.enable) {
