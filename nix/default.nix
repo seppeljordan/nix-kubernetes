@@ -74,6 +74,8 @@ let
         mapAttrs (name: networkpolicy: mkNetworkPolicy networkpolicy) config.kubernetes.networkPolicies;
       poddistributionbudgets =
         mapAttrs (name: pdb: mkPodDistributionBudget pdb) config.kubernetes.podDistributionBudgets;
+      customresourcedefinitions =
+        mapAttrs (name: crd: mkCustomResourceDefinition crd) config.kubernetes.customResourceDefinitions;
     } // (mapAttrs (name: customResources: (
       mapAttrs (name: customResource: mkCustomResource customResource) customResources
     )) config.kubernetes.customResources);

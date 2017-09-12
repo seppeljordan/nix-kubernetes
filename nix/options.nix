@@ -1053,6 +1053,56 @@ let
     };
   };
 
+  customResourceDefinitionOptions = {name, config, ...}: {
+    options = {
+      group = mkOption {
+        description = "Custom resource group";
+        type = types.str;
+      };
+
+      version = mkOption {
+        description = "Custom resource version";
+        type = types.str;
+        default = "v1";
+      };
+
+      scope = mkOption {
+        description = "Custom resource scope";
+        type = types.enum ["Namespaced" "Cluster"];
+        default = "Namespaced";
+      };
+
+      names = {
+        plural = mkOption {
+          description = "Plural custom resource name";
+          type = types.str;
+          default = "${name}s";
+        };
+
+        singular = mkOption {
+          description = "Singular custom resource name";
+          type = types.str;
+          default = name;
+        };
+
+        kind = mkOption {
+          description = "Kind is normally the CamelCased singular type. Your resource manifests use this.";
+          type = types.str;
+        };
+
+        shortNames = mkOption {
+          description = "Custom resource definition short names";
+          type = types.listOf types.str;
+          default = [];
+        };
+      };
+    };
+
+    config = {
+      name = mkDefault "${name}.${config.group}";
+    };
+  };
+
   podDistributionBudgetOptions = {name, config, ...}: {
     options = {
       minAvailable = mkOption {
@@ -1251,6 +1301,18 @@ in {
       default = {};
     };
 
+    customResources = mkOption {
+      description = "Attribute set of custom resources";
+      type = types.attrsOf (types.attrsOf (types.submodule [ customResourceOptions nsMetaOptions ]));
+      default = {};
+    };
+
+    customResourceDefinitions = mkOption {
+      description = "Attribute set of custom resources definitions";
+      type = types.attrsOf (types.submodule [ customResourceDefinitionOptions metaOptions ]);
+      default = {};
+    };
+
     defaultNamespace = mkOption {
       type = types.str;
       default =
@@ -1310,12 +1372,6 @@ in {
         type = types.attrs;
         default = {};
       };
-    };
-
-    customResources = mkOption {
-      description = "Attribute set of custom resources";
-      type = types.attrsOf (types.attrsOf (types.submodule [ customResourceOptions metaOptions ]));
-      default = {};
     };
   };
 }

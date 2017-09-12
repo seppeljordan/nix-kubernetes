@@ -322,6 +322,15 @@ let
   mkCustomResourceExtra = customResource:
     mapAttrs (n: v: v) customResource.extra;
 
+  mkCustomResourceDefinition = crd: {
+    spec = {
+      inherit (crd) group version scope;
+      names = {
+        inherit (crd.names) plural singular kind shortNames;
+      };
+    };
+  };
+
 in {
   mkNamespace = namespace:
     (mkResource "v1" "Namespace") // (mkMeta namespace);
@@ -416,6 +425,11 @@ in {
 
   mkCustomResource = customResource:
     (mkResource customResource.apiVersion customResource.kind) //
-    (mkMeta customResource) //
+    (mkNsMeta customResource) //
     (mkCustomResourceExtra customResource);
+
+  mkCustomResourceDefinition = crd:
+    (mkResource "apiextensions.k8s.io/v1beta1" "CustomResourceDefinition") //
+    (mkMeta crd) //
+    (mkCustomResourceDefinition crd);
 }
