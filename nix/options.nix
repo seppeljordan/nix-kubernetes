@@ -1303,7 +1303,7 @@ in {
 
     customResources = mkOption {
       description = "Attribute set of custom resources";
-      type = types.attrsOf (types.attrsOf (types.submodule [ customResourceOptions nsMetaOptions ]));
+      type = types.attrsOf (types.attrsOf (types.submodule [ customResourceOptions nsMetaOptions metaOptions ]));
       default = {};
     };
 
