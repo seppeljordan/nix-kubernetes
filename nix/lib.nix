@@ -29,7 +29,10 @@ let
 
   mkSpecMeta = resource: {
     metadata.labels = resource.labels;
-    metadata.annotations = resource.annotations;
+    metadata.annotations = resource.annotations // {
+      "x-truder.net/kind" = "nix-kubernetes";
+      "x-truder.net/version" = "v1";
+    };
   };
 
   mkCommand = cmd: if isString cmd then ["sh" "-c" cmd] else cmd;

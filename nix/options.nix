@@ -451,7 +451,6 @@ let
 
     config = mkMerge [{
       pod.labels.name = mkDefault config.name;
-      pod.annotations = config.annotations;
     } (mkDefault cfg.defaults.deployments)];
   };
 
