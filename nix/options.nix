@@ -526,8 +526,14 @@ let
     options = {
       type = mkOption {
         description = "Service type (ClusterIP, NodePort, LoadBalancer)";
-        type = types.enum ["ClusterIP" "NodePort" "LoadBalancer"];
+        type = types.enum ["ClusterIP" "NodePort" "LoadBalancer" "ExternalName"];
         default = "ClusterIP";
+      };
+
+      externalName = mkOption {
+        description = "External DNS name";
+        type = types.nullOr types.str;
+        default = null;
       };
 
       ports = mkOption {

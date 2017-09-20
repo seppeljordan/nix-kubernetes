@@ -1,5 +1,7 @@
 {
   service = {
+    kubernetes.namespaces.test = {};
+
     kubernetes.services = {
       simple.ports = [{port = 6379;}];
       multiple.ports = [
@@ -17,6 +19,11 @@
       withType = {
         type = "LoadBalancer";
         ports = [{port = 3306;}];
+      };
+      with-external-name = {
+        type = "ExternalName";
+        externalName = "kubernetes.default.svc.cluster.local";
+        ports = [{port = 80;}];
       };
     };
   };

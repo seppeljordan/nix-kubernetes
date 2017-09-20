@@ -161,6 +161,15 @@ let
 
   mkServiceSpec = service: {
     spec = {
+      type = service.type;
+    } // (optionalAttrs (service.clusterIP != null) {
+      clusterIP = service.clusterIP;
+    }) // (optionalAttrs (service.externalIPs != null) {
+      externalIPs = service.externalIPs;
+    }) // (optionalAttrs (service.externalName != null) {
+      externalName = service.externalName;
+    }) // (optionalAttrs (service.type != "ExternalName") {
+      selector = service.selector;
       ports = map (port: {
         port = port.port;
         targetPort = port.targetPort;
@@ -170,12 +179,6 @@ let
       } // (optionalAttrs (port.nodePort != null) {
         nodePort = port.nodePort;
       }))) service.ports;
-      selector = service.selector;
-      type = service.type;
-    } // (optionalAttrs (service.clusterIP != null) {
-      clusterIP = service.clusterIP;
-    }) // (optionalAttrs (service.externalIPs != null) {
-      externalIPs = service.externalIPs;
     });
   };
 
