@@ -46,13 +46,13 @@ in
   inherit profiles;
 
   package = mkYarnPackage {
-		name = "nix-kubernetes";
-		src = ./.;
-		packageJson = ./package.json;
-		yarnLock = ./yarn.lock;
-		# NOTE: this is optional and generated dynamically if omitted
-		yarnNix = ./yarn.nix;
-	};
+    name = "nix-kubernetes";
+    src = ./.;
+    packageJson = ./package.json;
+    yarnLock = ./yarn.lock;
+    # NOTE: this is optional and generated dynamically if omitted
+    yarnNix = ./yarn.nix;
+  };
 
   options = pkgs.stdenv.mkDerivation {
     name = "options-json";
