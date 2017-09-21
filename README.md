@@ -15,7 +15,7 @@ do fully deterministic deployments from packages to configuration.
 ## Installation
 
 ```sh
-$ nix-env -f https://github.com/xtruder/nix-kubernetes/archive/v0.25.0.tar.gz -iA package
+$ nix-env -f https://github.com/xtruder/nix-kubernetes/archive/v0.25.1.tar.gz -iA package
 ```
 
 ## Usage
