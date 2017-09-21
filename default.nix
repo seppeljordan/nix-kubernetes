@@ -39,8 +39,20 @@ let
     "defaults"
   ];
 
-in with pkgs.lib; {
+in
+	with pkgs.lib;
+  with (import (builtins.fetchTarball https://github.com/moretea/yarn2nix/archive/master.tar.gz) { inherit pkgs; });
+{
   inherit profiles;
+
+  package = mkYarnPackage {
+		name = "nix-kubernetes";
+		src = ./.;
+		packageJson = ./package.json;
+		yarnLock = ./yarn.lock;
+		# NOTE: this is optional and generated dynamically if omitted
+		yarnNix = ./yarn.nix;
+	};
 
   options = pkgs.stdenv.mkDerivation {
     name = "options-json";
