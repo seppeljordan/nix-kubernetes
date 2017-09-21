@@ -39,6 +39,8 @@ let
     "defaults"
   ];
 
+  version = (builtins.fromJSON (builtins.readFile ./package.json)).version;
+
 in
 	with pkgs.lib;
   with (import (builtins.fetchTarball https://github.com/moretea/yarn2nix/archive/master.tar.gz) { inherit pkgs; });
@@ -46,7 +48,7 @@ in
   inherit profiles;
 
   package = mkYarnPackage {
-    name = "nix-kubernetes";
+    name = "nix-kubernetes-${version}";
     src = ./.;
     packageJson = ./package.json;
     yarnLock = ./yarn.lock;
