@@ -536,6 +536,12 @@ let
         default = null;
       };
 
+      externalTrafficPolicy = mkOption {
+        description = "External traffic policy";
+        type = types.nullOr (types.enum [ "Local" "Cluster" ]);
+        default = null;
+      };
+
       ports = mkOption {
         type = types.listOf types.optionSet;
         description = "Ports exposed by service";

@@ -179,6 +179,8 @@ let
       } // (optionalAttrs (port.nodePort != null) {
         nodePort = port.nodePort;
       }))) service.ports;
+    }) // (optionalAttrs (service.externalTrafficPolicy != null) {
+      externalTrafficPolicy = service.externalTrafficPolicy;
     });
   };
 
