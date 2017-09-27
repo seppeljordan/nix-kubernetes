@@ -155,8 +155,11 @@ let
 
   mkDaemonSetSpec = daemon: {
     spec = {
-      template = (mkSpecMeta daemon.pod) // (mkPodSpec daemon.pod);
-    };
+      template = (mkSpecMeta daemon.pod) // (mkPodSpec daemon.pod
+      );
+    } // (optionalAttrs (daemon.updateStrategy != null) {
+      updateStrategy = daemon.updateStrategy;
+    });
   };
 
   mkServiceSpec = service: {

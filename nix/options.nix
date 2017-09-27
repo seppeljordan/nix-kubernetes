@@ -475,6 +475,11 @@ let
           default = {};
         };
       };
+      updateStrategy = mkOption {
+        description = "Update strategy for the daemonset.";
+        type = with types; nullOr (attrsOf (either str (attrsOf str)));
+        default = null;
+      };
     };
 
     config = mkMerge [{
